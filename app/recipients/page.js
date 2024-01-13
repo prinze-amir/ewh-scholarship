@@ -1,23 +1,29 @@
+'use client';
+import { getMovies } from "../../lib/mongo/movies";
+import { useState, useEffect } from 'react';
 
-const RecipientsPage = () => {
-    // const { data, error } = useSWR('/api/recipients', fetcher);
-    
-    // if (error) return <div>failed to load</div>;
-    // if (!data) return <div>loading...</div>;
-    
+export default function RecipientsPage(){
+
+    const [movies, setMovies] = useState(null);    
+
+    useEffect(() => {
+        async function loadMovies() {
+            const newMovies = await getMovies();
+            setMovies(newMovies);
+        }
+        loadMovies();
+    }, [])
+
+    if (!movies) {
+        return (
+            <h1>No movies to display</h1>
+        )
+    }
+
     return (
         <div>
-        <h1>Recipients</h1>
-        {/* <ul>
-            {data.map((recipient) => (
-            <li key={recipient.id}>
-                <Link href={`/recipients/${recipient.id}`}>
-                <a>{recipient.name}</a>
-                </Link>
-            </li>
-            ))}
-        </ul> */}
+            <h1>Recipients</h1>
+       
         </div>
     );
-    }
-    export default RecipientsPage;
+}
