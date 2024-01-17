@@ -11,7 +11,7 @@ const LatestButton = styled.button`
     border-radius: 25px;
     font-size: 1.2rem;
     background-color: #2fd6b9;
-    width: fit-content;
+    width: fit-content; 
     border: none;
     cursor: pointer;
     &:hover {
