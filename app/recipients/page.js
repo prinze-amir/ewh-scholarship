@@ -1,25 +1,18 @@
 'use client';
-// import { getMovies } from "../../lib/mongo/movies";
-import { useState, useEffect } from 'react';
-import { Recipient } from '@/components/recipient';
-
+import { Recipients } from './recipients';
+import { Hero } from '@/components/hero';
 export default function RecipientsPage(){
 
-    const [recipients, setRecipient] = useState(null);    
-
-   
-
-    // if (!recipients) {
-    //     return (
-    //         <h1>No recipients to display</h1>
-    //     )
-    // }
-
     return (
-        <div>
-            <h1>Recipients</h1>
-            <Recipient />
-       
-        </div>
+        <>
+        <Hero 
+        title={'Our Recipients'}
+        subtitle={'We are the future'}
+        image={'/images/graduates.jpg'}
+        height={'50vh'}
+        top={true}
+        />
+                <Recipients />            
+        </>
     );
 }

@@ -1,6 +1,6 @@
 'use client'
 import styled from 'styled-components';
-
+import Image from 'next/image'
 export const Footer = () => {
 
 const Button1 = styled.button`
@@ -68,6 +68,7 @@ background-color: rgb(255 255 255 / 17%);
     }
     return (
         <div style={footerStyles.divContainer}>
+             
         <h1 className="text-4xl">EWH Scholarships</h1>
         <h3 className="text-lg">Memorial Scholarship Fund</h3>
         <ul style={footerStyles.navmenu}>

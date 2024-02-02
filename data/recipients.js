@@ -10,7 +10,6 @@ const recipients = [
     },
 
     {
-        name:'Rashara Hall',
         Parents: 'Cimone Hall',
         graduationYear: '2023',
         college: 'Tennessee State University (TSU)',
@@ -37,58 +36,59 @@ const recipients = [
     },
     {
         name: 'Kaley Smith',
-        parents: null,
+        parents: '...',
         graduationYear: '2017',
-        college: null,
-        major: null,
-        bio: null
+        college: '...',
+        major: '...',
+        bio: '...'
     },
     {
         name: 'Larry Banks',        
-        parents: null,
+        parents: '...',
         graduationYear: '2017',
-        college: null,
-        major: null,
-        bio: null
+        college: '...',
+        major: '...',
+        bio: '...'
     },
     {
         name: 'Tyrus Banks',
-        parents: null,
-        graduatiionYear: '2018',
-        college: null,
-        major: null,
-        bio: null
+        parents: '...',
+        graduationYear: '2018',
+        college: '...',
+        major: '...',
+        bio: '...'
     },
     {
         name: 'Richarra Roach',
-        parents: null,
-        graduatiionYear: '2019',
-        college: null,
-        major: null,
-        bio: null
+        parents: '...',
+        graduationYear: '2019',
+        college: '...',
+        major: '...',
+        bio: '...'
     },
     {
         name: 'Tyra Banks',
-        parents: null,
-        graduatiionYear: '2019',
-        college: null,
-        major: null,
-        bio: null
+        parents: '...',
+        graduationYear: '2019',
+        college: '...',
+        major: '...',
+        bio: '...'
     },
     {
         name: 'Isharra Hall',
-        parents: null,
-        graduatiionYear: '2019',
+        parents: '...',
+        graduationYear: '2019',
         college: 'Morgan State University',
         major: 'Communications',
         bio: 'Home town : Philadelphia PA'
     },
     {
         name: 'Joshua Casey',
-        parents: null,
-        graduatiionYear: '2021',
+        parents: '...',
+        graduationYear: '2021',
         college: 'Univerrsity of Memphis',
         major: 'Psychology',
-        bio:null
+        bio:'...'
     }
 ] 
+export { recipients}

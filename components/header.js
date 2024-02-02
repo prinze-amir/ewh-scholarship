@@ -1,5 +1,5 @@
+'use client'
 import Link from 'next/link'
-
  export const Header = () => {
 
     const headerStyles = {
@@ -10,10 +10,10 @@ import Link from 'next/link'
             alignItems: 'center',
             padding: '1rem',
             backgroundColor: 'rgb(51 51 51 / 20%)',
+            position:"relative",
             color: '#fff',
-            position: 'absolute',
             width: '100%',
-            zIndex: '3',
+            zIndex: '31',
         },
         navmenu: {
             display: 'flex',
@@ -25,7 +25,7 @@ import Link from 'next/link'
      }
     return (
         <div style={headerStyles.divContainer}>
-            <h1>EWH Scholarships</h1>
+            <Link href="/"><h1>EWH Scholarships</h1></Link>
             <ul style={headerStyles.navmenu}>
                 <li><Link href="/recipients">Recipients</Link></li>
                 <li><Link href="/apply">Apply</Link></li>

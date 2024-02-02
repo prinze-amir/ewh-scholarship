@@ -19,7 +19,7 @@ const LatestButton = styled.button`
     }
 `;
     return (
-        <div className="flex items-center justify-center gap-x-4 mt-20 flex-wrap relative bg-slate-100 py-20">
+        <div className="flex items-center justify-center gap-x-4 flex-wrap relative bg-slate-100 py-20">
             <div style={{display:'flex', flexDirection:'column', justifyContent:'center', gap:'20px', width:'fit-content'}}>
                 <Image src="/images/nayla.jpeg" alt="nayla" width={500} height={500} />
                 <LatestButton>Latest Recipient Nayla Arnett</LatestButton>
