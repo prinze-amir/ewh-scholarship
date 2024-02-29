@@ -1,7 +1,9 @@
+import LoginForm from '@/components/forms/loginForm'
 export default function Admin (){
     return (
-        <div>
-            <h1>Admin</h1>
+        <div style={{display:"flex", justifyContent:"center", alignItems:"center", height:"70vh", flexFlow:"column"}}>
+            <h1 class="p-5 text-3xl">Login</h1>
+            <LoginForm />
         </div>
     )
 }

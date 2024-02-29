@@ -1,13 +1,12 @@
-import Image from 'next/image'
-import {Header} from '../components/header'
-import {Hero} from '../components/hero'
-import {Schools} from '../components/schools'
-import {Footer} from '../components/footer'
-import { Latest } from '../components/latests'
+//import Image from 'next/image'
+import {Hero} from '@/components/hero'
+import {Schools} from '@/components/schools'
+import {Footer} from '@/components/footer/footer'
+import { Latest } from '@/components/latest/latest'
 
 export default function Home() {
   return (
-   <div className="main-containe font-roboto">
+   <div className="main-container font-roboto">
     <Hero 
       title={'Earline & William Hall'}
       subtitle={'Memorial Scholarship Fund'}

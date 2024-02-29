@@ -1,0 +1,8 @@
+.recipientsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap:20px;
+    justify-content: center;
+    margin: auto;
+    margin-top:25px;
+}
