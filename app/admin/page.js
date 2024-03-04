@@ -1,4 +1,4 @@
-import LoginForm from '@/components/forms/loginForm'
+import LoginForm from '@/components/Forms/loginForm'
 export default function Admin (){
     return (
         <div style={{display:"flex", justifyContent:"center", alignItems:"center", height:"70vh", flexFlow:"column"}}>

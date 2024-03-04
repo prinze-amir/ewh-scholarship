@@ -1,5 +1,6 @@
-import {Hero} from '@/components/hero'
-import Form from '@/components/forms/applyForm'
+import {Hero} from '@/components/Heros/hero'
+import Form from '@/components/Forms/applyForm'
+import {Footer} from '@/components/Footers/footer'
 export default function Apply(){
     
     
@@ -16,9 +17,8 @@ export default function Apply(){
                     <p className="text-xl">complete the form below</p>
                 </div>
                 <Form />
-                
-
             </div>
+            <Footer/>
            </>
             
         )

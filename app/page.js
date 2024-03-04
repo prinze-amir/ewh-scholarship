@@ -1,8 +1,8 @@
 //import Image from 'next/image'
-import {Hero} from '@/components/hero'
+import {Hero} from '@/components/Heros/hero'
 import {Schools} from '@/components/schools'
-import {Footer} from '@/components/footer/footer'
-import { Latest } from '@/components/latest/latest'
+import {Footer} from '@/components/Footers/footer'
+import { Latest } from '@/components/Latest/latest'
 
 export default function Home() {
   return (

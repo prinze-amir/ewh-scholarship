@@ -18,3 +18,11 @@
 .latestButton:hover {
     background-color: #333;
 }
+
+.latestThumbnail {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:20px;
+    width:fit-content;
+}

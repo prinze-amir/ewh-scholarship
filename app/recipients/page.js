@@ -1,6 +1,6 @@
 //'use client';
 import { Recipients } from './recipients';
-import { Hero } from '@/components/hero';
+import { Hero } from '@/components/Heros/hero';
 export default function RecipientsPage(){
 
     return (

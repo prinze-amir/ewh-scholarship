@@ -1,0 +1,22 @@
+.formContainer {
+    padding:35px 25px;
+    border-radius: 10px;
+    margin-bottom: 60px;
+    background-color: #fff;
+    color:black;
+    box-shadow: 1px 1px 10px 1px #7676767a; 
+    border:solid 1px #aeaeae78;
+}
+
+.formButton {
+    padding:15px 20px;
+    border-radius: 15px;
+    background-color: rgb(48, 179, 135);
+    color:#fff
+}
+
+.formButton:hover {
+    background-color: rgb(115, 223, 187);
+    color:#fff;
+    box-shadow: 1px 1px 10px 1px #7676767a;
+}
