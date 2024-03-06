@@ -16,7 +16,15 @@ module.exports = {
         lato: ['Lato', 'sans-serif'],
         mona:['Mona Sans', 'sans-serif'],
         roboto:['Roboto', 'sans-serif'],
-
+        satoshi:['Satoshi', 'sans-serif'],
+        inter:['Inter', 'sans-serif'],
+      },
+      colors: {
+        'primary': '#FF6363',
+        'secondary': {
+          100: '#E2E2D5',
+          200: '#888883',
+        },
       },
     },
   },

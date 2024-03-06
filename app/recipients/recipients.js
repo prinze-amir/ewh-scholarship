@@ -2,22 +2,23 @@
 import Link from 'next/link'
 import styles from '@/app/recipients/recipients.module.css'
 import Image from 'next/image';
+import { getAllRecipients } from '@/lib/mongo/recipients';
 const uri = process.env.baseURI;
 const Recipients = async () =>{
 
-    const fetchRecipients = async () => {
-        try {
-            const recipients = await fetch(`${uri}/api/recipients`, {cache: "no-store"});
-        const recipientData = await recipients.json();
-       console.log(recipients, 'recipients outside component');
-        return recipientData
-        } catch (error) {
-        console.log(error);
-        return null;
-        }
-    }
+    // const fetchRecipients = async () => {
+    //     try {
+    //         const recipients = await fetch(`${uri}/api/recipients`, {cache: "no-store"});
+    //     const recipientData = await recipients.json();
+    //    console.log(recipients, 'recipients outside component');
+    //     return recipientData
+    //     } catch (error) {
+    //     console.log(error);
+    //     return null;
+    //     }
+    // }
     
-    const data = await fetchRecipients();
+    const data = await getAllRecipients();
     console.log(data, 'inside component')
 
     if (!data) {    
@@ -34,7 +35,7 @@ const Recipients = async () =>{
                 return (
                     <div style={{padding:"10px", border:'solid 1px #eee', width:"450px" }} key={recipient._id}>
                         <Link href={`/recipients/${recipient._id}`}>
-                            <Image alt={recipient.id} src={recipient.profileImage ? recipient.profileImage : defaultProfile} width={300} height={300} />
+                            <Image alt={recipient._id} src={recipient.profileImage ? recipient.profileImage : defaultProfile} width={300} height={300} />
                         <h2>Name: {recipient.name}</h2></Link>
                         <p>Parents: {recipient.parents ? recipient.parents: '...'}</p>
                         <p>Graduated: {recipient.graduateYear}</p>

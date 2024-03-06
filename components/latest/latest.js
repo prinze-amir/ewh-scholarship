@@ -1,7 +1,6 @@
 import Image from 'next/image'
-//import Recipient from './recipient'
 import styles from '@/components/latest/latest.module.css'
-// import Recipient from './recipient'
+import Link  from 'next/link'
 const uri = process.env.baseURI;
 const fetchLatest = async () => {
     const latest = await fetch(`${uri}/api/latest`, {cache: "no-store"});
@@ -16,11 +15,13 @@ export const Latest = async () => {
     
     if (!latest) return <div>No recipient found</div>;
 
+    const profileImage = latest.profileImage ? latest.profileImage : "/images/nayla.jpeg";
+
     return (
         <div className="flex items-center justify-center gap-x-4 flex-wrap relative bg-slate-100 py-20">
             <div className={styles.latestThumbnail}>
-                <Image src="/images/nayla.jpeg" alt="nayla" width={450} height={450} />
-                <button className={styles.latestButton}>Latest Recipient {latest.name}</button>
+                <Image src={profileImage} alt="nayla" width={450} height={450} />
+               <Link href={`/recipients/${latest._id}`}><button className={styles.latestButton}>Latest Recipient {latest.name}</button></Link> 
             </div>
 
             <div className={styles.latestContent}>

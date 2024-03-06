@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
- export const Header = () => {
+ export const TransparentHeader = () => {
 
     const headerStyles = {
         divContainer: {
@@ -9,8 +9,9 @@ import Link from 'next/link'
             justifyContent: 'space-between',
             alignItems: 'center',
             padding: '1rem',
-            backgroundColor: '#fff',
+            backgroundColor: 'rgb(51 51 51 / 20%)',
             position:"relative",
+            color: '#fff',
             width: '100%',
             zIndex: '31',
         },
