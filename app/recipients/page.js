@@ -1,6 +1,7 @@
 //'use client';
 import { Recipients } from './recipients';
 import { Hero } from '@/components/Heros/hero';
+import { Footer } from '@/components/Footers/footer';
 export default function RecipientsPage(){
 
     return (
@@ -12,7 +13,8 @@ export default function RecipientsPage(){
         height={'50vh'}
         top={true}
         />
-        <Recipients />            
+        <Recipients />
+        <Footer />            
         </div>
     );
 }

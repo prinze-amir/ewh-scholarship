@@ -33,15 +33,17 @@ const Recipients = async () =>{
             {data.map((recipient) => {
                 if(recipient.recipient === true){
                 return (
-                    <div style={{padding:"10px", border:'solid 1px #eee', width:"450px" }} key={recipient._id}>
+                    <div className={styles.recipientCard} key={recipient._id}>
                         <Link href={`/recipients/${recipient._id}`}>
-                            <Image alt={recipient._id} src={recipient.profileImage ? recipient.profileImage : defaultProfile} width={300} height={300} />
-                        <h2>Name: {recipient.name}</h2></Link>
-                        <p>Parents: {recipient.parents ? recipient.parents: '...'}</p>
-                        <p>Graduated: {recipient.graduateYear}</p>
-                        <p>School: {recipient.college}</p>
-                        <p>Major: {recipient.major}</p>
-                        <p>Bio: {recipient.bio}</p>
+                            <Image alt={recipient._id} src={recipient.profileImage ? recipient.profileImage : defaultProfile} width={300} height={300} className={styles.profileImage} />
+                            </Link>
+                        <div className={styles.content}>
+                            <h2 className="text-xl ">{recipient.name}</h2>
+                            <p>Graduated in {recipient.graduateYear}</p>
+                            <p>Attending {recipient.college}</p>
+                            <p>Majoring in {recipient.major}</p>
+                        </div>
+                        
                     </div>
                 )}
             })}
