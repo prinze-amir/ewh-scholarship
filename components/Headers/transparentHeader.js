@@ -31,6 +31,7 @@ import Link from 'next/link'
                 <li><Link href="/apply">Apply</Link></li>
                 <li><Link href="/donate">Donate</Link></li>
                 <li><Link href="/login">Login</Link></li>    
+                <li><Link href="/admin">Admin</Link></li>    
            
             </ul>
         </div>

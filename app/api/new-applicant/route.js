@@ -7,10 +7,10 @@ export async function POST (request){
       const applicant = await request.json();
       if (applicant.profileImage ) {
         console.log(applicant.profileImage, 'the image')
-        const uploadedImageUrl  = await uploadGoogleDrive(applicant.profileImage, applicant.name);
+        const uploadedImage  = await uploadGoogleDrive(applicant.profileImage, applicant.name);
 
         // Replace the base64 image data with the URL from Google Drive
-        applicant.profileImage = uploadedImageUrl;
+        applicant.profileImage = uploadedImage;
       }
       console.log(applicant, 'the applicant')
 

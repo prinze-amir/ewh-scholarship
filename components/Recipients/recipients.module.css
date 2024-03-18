@@ -1,0 +1,89 @@
+.recipientsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap:20px;
+    justify-content: center;
+    margin: auto;
+    margin-top:25px;
+    margin-bottom:20px;
+    padding:20px;
+
+}
+.recipientListItem{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap:10px;
+    padding: 20px;
+    overflow-y: hidden;
+    border-bottom: solid 1px #ddd;
+
+}
+.adminRecipientsContainer {
+    display:flex;
+    flex-flow: column;
+justify-content: center;
+max-width:700px;
+align-self: center;;
+}
+.adminProifileImage {
+    border-radius: 50%;
+    height:fit-content;
+}
+
+.profileImage {
+    max-height: 310px;
+    border-radius: 5%;
+    object-fit: cover;
+    border: 1px solid #d2d2d2;
+
+}
+.recipientCard {
+    width: 350px;
+    height:500px;
+    border-radius: 10px;
+    display: flex;
+    border: 1px solid #d2d2d2;
+    flex-direction: column;
+    gap:10px;
+    padding: 20px;
+    overflow-y: hidden;
+}
+.recipientCard:hover {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+.content {
+    display:flex;
+    flex-direction: column;
+   margin-top:10px;
+   gap:5px;
+
+}
+.adminButtons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+
+}
+.editButton {
+    background-color: #4ca5af;
+    border: none;
+    color: white;
+    padding: 5px;
+    height: fit-content;    
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.deleteButton {
+    background-color: #fa3695;
+    border: none;
+    color: white;
+    padding: 5px;
+height: fit-content;    
+margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+

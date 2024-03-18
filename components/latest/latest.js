@@ -15,12 +15,12 @@ export const Latest = async () => {
     
     if (!latest) return <div>No recipient found</div>;
 
-    const profileImage = latest.profileImage ? latest.profileImage : "/images/nayla.jpeg";
+    const profileImage = latest.profileImage ? latest.profileImage.src : "/images/nayla.jpeg";
 
     return (
         <div className="flex items-center justify-center gap-x-4 flex-wrap relative bg-slate-100 py-20">
             <div className={styles.latestThumbnail}>
-                <Image src={profileImage} alt="nayla" width={450} height={450} />
+                <Image src={profileImage} alt={latest.name} width={450} height={450} />
                <Link href={`/recipients/${latest._id}`}><button className={styles.latestButton}>Latest Recipient {latest.name}</button></Link> 
             </div>
 

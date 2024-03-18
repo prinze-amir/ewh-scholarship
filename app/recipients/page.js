@@ -1,5 +1,5 @@
 //'use client';
-import { Recipients } from './recipients';
+import { Recipients } from '@/components/Recipients/recipients';
 import { Hero } from '@/components/Heros/hero';
 import { Footer } from '@/components/Footers/footer';
 export default function RecipientsPage(){

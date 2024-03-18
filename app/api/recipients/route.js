@@ -1,4 +1,5 @@
-import { getAllRecipients } from "@/lib/mongo/recipients"
+import { getAllRecipients, deleteRecipient } from "@/lib/mongo/recipients"
+
 export async function GET(request) {
     const recipients = await getAllRecipients()
     if (recipients) {
@@ -10,3 +11,11 @@ export async function GET(request) {
     }
    
   }
+
+  export async function POST(request) {
+    const body = JSON.parse(request.body)
+    console.log(body, 'body')
+    return { status: 200, body: { message: 'success' } }
+  }
+
+  

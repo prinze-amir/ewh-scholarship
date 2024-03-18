@@ -3,10 +3,12 @@ import {Hero} from '@/components/Heros/hero'
 import {Schools} from '@/components/schools'
 import {Footer} from '@/components/Footers/footer'
 import { Latest } from '@/components/Latest/latest'
+import {TransparentHeader} from '@/components/Headers/transparentHeader'
 
 export default function Home() {
   return (
    <div className="main-container font-roboto">
+    <TransparentHeader/>
     <Hero 
       title={'Earline & William Hall'}
       subtitle={'Memorial Scholarship Fund'}
