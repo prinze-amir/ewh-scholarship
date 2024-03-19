@@ -8,11 +8,12 @@ const Recipients = async () =>{
 
    
     const data = await getAllRecipients();
-    console.log(data, 'recipients data')
 
-    if (!data) {    
+    if (!data.some(recipient => recipient.isApproved === true)) {    
         return (
-            <h1>No recipients to display</h1>
+            <div className={styles.recipientsContainer}>
+                            <h1 className="text-4xl uppercase" >No recipients to display</h1>
+            </div>
         )
     }
     const defaultProfile = 'https://drive.google.com/uc?export=view&id=1zML9_4lYJsPwtfi_abQTKOHKv0yj_Pay';
@@ -21,11 +22,12 @@ const Recipients = async () =>{
         
         <div className={styles.recipientsContainer}>   
             {data.map((recipient) => {
-                if(recipient.recipient === true){
+                if(recipient.isApproved === true){
+                    const id = JSON.stringify(recipient._id);
                 return (
-                    <div className={styles.recipientCard} key={recipient._id}>
+                    <div className={styles.recipientCard} key={id}>
                         <Link href={`/recipients/${recipient._id}`}>
-                            <Image alt={recipient.name} src={recipient.profileImage ? recipient.profileImage.src : defaultProfile} width={300} height={300} className={styles.profileImage} />
+                            <Image alt={id} src={recipient.profileImage ? recipient.profileImage.src : defaultProfile} width={300} height={300} className={styles.profileImage} />
                             </Link>
                         <div className={styles.content}>
                             <h2 className="text-xl ">{recipient.name}</h2>
@@ -35,7 +37,7 @@ const Recipients = async () =>{
                         </div>
                         
                     </div>
-                )}
+                )} 
             })}
             
         </div>

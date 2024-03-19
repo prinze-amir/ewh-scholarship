@@ -20,7 +20,7 @@ export const Latest = async () => {
     return (
         <div className="flex items-center justify-center gap-x-4 flex-wrap relative bg-slate-100 py-20">
             <div className={styles.latestThumbnail}>
-                <Image src={profileImage} alt={latest.name} width={450} height={450} />
+                <Image src={profileImage} alt={latest.name} width={400} height={400} />
                <Link href={`/recipients/${latest._id}`}><button className={styles.latestButton}>Latest Recipient {latest.name}</button></Link> 
             </div>
 

@@ -1,13 +1,16 @@
 'use client'
 import {useState} from 'react';
-import { revalidatePath } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import Image from 'next/image';
 import style from '@/components/forms/forms.module.css';
 import { useRouter } from 'next/navigation'
 import heic2any from 'heic2any';
+import { Skeleton, Button, CircularProgress } from '@chakra-ui/react'
+
 
 const ApplyForm = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const date = new Date();
   const startYear = 1980;
@@ -16,6 +19,7 @@ const ApplyForm = () => {
   const handleSubmit = async (e) => {
     
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await fetch(`/api/new-applicant`, {
         method: 'POST',
@@ -45,13 +49,16 @@ const ApplyForm = () => {
       
       console.log('form submitted', result);
       
+     
+
       router.push('/recipients');
 
-      // Revalidate the recipients page
-      await revalidatePath('/recipients');
+       // Revalidate the recipients page
+        await revalidatePath('/recipients');
 
     } catch (error) {
       console.error('Failed to submit form', error);
+      setLoading(false);
     }
     
   }
@@ -118,7 +125,25 @@ const ApplyForm = () => {
       formattedNumber += match[3] ? `-${match[3]}` : '';
     }
     e.target.value = formattedNumber;
-  };
+  }
+
+  if (loading) {
+      return (
+        <div className={style.skeletonContainer}>
+        <CircularProgress isIndeterminate color='green.300' size="150px" className={style.spinning} />
+
+        <Skeleton isLoaded={!loading} height="50vh" width="70vw">
+
+        </Skeleton>
+
+        </div>
+                  
+
+        
+      )
+  }
+
+
     return (
       <div  className={style.formContainer}>
         <button onClick={testForm} className="bg-orange-700 p-3">Test Button</button>
@@ -227,7 +252,7 @@ const ApplyForm = () => {
                   <textarea className="appearance-none block w-full bg-gray-200  border border-gray-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="bio"  required placeholder="Tell us a litte about yourself"/>
               </div>
           </div>
-          <button type="submit" className={style.formButton}>Submit</button>
+          <Button  colorScheme="green" variant="outline" type="submit">Submit</Button>
         </form>
       </div>
 

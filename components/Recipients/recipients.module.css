@@ -3,6 +3,7 @@
     flex-wrap: wrap;
     gap:20px;
     justify-content: center;
+    min-height:30vh;
     margin: auto;
     margin-top:25px;
     margin-bottom:20px;
@@ -29,6 +30,7 @@ align-self: center;;
 .adminProifileImage {
     border-radius: 50%;
     height:fit-content;
+    width:auto;
 }
 
 .profileImage {
@@ -59,12 +61,19 @@ align-self: center;;
    gap:5px;
 
 }
+.adminContent{
+    width:60%;
+}
 .adminButtons {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 10px;
     justify-content: center;
 
+}
+.switch {
+    display:flex;
+    gap:10px;
 }
 .editButton {
     background-color: #4ca5af;

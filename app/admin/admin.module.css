@@ -23,7 +23,25 @@
     color: #fff;
    
 }
-
+.recipientView {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    max-width:900px;
+    gap: 30px;
+    color: #fff;
+    background-color: rgb(38, 38, 38);
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px 0 #070707;
+}
+.recipientView img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 .recipients {
     display: flex;
     justify-content: center;
@@ -32,6 +50,8 @@
     background-color: #1b1b1b;
     border-radius: 15px;
     width: fit-content;
+    align-self: center;
+    color:#fff
 }
 
 .count {
@@ -60,8 +80,8 @@
     background-color: #333;
     flex-flow: column;
     gap: 20px;
-    justify-content: center;
     border-radius:15px;
     margin:30px;
     padding: 20px;
+    min-height:95vh;
 }

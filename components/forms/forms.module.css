@@ -20,3 +20,14 @@
     color:#fff;
     box-shadow: 1px 1px 10px 1px #7676767a;
 }
+
+.spinning {
+    position: absolute !important;
+    z-index: 1000;
+}
+.skeletonContainer {
+    margin-bottom: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
