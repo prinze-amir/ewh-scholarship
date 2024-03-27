@@ -21,5 +21,6 @@ import {deletePhoto} from "@/lib/google/googleDriveService"
     }
     console.log(update, 'update')
     const recipient = await updateRecipient(recipientId, update)
+
     return Response.json(recipient)
   }

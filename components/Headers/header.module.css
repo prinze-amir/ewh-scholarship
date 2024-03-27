@@ -7,8 +7,10 @@
     background-color: #fff;
     color:black;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position:relative;
+    position:sticky;
+    top:0;
     z-index: 31;
+
 }
 
 .navmenu {
@@ -16,5 +18,5 @@
     justify-content: space-between;
     align-items: center;
     list-style: none;
-    width:30%;
+    gap:15px;
 }

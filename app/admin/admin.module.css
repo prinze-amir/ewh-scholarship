@@ -23,6 +23,18 @@
     color: #fff;
    
 }
+.recipients {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    border:solid 1px #ddd;
+    padding: 20px;
+    background-color: #1b1b1b;
+    border-radius: 15px;
+    width: fit-content;
+    align-self: center;
+    color:#fff
+}
 .recipientView {
     display: flex;
     justify-content: center;
@@ -42,18 +54,27 @@
     border-radius: 50%;
     object-fit: cover;
 }
-.recipients {
+.spinner {
     display: flex;
     justify-content: center;
-    border:solid 1px #ddd;
-    padding: 20px;
-    background-color: #1b1b1b;
-    border-radius: 15px;
-    width: fit-content;
-    align-self: center;
-    color:#fff
+
 }
 
+@media screen and (max-width: 768px) {
+    .recipientView {
+        flex-flow: column-reverse;
+        gap: 20px;
+        padding: 20px 10px;
+        justify-content: center;
+    }
+    .recipientView img {
+        width: 200px;
+        height: 200px;
+    }
+    .info {
+        text-align: center;
+    }
+}
 .count {
     border: solid 1px #ddd;
     padding:25px;
@@ -77,6 +98,8 @@
 
 .adminContiainer {
     display: flex;
+    align-self: center;
+    align-items: center;
     background-color: #333;
     flex-flow: column;
     gap: 20px;

@@ -15,6 +15,7 @@ export default function AdminLayout({ children }) {
 
                     </ul>
                 </div>
+
           {children}
         </section>
   

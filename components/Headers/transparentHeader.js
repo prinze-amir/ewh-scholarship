@@ -20,7 +20,7 @@ import Link from 'next/link'
             justifyContent: 'space-between',
             alignItems: 'center',
             listStyle: 'none',
-            width: '30%'
+            gap:'15px'
         }
      }
     return (

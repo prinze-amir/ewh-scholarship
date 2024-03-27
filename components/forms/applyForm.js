@@ -1,12 +1,10 @@
 'use client'
 import {useState} from 'react';
-import { revalidatePath } from 'next/cache';
 import Image from 'next/image';
 import style from '@/components/forms/forms.module.css';
 import { useRouter } from 'next/navigation'
-import heic2any from 'heic2any';
 import { Skeleton, Button, CircularProgress } from '@chakra-ui/react'
-
+import { formatPhone } from '@/utilities/forms';
 
 const ApplyForm = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
@@ -31,38 +29,50 @@ const ApplyForm = () => {
           parents: e.target['parents'].value,
           email: e.target['email'].value,
           phone: e.target['phone'].value,
-          addressStreet: e.target['addressStreet'].value,
-          addressCity: e.target['addressCity'].value,
-          addressState: e.target['addressState'].value,
-          addressZip: e.target['addressZip'].value,
-          graduateYear: e.target['year'].value,
+          address: {
+            street: e.target['addressStreet'].value,
+            city: e.target['addressCity'].value,
+            state: e.target['addressState'].value,
+            zip: e.target['addressZip'].value
+          },
+          graduationYear: e.target['year'].value,
           major: e.target['major'].value,
           college: e.target['school'].value,
           profileImage: imagePreviewUrl,
           bio: e.target['bio'].value,
           date: date,
-          recipient: true
+          isApproved: true
         })
       });
   
       const result = await response.json();
       
       console.log('form submitted', result);
-      
-     
-
-      router.push('/recipients');
-
-       // Revalidate the recipients page
-        await revalidatePath('/recipients');
 
     } catch (error) {
       console.error('Failed to submit form', error);
       setLoading(false);
     }
+      
+    router.push('/recipients');
     
   }
 
+  const testForm = () => {
+      document.getElementById('name').value = 'Amir Arnett';
+      document.getElementById('parents').value = 'Donna and Derrick';
+      document.getElementById('email').value = 'amir@yahoo.com';
+      document.getElementById('phone').value = '(404) 555-5555';
+      document.getElementById('addressStreet').value = '1234 Elm St';
+      document.getElementById('addressCity').value = 'Atlanta';
+      document.getElementById('addressState').value = 'GA';
+      document.getElementById('addressZip').value = '30303';
+      document.getElementById('year').value = '2023';
+      document.getElementById('major').value = 'Business';
+      document.getElementById('school').value = 'Georgia State University';
+      document.getElementById('bio').value = 'I am a very smart and hard working'
+  }
+  
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
 
@@ -99,33 +109,6 @@ const ApplyForm = () => {
       reader.readAsDataURL(file);
     }
 };
-  const testForm = () => {
-      document.getElementById('name').value = 'Amir Arnett';
-      document.getElementById('parents').value = 'Donna and Derrick';
-      document.getElementById('email').value = 'amir@yahoo.com';
-      document.getElementById('phone').value = '(404) 555-5555';
-      document.getElementById('addressStreet').value = '1234 Elm St';
-      document.getElementById('addressCity').value = 'Atlanta';
-      document.getElementById('addressState').value = 'GA';
-      document.getElementById('addressZip').value = '30303';
-      document.getElementById('year').value = '2023';
-      document.getElementById('major').value = 'Business';
-      document.getElementById('school').value = 'Georgia State University';
-      document.getElementById('bio').value = 'I am a very smart and hard working'
-  }
-   
-  const formatPhone = (e) => {
-    const input = e.target.value.replace(/\D/g, ''); // Remove all non-digit characters
-    const match = input.match(/^(\d{0,3})(\d{0,3})(\d{0,4})$/);
-
-    let formattedNumber = '';
-    if (match) {
-      formattedNumber += match[1] ? `(${match[1]}` : '';
-      formattedNumber += match[2] ? `) ${match[2]}` : '';
-      formattedNumber += match[3] ? `-${match[3]}` : '';
-    }
-    e.target.value = formattedNumber;
-  }
 
   if (loading) {
       return (
