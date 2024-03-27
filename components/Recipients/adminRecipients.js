@@ -1,17 +1,16 @@
 'use client'
 import styles from '@/components/Recipients/recipients.module.css'
 import Image from 'next/image';
-import {useState, useEffect} from 'react';
-import { Button, ButtonGroup, Switch, Spinner } from '@chakra-ui/react'
+import {useState, useEffect, useRef} from 'react';
+import { Button, ButtonGroup, Spinner } from '@chakra-ui/react'
 import {useRouter, useSearchParams} from 'next/navigation';
-import CustomSwitch from '@/components/Forms/switch';
+import CustomSwitch from '@/components/forms/switchButton';
 
 const AdminRecipients = ({allRecipients}) => {
     const [recipients, setRecipients] = useState(allRecipients);
     const [isLoading, setIsLoading] = useState(false);
     const [updating, setUpdating] = useState(false);
     const router = useRouter();
-    
     const searchParams = useSearchParams();
     let searchTerm = searchParams.get('search');
 
