@@ -5,7 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 export default function AdminLayout({ children }) {
 
   return (
-        <section className={adminStyles.adminContiainer}>
+        <section className={adminStyles.adminContainer}>
                 <div id="adminNav" className={adminStyles.nav}>
                     <ul>
                         <Link href="/"><li>Home</li></Link>

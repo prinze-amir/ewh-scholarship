@@ -41,7 +41,7 @@ const ApplyForm = () => {
           profileImage: imagePreviewUrl,
           bio: e.target['bio'].value,
           date: date,
-          isApproved: true
+          isApproved: false
         })
       });
   

@@ -4,23 +4,49 @@ import Image from 'next/image';
 import {useState, useEffect, useRef} from 'react';
 import { Button, ButtonGroup, Spinner } from '@chakra-ui/react'
 import {useRouter, useSearchParams} from 'next/navigation';
-import CustomSwitch from '@/components/forms/switchButton';
+import CustomSwitch from '@/components/Forms/switchButton';
+import { fetchNextPage } from '@/app/actions';
 
-const AdminRecipients = ({allRecipients}) => {
+const AdminRecipients = ({allRecipients, limit, pages}) => {
     const [recipients, setRecipients] = useState(allRecipients);
     const [isLoading, setIsLoading] = useState(false);
     const [updating, setUpdating] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
     let searchTerm = searchParams.get('search');
+    let filter = searchParams.get('filter');
+    const [page, setPage] = useState(0);
+    const [pageCount, setPageCount] = useState(pages-1);
 
     useEffect(() => {
         if(!searchTerm || searchTerm === '' || searchTerm === 'undefined' || searchTerm === 'null' || searchTerm === 'false' || searchTerm === 'true'){
           return  setRecipients(allRecipients);
         };
-        setRecipients(allRecipients.filter(recipient => recipient.name.toLowerCase().includes(searchTerm.toLowerCase())));
-        console.log(recipients, 'recipients')
+        setRecipients(allRecipients.filter(recipient =>{
+
+                return Object.values(recipient).some(value => {
+                    if ( typeof value  === 'string'){
+                        return value.toLowerCase().includes(searchTerm.toLowerCase());
+                    } else if (typeof value === 'object'){
+                        return Object.values(value).some(val => {
+                            return val.toLowerCase().includes(searchTerm.toLowerCase());
+                        })
+                    }
+                } 
+            
+            )
+        }));
     }, [searchTerm])
+
+    useEffect(() => {
+        if (filter === 'pending') {
+            setRecipients(allRecipients.filter(recipient => !recipient.isApproved));
+        } else if (filter === 'approved') {
+            setRecipients(allRecipients.filter(recipient => recipient.isApproved));
+        }
+    }, [filter])
+
+
 
     if (recipients.length === 0) {    
         return (
@@ -35,7 +61,7 @@ const AdminRecipients = ({allRecipients}) => {
 
     const handleDelete = async (e) => {
         const recipientId = e.target.id;
-        setIsLoading(true);
+        setIsLoading(pre=>({...pre, [recipientId]: true}));
         try {
             const response = await fetch(`/api/recipients/${recipientId}`, {
                 method: 'DELETE',
@@ -46,10 +72,10 @@ const AdminRecipients = ({allRecipients}) => {
             });
             const data = await response.json();
             setRecipients(recipients.filter(recipient => recipient._id.toString() !== recipientId));
-            setIsLoading(false);
+            setIsLoading(pre=>({...pre, [recipientId]: false}));
         } catch (error) {
             console.log(error);
-            setIsLoading(false);
+            setIsLoading(pre=>({...pre, [recipientId]: false}));
         }
     }
    const handleEdit = (e) => {
@@ -89,6 +115,32 @@ const AdminRecipients = ({allRecipients}) => {
 
     }
 
+    const nextPage = async () => {
+       
+        const nextPageData = await fetchNextPage(page+1, limit)
+        .then(data => {
+            setRecipients(data);
+            setPage(prev=>prev+1);
+            setPageCount(prev=>prev-1);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+
+    const prevPage = async () => {
+            
+
+            const prevPageData = await fetchNextPage(page-1, limit)
+            .then(data => {
+                setRecipients(data);
+                setPage(prev=>prev-1);
+                setPageCount(prev=>prev+1);            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
+
 
     return (
         <div className={styles.adminRecipientsContainer}>   
@@ -108,7 +160,7 @@ const AdminRecipients = ({allRecipients}) => {
                         <div className={styles.adminButtons}>
                              <ButtonGroup gap='2'>
                                 <Button id={recipient._id} onClick={handleEdit} colorScheme='whiteAlpha'>EDIT</Button>
-                                <Button id={recipient._id} isLoading={isLoading} colorScheme='blackAlpha' onClick={handleDelete} >DELETE</Button>
+                                <Button id={recipient._id} isLoading={isLoading[recipient._id]} colorScheme='blackAlpha' onClick={handleDelete} >DELETE</Button>
                             </ButtonGroup>
                             <div className={styles.switch}>
                                 <h1>APPROVE</h1>
@@ -122,6 +174,13 @@ const AdminRecipients = ({allRecipients}) => {
                     </div>
                 )
             })}
+            <div className="p-5">
+                <ButtonGroup gap='2' >
+                <Button isDisabled={pageCount === pages-1} onClick={prevPage}>Previous</Button>
+
+                    <Button isDisabled={pageCount<=0} onClick={nextPage}>Next</Button>
+                </ButtonGroup>
+            </div>
 
             
         </div>

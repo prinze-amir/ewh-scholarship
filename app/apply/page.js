@@ -1,13 +1,13 @@
 import {Hero} from '@/components/Heros/hero'
 import Form from '@/components/Forms/applyForm'
 import {Footer} from '@/components/Footers/footer'
-import {Header} from '@/components/Headers/header'
+import {TransparentHeader} from '@/components/Headers/transparentHeader'
 export default function Apply(){
     
     
         return (
            <div className="bg-white">
-           <Header/>
+           <TransparentHeader/>
             <Hero 
             image={'/images/graduates.jpg'}
             height={'40vh'}

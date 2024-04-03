@@ -1,38 +1,35 @@
 'use client'
 import Link from 'next/link'
+import styles from './header.module.css'
+import { useState, useEffect } from 'react';
+import { Dropdown } from '@/components/Dropdowns/menu'
+import { MobileDropdown } from '@/components/Dropdowns/mobileMenu'
  export const TransparentHeader = () => {
+    const [isScrolled, setIsScrolled] = useState(false);
 
-    const headerStyles = {
-        divContainer: {
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '1rem',
-            backgroundColor: 'rgb(51 51 51 / 20%)',
-            position:"relative",
-            color: '#fff',
-            width: '100%',
-            zIndex: '31',
-        },
-        navmenu: {
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            listStyle: 'none',
-            gap:'15px'
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 0) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
         }
-     }
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [])
+
+
     return (
-        <div style={headerStyles.divContainer}>
+        <div className={isScrolled ? styles.solidHeader: styles.transparentHeader}>
             <Link href="/"><h1>EWH Scholarships</h1></Link>
-            <ul style={headerStyles.navmenu}>
-                <li><Link href="/recipients">Recipients</Link></li>
-                <li><Link href="/apply">Apply</Link></li>
-                <li><Link href="/donate">Donate</Link></li>
+            <ul className={styles.navmenu}>
+                <li><Dropdown/></li>
+                {/* <li><Link href="/donate">Donate</Link></li> */}
                 <li><Link href="/login">Login</Link></li>    
-                <li><Link href="/admin">Admin</Link></li>    
-           
+                <li><Link href="/admin">Admin</Link></li> 
+                <li><MobileDropdown /></li>   
+   
             </ul>
         </div>
     )

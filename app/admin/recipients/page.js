@@ -4,8 +4,8 @@ import { getAllRecipients } from '@/lib/mongo/recipients'
 import adminStyles from '@/app/admin/admin.module.css'
 import {Search} from '@/components/Filters/search'
 export default async function Admin (){
-    const response = await getAllRecipients();
-    const allRecipients = JSON.parse(JSON.stringify(response));
+    const {recipients} = await getAllRecipients(0,0);
+    const allRecipients = JSON.parse(JSON.stringify(recipients));
     return (
             
             <div className={adminStyles.recipients}>

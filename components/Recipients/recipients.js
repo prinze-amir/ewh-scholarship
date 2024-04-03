@@ -21,8 +21,14 @@ const Recipients = ({allRecipients}) =>{
         };
         setRecipients(allRecipients.filter(recipient => {
             
-                return Object.values(recipient).some(value => { 
-                    return typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase());
+                return Object.values(recipient).some(value => {
+                    if ( typeof value  === 'string'){
+                        return value.toLowerCase().includes(searchTerm.toLowerCase());
+                    } else if (typeof value === 'object'){
+                        return Object.values(value).some(val => {
+                            return val.toLowerCase().includes(searchTerm.toLowerCase());
+                        })
+                    }
                 });
             }
         ));

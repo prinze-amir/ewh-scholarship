@@ -1,11 +1,13 @@
 'use client'
-import { Select, Stack, Input, Textarea, InputGroup, InputLeftAddon, InputRightAddon, IconButton, InputLeftElement, CircularProgress, Skeleton, Button } from '@chakra-ui/react'
+import { Select, Stack, Input, Textarea, InputGroup, FormLabel, InputLeftElement, CircularProgress, Skeleton, Button } from '@chakra-ui/react'
 import { states } from '@/utilities/states';
 import  {useRouter} from 'next/navigation';
 import  Image from 'next/image';
 import { formatPhone } from '@/utilities/forms';
 import { PhoneIcon, EmailIcon } from '@chakra-ui/icons';
-import { useState, useEffect } from 'react';
+import { BiDollar } from "react-icons/bi";
+import { useState } from 'react';
+import CustomSwitch from '@/components/Forms/switchButton';
 import style from '@/app/admin/admin.module.css';
 
 const EditForm = ({ recipient }) => {
@@ -23,31 +25,110 @@ const EditForm = ({ recipient }) => {
         graduationYear: recipient.graduationYear,
         major: recipient.major,
         college: recipient.college,
+        profileImage: recipient?.profileImage,
         bio: recipient.bio,
         isApproved: recipient.isApproved,
         amountReceived: recipient.amountReceived,
     });
     const [profile, setProfile] = useState(recipient);
+    const [imagePreviewUrl, setImagePreviewUrl] = useState(recipient.profileImage?.src);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-
-     recipient._id = recipient._id.toString();
+    const date = new Date();
+    const startYear = 1980;
+    const year = date.getFullYear();
+    
+    recipient._id = recipient._id.toString();
 
     const handleInput = (e) => {
         const { name, value } = e.target;
-        setFormData({ [name]: value });
+        
+        setFormData(pre=>{
+
+            if(name.startsWith('address.')) {
+                return {
+                    ...pre,
+                    address: {
+                        ...pre.address,
+                        [name.split('.')[1]]: value
+                    }
+                }
+            }
+
+            return {
+                ...pre,
+                [name]: value
+            }
+        });
     };
     const handlePhoneInput = (e) => {
         formatPhone(e);
         const { name, value } = e.target;
-        setFormData({ [name]: value });
+        setFormData(prev=>{ 
+            return {
+                ...prev,
+                [name]: value
+             }
+            }
+        );
     };
+    const handleImageChange = async (e) => {
+        const file = e.target.files[0];
+    
+        if (file.type === 'image/heic' || file.name.endsWith('.heic')) {
+    
+          try {
+            const convertedBlob = await heic2any({
+              blob: file,
+              toType: "image/jpeg",
+              quality: 0.8 // Adjust quality as needed
+            });
+    
+            // Generate a URL for the converted file
+            const reader = new FileReader();
+    
+            reader.onloadend = () => {
+              // Set the generated URL for preview
+              setImagePreviewUrl(reader.result);
+              //set image to form data
+
+              setFormData((prev)=>{ 
+                    return {
+                    ...prev, profileImage: reader.result 
+                    }
+                });
+            };
+      
+            reader.readAsDataURL(convertedBlob);        
+          } catch (error) {
+            console.error('Error converting HEIC to JPEG', error);
+            alert('Failed to convert image format. Please select a different file.');
+          }} else {
+          // Generate a URL for the file
+          const reader = new FileReader();
+    
+          reader.onloadend = () => {
+            // Set the generated URL for preview
+            setImagePreviewUrl(reader.result);
+            //set image to form data
+            setFormData((prev)=>{ 
+                return {
+                ...prev, profileImage: reader.result 
+                }
+            });
+          };
+    
+          reader.readAsDataURL(file);
+        }
+    };
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const response = await fetch('/api/recipients/' + recipient._id, {
+
+            const response = await fetch(`/api/recipients/${recipient._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -55,20 +136,20 @@ const EditForm = ({ recipient }) => {
                 body: JSON.stringify(formData),
             });
             const data = await response.json();
-            console.log(formData);
+            console.log(formData, 'form data');
             setProfile(prev=>({...prev, ...formData}));
             router.refresh();
         } catch (error) {
             console.log(error);
         }
         setIsLoading(false);
-        console.log(profile)
+        console.log(profile, 'profile')
 
     };
     const imageUrl = recipient.profileImage ? recipient.profileImage.src : "/images/nayla.jpeg";
 
     return (
-        <div className={style.adminContiainer}>
+        <div className={style.editContainer}>
              {!isLoading && <div className={style.recipientView}>
                     <div className={style.info}>
                     <p className="text-3xl">{recipient.name}</p>
@@ -82,7 +163,7 @@ const EditForm = ({ recipient }) => {
                     </> 
                 
                     }
-                    <p> {recipient.graduationYear}</p>
+                    <p> Graduated Highschool in {recipient.graduationYear}</p>
                     <p> Attending {recipient.college}</p>
                     <p> Studying {recipient.major}</p>
                     <p> Bio: {recipient.bio}</p>
@@ -102,25 +183,57 @@ const EditForm = ({ recipient }) => {
                 </div>
                }
 
-        <form className="text-white p-5 max-w-screen-sm rounded-lg " onSubmit={handleSubmit}>
+        <form className="text-white p-5 max-w-screen-sm w-[100%] rounded-lg border shadow-lg self-center" onSubmit={handleSubmit}>
             <Stack spacing={3}>
-            <InputGroup size='lg' spacing={2} gap='3'>
-                <Input
+            <label htmlFor="amountReceived" className="text-white font-medium">Amount Received</label>
+
+                <InputGroup spacing={3} gap='3'>
+                        <InputLeftElement>
+                            <BiDollar />
+                        </InputLeftElement>
+
+                        <Input  
+                        type="number"
+                        name="amountReceived"
+                        value={formData.amountReceived}
+                        onChange={handleInput}
+                        placeholder="Amount Received"
+                        />
+                <FormLabel htmlFor="isApproved" className="text-white font-medium">Approved</FormLabel>
+                <CustomSwitch
+                    name="isApproved"
+                    value={formData.isApproved}
+                    onChange={handleInput}
+                    defaultChecked={recipient.isApproved}
+                /> 
+                </InputGroup>
+               
+                <InputGroup size='lg' spacing={2} gap='3'>
+                <div className="w-[50%]">
+                    <FormLabel htmlFor="name" className="text-white font-medium">Name</FormLabel>
+                    <Input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleInput}
                     placeholder="Name"
                 />
-                <Input
+                </div>
+                <div className="w-[50%]">
+                    <FormLabel htmlFor="parents" className="text-white font-medium">Parents</FormLabel>
+                     <Input
                     type="text"
                     name="parents"
                     value={formData.parents}
                     onChange={handleInput}
                     placeholder="Parents"
                 />
+                </div>
+               
             </InputGroup>
+            <Stack spacing={3} direction={['column', 'row']}>
             <InputGroup>
+               
                 <InputLeftElement >
                     <EmailIcon />
                 </InputLeftElement>
@@ -133,6 +246,7 @@ const EditForm = ({ recipient }) => {
                 />
             </InputGroup>
             <InputGroup>
+
                 <InputLeftElement >
                 <PhoneIcon color='gray.300' />
                 </InputLeftElement>
@@ -146,8 +260,9 @@ const EditForm = ({ recipient }) => {
                     pattern="\(\d{3}\) \d{3}-\d{4}"
                 />
             </InputGroup>
+               </Stack>
+               <label className="font-medium">Address</label>
             <InputGroup gap='3'>
-               
                 <Input
                     type="text"
                     name='address.street'
@@ -155,16 +270,16 @@ const EditForm = ({ recipient }) => {
                     onChange={handleInput}
                     placeholder="Address"
                 />
-                <Input
+                
+            </InputGroup >
+            <InputGroup gap='3'>
+            <Input
                     type="text"
                     name='address.city'
                     value={formData.address?.city}
                     onChange={handleInput}
                     placeholder="City"
                 />
-            </InputGroup >
-            <InputGroup gap='3'>
-               
                 <Select
                     name="address.state"
                     value={formData.address?.state}
@@ -185,6 +300,59 @@ const EditForm = ({ recipient }) => {
                     placeholder="ZipCode"
                 />
             </InputGroup>
+            <InputGroup gap='4'>
+                <div className="w-[50%]">
+                    <FormLabel htmlFor="graduationYear" className="text-white">Graduation Year</FormLabel>
+                <Select
+                    name="graduationYear"
+                    value={formData.graduationYear}
+                    onChange={handleInput}
+                    placeholder={year}
+                >
+                   {
+                        Array.from(new Array(50), (val, index) => index + startYear).map((year) => {
+                            return (
+                            <option key={year} value={year}>{year}</option>
+                            )
+                        })
+                    }
+                </Select>
+                </div>
+
+                <div className="w-[50%]">
+                <FormLabel htmlFor="major" className="text-white">Major</FormLabel>
+
+                  <Input
+                    type="text"
+                    name="major"
+                    value={formData.major}
+                    onChange={handleInput}
+                    placeholder="Major"
+                />
+                </div>
+            </InputGroup>
+            <label htmlFor="college" className="text-white">College</label>
+            <Input
+                    type="text"
+                    name="college"
+                    value={formData.college}
+                    onChange={handleInput}
+                    placeholder="College"
+                />
+                {imagePreviewUrl && (
+                <div className="w-full px-3 mb-6">
+                 
+                  <Image id="image-preview" alt="Profile-Image-Preview"  width={250} height={250} src={imagePreviewUrl} />
+                </div>
+                )}
+                <label htmlFor="profileImage" className="text-white">Profile Image</label>
+            <Input
+                    type="file"
+                    name="profileImage"
+                    onChange={handleImageChange}
+                    placeholder="Upload Image"
+                />
+                <label htmlFor="bio" className="text-white">Bio</label>
             <InputGroup>
                 <Textarea
                     type="text"

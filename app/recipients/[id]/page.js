@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { getRecipient } from "@/lib/mongo/recipients";
 import style from './single.module.css'
+import { Header } from "@/components/Headers/header";
 export default async function RecipientSinglePage({params}){
     const recipientId = params;
     
@@ -12,14 +13,17 @@ export default async function RecipientSinglePage({params}){
     const profileImage = recipient.profileImage ? recipient.profileImage.src : defaultProfile;
 
     return (
-        <div className={style.profileContainer}>
-            <Image src={profileImage} alt={recipient.name} width={300} height={300} className={style.profileImage} />
-            
-        <h1>{recipient.name}</h1>
-        <h2>My parents are {recipient.parents}</h2>
-        <p>I graduated in {recipient.graduateYear}</p>
-        <p>{recipient.bio}</p>
-
-        </div>
+        <>
+            <Header />
+            <div className={style.profileContainer}>
+                <Image src={profileImage} alt={recipient.name} width={300} height={300} className={style.profileImage} />
+                
+                <h1>{recipient.name}</h1>
+                <h2>My parents are {recipient.parents}</h2>
+                <p>I graduated in {recipient.graduateYear}</p>
+                <p>{recipient.bio}</p>
+            </div>
+        </>
+        
     );
 }

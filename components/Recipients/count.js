@@ -1,17 +1,18 @@
 import { getAllRecipients } from "@/lib/mongo/recipients";
 import { revalidatePath } from "next/cache";
- const Count = async () => {
+import { ButtonFilters } from "../Filters/status";
 
-    const data = await getAllRecipients();
+const Count = async () => {
+    const {recipients} = await getAllRecipients(0,0);
 
-    if (!data) {    
+    if (!recipients) {    
         return (
             <h1>No recipients to display</h1>
         )
     }
 
-   const approved = data.filter(recipient => recipient.isApproved === true);
-   const pending = data.filter(recipient => recipient.isApproved === false);
+   const approved = recipients.filter(recipient => recipient.isApproved === true);
+   const pending = recipients.filter(recipient => recipient.isApproved === false);
 
    revalidatePath('/admin');
 
@@ -19,6 +20,7 @@ import { revalidatePath } from "next/cache";
         <div>
             <h1>{approved.length} Recipients</h1>
             <h1>{pending.length} New Applicants</h1>
+            <ButtonFilters />
         </div>
     )
 }

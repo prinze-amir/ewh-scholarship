@@ -10,8 +10,6 @@ export default async function EditRecipient({params}) {
 
 
   return (
-    <div className={style.adminContiainer}>
             <EditForm recipient={recipient} />
-    </div>
   );
 }

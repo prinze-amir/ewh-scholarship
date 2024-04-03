@@ -41,12 +41,14 @@
     align-self: center;
     align-items: center;
     max-width:900px;
+    width:100%;
     gap: 30px;
     color: #fff;
     background-color: rgb(38, 38, 38);
     padding: 40px 30px;
     border-radius: 15px;
     box-shadow: 0 0 10px 0 #070707;
+    margin-bottom:30px;
 }
 .recipientView img {
     width: 250px;
@@ -96,7 +98,7 @@
 
 }
 
-.adminContiainer {
+.adminContainer {
     display: flex;
     align-self: center;
     align-items: center;
@@ -107,4 +109,14 @@
     margin:30px;
     padding: 20px;
     min-height:95vh;
+}
+.editContainer {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #333;
+    border-radius: 15px;
+    color: #fff;
 }

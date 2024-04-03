@@ -33,7 +33,3 @@ input::placeHolder{
   text-transform: capitalize;
 }
 
-.recipients {
-  height:1060px;
-  overflow: scroll;
-}

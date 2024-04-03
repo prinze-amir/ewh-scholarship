@@ -5,13 +5,16 @@ export async function POST (request){
 
     try {
       const applicant = await request.json();
+
       if (applicant.profileImage ) {
-        console.log(applicant.profileImage, 'the image')
+
+        
         const uploadedImage  = await uploadGoogleDrive(applicant.profileImage, applicant.name);
 
         // Replace the base64 image data with the URL from Google Drive
         applicant.profileImage = uploadedImage;
       }
+
       console.log(applicant, 'the applicant')
 
         // Insert the new recipient into the database

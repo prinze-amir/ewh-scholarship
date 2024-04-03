@@ -5,8 +5,9 @@ import { AdminRecipients } from '@/components/Recipients/adminRecipients'
 import adminStyles from '@/app/admin/admin.module.css'
 import {Search} from '@/components/Filters/search'
 export default async function Admin (){
-    const response = await getAllRecipients();
-    const allRecipients = JSON.parse(JSON.stringify(response));
+    const limit = 3;
+    const {recipients, pages} = await getAllRecipients(0,limit);
+    const allRecipients = JSON.parse(JSON.stringify(recipients));
 
     return (
         <div className={adminStyles.dashboardGrid}>
@@ -17,7 +18,7 @@ export default async function Admin (){
             <div className={adminStyles.recipients}>
                 <Search theme={'white'}/>
 
-                <AdminRecipients allRecipients={allRecipients} />
+                <AdminRecipients limit={limit} pages={pages} allRecipients={allRecipients} />
 
             </div>
             

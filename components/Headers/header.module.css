@@ -1,4 +1,4 @@
-.divContainer {
+.solidHeader {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -11,6 +11,19 @@
     top:0;
     z-index: 31;
 
+}
+
+.transparentHeader {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: rgb(51 51 51 / 20%);
+    color: #fff;
+    position: relative;
+    width:100%;
+    z-index: 31;
 }
 
 .navmenu {

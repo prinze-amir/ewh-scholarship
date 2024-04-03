@@ -12,4 +12,6 @@ export const formatPhone = (e) => {
     e.target.value = formattedNumber;
   }
 
-
+export const isEmpty = (obj) => {
+  return Object.keys(obj).length === 0;
+}

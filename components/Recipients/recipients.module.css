@@ -19,13 +19,7 @@
     height:40vh;
     font-size: 20px;
 }
-.recipients {
-    transition: opacity 0.5s ease-in-out;
-  }
-  
-  .recipients.filtered {
-    opacity: 0;
-  }
+
 .recipientListItem{
     display: flex;
     flex-direction: row;
@@ -39,9 +33,9 @@
 .adminRecipientsContainer {
     display:flex;
     flex-flow: column;
-justify-content: center;
-max-width:700px;
-align-self: center;;
+    justify-content: center;
+    max-width:700px;
+    align-self: center;
 }
 .adminProifileImage {
     border-radius: 50%;
@@ -66,8 +60,7 @@ align-self: center;;
     gap:10px;
     padding: 20px;
     overflow-y: hidden;
-    transition: opacity 0.5s ease-in-out;
-
+    
 }
 .recipientCard:hover {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
@@ -108,8 +101,8 @@ align-self: center;;
     border: none;
     color: white;
     padding: 5px;
-height: fit-content;    
-margin: 4px 2px;
+    height: fit-content;    
+    margin: 4px 2px;
     cursor: pointer;
     border-radius: 5px;
 }
