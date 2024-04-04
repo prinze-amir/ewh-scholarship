@@ -1,10 +1,14 @@
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import ColorPicker from "@/components/Forms/colorPicker"
 
-export default function Settings() {
-    return (
-        <div>
-            <h1>Settings</h1>
-            <Button colorScheme='blue'>Button</Button>        
-            </div>
-    )
+export default async function Settings() {
+
+ return (
+    <>
+        <ColorPicker />
+    </>
+    
+  )
 }
+
+
+

@@ -1,6 +1,5 @@
 import adminStyles from './admin.module.css'
 import Link from 'next/link'
-import { ChakraProvider } from '@chakra-ui/react'
 
 export default function AdminLayout({ children }) {
 
