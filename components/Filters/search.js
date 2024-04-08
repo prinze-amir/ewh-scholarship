@@ -19,13 +19,18 @@ const Search = ({theme}) => {
 
     };
     const handleChange = (e) => {
-        setSearch(e.target.value);
-       
+        if (e.target.value){
+            setSearch(e.target.value);
         router.push(`${pathname}?search=${e.target.value}`, {shalllow: true});
+        } else {
+            setSearch('');
+            router.push(pathname, {shalllow: true});
+        }
+        
 
     }
     return (
-        <form className="flex mt-5 justify-center" onSubmit={handleSearch}>
+        <form className="flex mt-5 justify-center z-10" onSubmit={handleSearch}>
             <Stack spacing={2} direction="row" mb="20px">
                 <Input
                     type="text"

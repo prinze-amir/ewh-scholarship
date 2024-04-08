@@ -33,3 +33,6 @@ input::placeHolder{
   text-transform: capitalize;
 }
 
+html {
+  scroll-behavior: smooth;
+}

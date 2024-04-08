@@ -1,7 +1,6 @@
 import { getAllRecipients } from "@/lib/mongo/recipients";
 import { revalidatePath } from "next/cache";
-import { ButtonFilters } from "../Filters/status";
-
+import { StatusFilters } from "../Filters/status";
 const Count = async () => {
     const {recipients} = await getAllRecipients(0,0);
 
@@ -18,9 +17,9 @@ const Count = async () => {
 
     return (
         <div>
-            <h1>{approved.length} Recipients</h1>
-            <h1>{pending.length} New Applicants</h1>
-            <ButtonFilters />
+            <h1 className="text-3xl my-2">{approved.length} Recipients</h1>
+            <h1 className="text-3xl my-2">{pending.length} New Applicants</h1>
+            <StatusFilters />
         </div>
     )
 }

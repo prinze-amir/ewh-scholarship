@@ -1,9 +1,9 @@
 //import Image from 'next/image'
-import {Hero} from '@/components/Heros/hero'
-import {Schools} from '@/components/schools'
-import {Footer} from '@/components/Footers/footer'
-import { Latest } from '@/components/Latest/latest'
-import {TransparentHeader} from '@/components/Headers/transparentHeader'
+import {Hero} from '@/Components/Heros/hero'
+import {Schools} from '@/Components/schools'
+import {Footer} from '@/Components/Footers/footer'
+import { Latest } from '@/Components/Latest/latest'
+import {TransparentHeader} from '@/Components/Headers/transparentHeader'
 
 export default function Home() {
   return (
@@ -17,16 +17,7 @@ export default function Home() {
       height={'70vh'}
       top={true}
     />
-     {/* <div className="flex items-center justify-center gap-x-20 bg-transparent py-8 px-20 w-fit	mx-auto rounded-lg flex-wrap  z-10 relative shadow-md">
-      <div>
-        <Image src="/images/earline.jpg" alt="earline" width={250} height={250} />
-        <h2 style={{color:'#333', textAlign:'center', fontSize:'1.5em', marginTop:'15px'}}>Earline Hall</h2>
-      </div>
-      <div>
-        <Image src="/images/william.jpg" alt="earline" width={250} height={250} />
-        <h2 style={{color:'#333', textAlign:'center', fontSize:'1.5em', marginTop:'15px'}}>William Hall</h2>
-      </div>
-    </div> */}
+     
     <Latest/>
 
    <Hero image={'/images/tsu-campus.jpg'}

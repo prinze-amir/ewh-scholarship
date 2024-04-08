@@ -4,7 +4,7 @@ import Image from 'next/image';
 import {useState, useEffect, useRef} from 'react';
 import { Button, ButtonGroup, Spinner } from '@chakra-ui/react'
 import {useRouter, useSearchParams} from 'next/navigation';
-import CustomSwitch from '@/components/Forms/switchButton';
+import CustomSwitch from '@/Components/Forms/switchButton';
 import { fetchNextPage } from '@/app/actions';
 
 const AdminRecipients = ({allRecipients, limit, pages}) => {
@@ -13,17 +13,26 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
     const [updating, setUpdating] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
-    let searchTerm = searchParams.get('search');
-    let filter = searchParams.get('filter');
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState(pages-1);
 
+    let searchTerm = searchParams.get('search');
+    let filter = searchParams.get('filter');
+    
     useEffect(() => {
         if(!searchTerm || searchTerm === '' || searchTerm === 'undefined' || searchTerm === 'null' || searchTerm === 'false' || searchTerm === 'true'){
           return  setRecipients(allRecipients);
         };
-        setRecipients(allRecipients.filter(recipient =>{
+        searchRecipients();
+    }, [searchTerm])
 
+    useEffect(() => {
+       filterStatus();
+    }, [filter])
+
+    const searchRecipients = async () => {
+        const loadAll = await fetchNextPage(0, 0);
+        setRecipients(prev=>loadAll.filter(recipient =>{
                 return Object.values(recipient).some(value => {
                     if ( typeof value  === 'string'){
                         return value.toLowerCase().includes(searchTerm.toLowerCase());
@@ -36,17 +45,16 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
             
             )
         }));
-    }, [searchTerm])
+    }
 
-    useEffect(() => {
+    const filterStatus = async () =>{
+        const loadAll = await fetchNextPage(0, 0);
         if (filter === 'pending') {
-            setRecipients(allRecipients.filter(recipient => !recipient.isApproved));
+            setRecipients(prev=>loadAll.filter(recipient => !recipient.isApproved));
         } else if (filter === 'approved') {
-            setRecipients(allRecipients.filter(recipient => recipient.isApproved));
+            setRecipients(loadAll.filter(recipient => recipient.isApproved));
         }
-    }, [filter])
-
-
+    }
 
     if (recipients.length === 0) {    
         return (
@@ -150,7 +158,7 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
                 
                 return (
                     <div key={recipient._id} className={styles.recipientListItem}>
-                            <Image alt={recipient.name+recipient._id} src={recipient.profileImage ? recipient.profileImage.src : defaultProfile} width={75} height={75} className={styles.adminProifileImage} />
+                            <Image alt={recipient.name+recipient._id} src={recipient.profileImage ? recipient.profileImage.src : defaultProfile} width={250} height={250} className={styles.adminProifileImage} />
                         <div className={styles.adminContent}>
                             <h2 className="text-xl ">{recipient.name}</h2>
                             <p>Graduated in {recipient.graduateYear}</p>
@@ -182,7 +190,6 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
                 </ButtonGroup>
             </div>
 
-            
         </div>
 
     )

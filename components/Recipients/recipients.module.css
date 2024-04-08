@@ -3,9 +3,14 @@
     flex-wrap: wrap;
     gap:20px;
     justify-content: center;
-    margin: auto;
-    margin-bottom:20px;
     padding:20px;
+    max-width: 1200px;
+}
+.recipientsWrapper{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
 
 }
 .empty {
@@ -40,7 +45,7 @@
 .adminProifileImage {
     border-radius: 50%;
     height:fit-content;
-    width:auto;
+    width:100px;
 }
 
 .profileImage {
@@ -105,5 +110,22 @@
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 5px;
+}
+@media (max-width: 768px) {
+    .recipientsContainer {
+        padding: 10px;
+    }
+    .recipientCard {
+        width: 100%;
+    }
+    .adminContent{
+        width:100%;
+    }
+    .recipientListItem{
+        flex-flow:column
+    }
+    .adminProifileImage {
+        width:100%;
+    }
 }
 

@@ -7,9 +7,9 @@ import { formatPhone } from '@/utilities/forms';
 import { PhoneIcon, EmailIcon } from '@chakra-ui/icons';
 import { BiDollar } from "react-icons/bi";
 import { useState } from 'react';
-import CustomSwitch from '@/components/Forms/switchButton';
+import CustomSwitch from '@/Components/Forms/switchButton';
 import style from '@/app/admin/admin.module.css';
-
+import RecipientCard from '../Cards/recipientCard';
 const EditForm = ({ recipient }) => {
     const [formData, setFormData] = useState({
         name: recipient.name,
@@ -150,27 +150,8 @@ const EditForm = ({ recipient }) => {
 
     return (
         <div className={style.editContainer}>
-             {!isLoading && <div className={style.recipientView}>
-                    <div className={style.info}>
-                    <p className="text-3xl">{recipient.name}</p>
-                    <p> Parents:  {recipient.parents}</p>
-                    <p> {recipient.email}</p>
-                    <p> {recipient.phone}</p>
-                    {recipient.address && 
-                    <>
-                    <p> {recipient.address?.street}</p>
-                    <p> {recipient.address?.city} {recipient.address?.state} {recipient.address?.zip}</p>
-                    </> 
-                
-                    }
-                    <p> Graduated Highschool in {recipient.graduationYear}</p>
-                    <p> Attending {recipient.college}</p>
-                    <p> Studying {recipient.major}</p>
-                    <p> Bio: {recipient.bio}</p>
-                    <p>Amount Received: {recipient?.amountReceived}</p>
-                    </div>
-                    <Image src={imageUrl} height={250} width={250} alt={recipient.name} />
-                </div>  }
+             {!isLoading && <RecipientCard recipient={recipient} style={style} icons={{email:EmailIcon,phone:PhoneIcon}} />}
+
 
                 {isLoading && 
                 <div className="relative">
@@ -204,10 +185,9 @@ const EditForm = ({ recipient }) => {
                     name="isApproved"
                     value={formData.isApproved}
                     onChange={handleInput}
-                    defaultChecked={recipient.isApproved}
+                    isChecked={recipient.isApproved}
                 /> 
                 </InputGroup>
-               
                 <InputGroup size='lg' spacing={2} gap='3'>
                 <div className="w-[50%]">
                     <FormLabel htmlFor="name" className="text-white font-medium">Name</FormLabel>
@@ -230,7 +210,7 @@ const EditForm = ({ recipient }) => {
                 />
                 </div>
                
-            </InputGroup>
+                </InputGroup>
             <Stack spacing={3} direction={['column', 'row']}>
             <InputGroup>
                
@@ -261,7 +241,9 @@ const EditForm = ({ recipient }) => {
                 />
             </InputGroup>
                </Stack>
-               <label className="font-medium">Address</label>
+               
+
+            <label className="font-medium">Address</label>
             <InputGroup gap='3'>
                 <Input
                     type="text"
@@ -300,6 +282,10 @@ const EditForm = ({ recipient }) => {
                     placeholder="ZipCode"
                 />
             </InputGroup>
+               
+             
+               
+               
             <InputGroup gap='4'>
                 <div className="w-[50%]">
                     <FormLabel htmlFor="graduationYear" className="text-white">Graduation Year</FormLabel>

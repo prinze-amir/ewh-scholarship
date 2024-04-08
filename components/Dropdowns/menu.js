@@ -1,10 +1,16 @@
 import { Menu, MenuButton, MenuList, MenuItem, Button} from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
+import { accentColor as themeAccentColor } from '@/utilities/theme';
+import {useState, useEffect} from 'react';
 
 export const Dropdown = () => {
+    const [accentColor, setAccentColor] = useState('');
+    useEffect(() => {
+        setAccentColor(themeAccentColor)
+        }, []);
     return (
         <Menu>
-            <MenuButton as={Button} bgColor="#2fd6b9" color="white" rightIcon={<ChevronDownIcon />}
+            <MenuButton as={Button} bgColor={accentColor} color="white" rightIcon={<ChevronDownIcon />}
             _hover={{color:'#333', backgroundColor:'white'}} 
             _active={{color:'#333', backgroundColor:'white'}} 
             >

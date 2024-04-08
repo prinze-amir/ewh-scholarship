@@ -7,7 +7,7 @@ export default function ColorPicker(props) {
     let  {theme} = props;
     useEffect(()=>{
 
-         theme = localStorage.getItem('theme-color');
+         theme = localStorage.getItem('theme-accent-color');
 
         if(theme){
             setColor(theme);
@@ -20,8 +20,8 @@ export default function ColorPicker(props) {
         const newColor = e.target.color.value;
         setColor(prev=>newColor);
 
-        localStorage.setItem('theme-color', newColor);
-        theme = localStorage.getItem('theme-color');
+        localStorage.setItem('theme-accent-color', newColor);
+        theme = localStorage.getItem('theme-accent-color');
 
     }
 

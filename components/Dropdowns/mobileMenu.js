@@ -1,14 +1,23 @@
+
 import { Menu, MenuButton, MenuList, MenuItem, Button, IconButton} from '@chakra-ui/react';
+import {useState, useEffect} from 'react';
 import { ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { accentColor as themeAccentColor } from '@/utilities/theme';
 
 export const MobileDropdown = () => {
+    const [accentColor, setAccentColor] = useState('');
+    useEffect(() => {
+        setAccentColor(themeAccentColor)
+        }, []);
+    
+
     return (
         <Menu>
             <MenuButton
             as={IconButton}
             aria-label='Options'
             icon={<HamburgerIcon />}
-            bgColor='#2fd6b9'
+            bgColor={accentColor}
             variant='outline'
             _hover={{color:'#333', backgroundColor:'white'}} 
             _active={{color:'#333', backgroundColor:'white'}} 

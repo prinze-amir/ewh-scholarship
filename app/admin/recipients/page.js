@@ -1,8 +1,8 @@
-import LoginForm from '@/components/Forms/loginForm'
-import { AdminRecipients } from '@/components/Recipients/adminRecipients'
+import LoginForm from '@/Components/Forms/loginForm'
+import { AdminRecipients } from '@/Components/Recipients/adminRecipients'
 import { getAllRecipients } from '@/lib/mongo/recipients'
 import adminStyles from '@/app/admin/admin.module.css'
-import {Search} from '@/components/Filters/search'
+import {Search} from '@/Components/Filters/search'
 export default async function Admin (){
     const limit = 4
     const {recipients, pages} = await getAllRecipients(0,limit);

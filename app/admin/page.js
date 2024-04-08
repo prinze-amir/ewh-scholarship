@@ -1,9 +1,9 @@
-import LoginForm from '@/components/Forms/loginForm'
-import { Count } from '@/components/Recipients/count'
+import LoginForm from '@/Components/Forms/loginForm'
+import { Count } from '@/Components/Recipients/count'
 import { getAllRecipients } from '@/lib/mongo/recipients'
-import { AdminRecipients } from '@/components/Recipients/adminRecipients'
+import { AdminRecipients } from '@/Components/Recipients/adminRecipients'
 import adminStyles from '@/app/admin/admin.module.css'
-import {Search} from '@/components/Filters/search'
+import {Search} from '@/Components/Filters/search'
 import { accentColor } from '@/utilities/theme'
 
 export default async function Admin (){

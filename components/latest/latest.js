@@ -14,9 +14,11 @@ export const Latest = async () => {
     const profileImage = latest[0].profileImage ? latest[0].profileImage.src : "/images/nayla.jpeg";
 
     return (
-        <div className="flex items-center justify-center gap-x-4 flex-wrap relative bg-slate-100 py-20">
+        <div className="flex items-center justify-center gap-4 flex-wrap relative bg-slate-100 py-20">
             <div className={styles.latestThumbnail}>
+                
                 <Image src={profileImage} alt={latest[0].name} width={400} height={400} />
+               
                <Link href={`/recipients/${latest[0]._id}`}><button className={styles.latestButton}>Latest Recipient {latest[0].name}</button></Link> 
             </div>
 

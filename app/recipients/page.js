@@ -1,30 +1,38 @@
-import { Recipients } from '@/components/Recipients/recipients';
-import { Hero } from '@/components/Heros/hero';
-import { Footer } from '@/components/Footers/footer';
+import { Recipients } from '@/Components/Recipients/recipients';
+import { Hero } from '@/Components/Heros/hero';
+import { Footer } from '@/Components/Footers/footer';
 import { getAllRecipients } from '@/lib/mongo/recipients';
-import { Search } from '@/components/Filters/search';
-import {TransparentHeader} from '@/components/Headers/transparentHeader'
+import {TransparentHeader} from '@/Components/Headers/transparentHeader'
+import { getRecipients } from '../actions';
 
 export default async function RecipientsPage({}){
-    
-    const {recipients, total, limit, pages, page} = await getAllRecipients(0,0);
+
+    const limit = 6
+    //this is using Mongoose Model
+   // const {recipients, pages } = await getRecipients(0,limit);
+
+    const {recipients, pages} = await getAllRecipients(0,limit);
     //this is to serialize the data so that it can be passed as props
     const allRecipients = JSON.parse(JSON.stringify(recipients)).reverse();
 
     return (
         <div>
             <TransparentHeader/>
-        <Hero 
-            title={'Our Recipients'}
-            subtitle={'We are the future'}
-            image={'/images/graduates.jpg'}
-            height={'50vh'}
-            top={true}
-        />
-        <Search />
-        <div className="recipients">
-             <Recipients allRecipients={allRecipients} />
-        </div>
+            <Hero 
+                title={'Our Recipients'}
+                subtitle={'We are the future'}
+                image={'/images/graduates.jpg'}
+                height={'50vh'}
+                top={true}
+                search={true}
+            />
+       
+             <Recipients 
+             pages={pages}
+             limit={limit}
+             allRecipients={allRecipients} 
+             />
+      
         <Footer />            
         </div>
     );

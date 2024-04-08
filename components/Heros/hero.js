@@ -1,9 +1,12 @@
-'use client'
-import { useRouter } from "next/navigation"
-import { Button } from "@chakra-ui/react"
-export const Hero = (props) => {
-    const {title, subtitle, image, buttonText, height, top} = props
-    const router = useRouter()
+import { Button, background } from "@chakra-ui/react"
+import { Search } from '@/Components/Filters/search';
+import Link from 'next/link'
+export const Hero = async (props) => {
+    const {title, subtitle, image, buttonText, height, top, search, noOverlay} = props
+    let imageUrl = image
+    if (image.includes('google')) {
+         imageUrl = 'http://localhost:1105/api/proxy?' + image
+    }
 
     let heroHeight = height ? height : '50vh'
     let adjustMargin = top ? '-74px' : '0px'
@@ -15,13 +18,13 @@ export const Hero = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
             minHeight: heroHeight,
-            backgroundImage: `url(${image})`,
+            backgroundImage: `url(${imageUrl})`,
             backgroundAttachment: 'fixed',
             color: '#fff',
             width: '100%',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
-            backgroundPosition: 'bottom center',
+            backgroundPosition: 'center center',
             zIndex: '0',
             position: 'absolute',
             
@@ -63,16 +66,18 @@ export const Hero = (props) => {
 
            {title && <h1 style={heroStyles.title}>{title}</h1>
             }
-            {subtitle && <h2 style={heroStyles.subtitle}>{subtitle}</h2>}            
-            {buttonText && <Button 
+            {subtitle && <h2 style={heroStyles.subtitle}>{subtitle}</h2>}
+            {search && <Search/>}           
+            {buttonText && <Link href="/apply"><Button 
                 size='lg'
                 bgColor="#2fd6b9" 
                 color="white"
                 zIndex={'2'} 
                  style={{marginTop:'20px'}}
-                _hover={{color:'#333', backgroundColor:'white'}}  
-                onClick={()=>router.push('/apply')}>{buttonText}</Button>}
-            <div style={heroStyles.overlay}></div>
+                _hover={{color:'#333', backgroundColor:'white'}} 
+
+                >{buttonText}</Button></Link>}
+            {!noOverlay && <div style={heroStyles.overlay}></div>}
         </div>
         <div style={heroStyles.height}></div>
     </div>

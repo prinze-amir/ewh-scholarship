@@ -19,7 +19,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background-color: rgb(51 51 51 / 20%);
+    background-color: rgb(51 51 51 / 0%);
     color: #fff;
     position: relative;
     width:100%;
@@ -32,4 +32,15 @@
     align-items: center;
     list-style: none;
     gap:15px;
+}
+.mobileMenu {
+    display: none;
+}
+@media (max-width: 768px) {
+    .navmenu {
+        display: none;
+    }
+    .mobileMenu {
+        display: block;
+    }
 }

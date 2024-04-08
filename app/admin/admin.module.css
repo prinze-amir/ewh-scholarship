@@ -35,60 +35,24 @@
     align-self: center;
     color:#fff
 }
-.recipientView {
-    display: flex;
-    justify-content: center;
-    align-self: center;
-    align-items: center;
-    max-width:900px;
-    width:100%;
-    gap: 30px;
-    color: #fff;
-    background-color: rgb(38, 38, 38);
-    padding: 40px 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px 0 #070707;
-    margin-bottom:30px;
-}
-.recipientView img {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    object-fit: cover;
-}
+
 .spinner {
     display: flex;
     justify-content: center;
 
 }
 
-@media screen and (max-width: 768px) {
-    .recipientView {
-        flex-flow: column-reverse;
-        gap: 20px;
-        padding: 20px 10px;
-        justify-content: center;
-    }
-    .recipientView img {
-        width: 200px;
-        height: 200px;
-    }
-    .info {
-        text-align: center;
-    }
-}
+
 .count {
     border: solid 1px #ddd;
     padding:25px;
     border-radius: 10px;
     height:fit-content;
     width: fit-content;
+    max-width:100%;
 }
 
-.count h1 {
-    font-size: 2rem;
-    margin: 0;
-}
+
 .dashboardGrid {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -96,7 +60,6 @@
     margin: 30px;
 
 }
-
 .adminContainer {
     display: flex;
     align-self: center;
@@ -118,4 +81,25 @@
     background-color: #333;
     border-radius: 15px;
     color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+    .dashboardGrid {
+        display: flex;
+        flex-flow: column;
+        max-width: 100%;
+        margin:auto;
+    }
+    .adminContainer {
+        margin: 0;
+    }
+    .editContainer {
+        margin: 0;
+    }
+    .count {
+        text-align: center;
+    }
+    .nav ul {
+        gap: 8px;
+    }
 }

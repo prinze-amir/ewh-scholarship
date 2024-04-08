@@ -1,5 +1,14 @@
 'use client'
+if (typeof localStorage === 'undefined') {
+  global.localStorage = {
+    getItem: () => null,
+    setItem: () => null
+  }
+}
 
-const accentColor = localStorage.getItem('theme-color') || aquamarine;
+// Set the accent color to the value stored in localStorage, or 'aquamarine' if it's not set
+
+
+const accentColor = localStorage.getItem('theme-accent-color') || '#2fd6b9';
   
 export { accentColor }
