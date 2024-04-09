@@ -26,7 +26,7 @@ export default function ColorPicker(props) {
     }
 
   return (
-    <Card>
+    <Card className="h-fit">
       <CardHeader>
         <Heading>Theme Colors</Heading>
         <p>Select theme accent color.</p>

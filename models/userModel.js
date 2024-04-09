@@ -14,16 +14,18 @@ const userSchema = new Schema({
         type: String,
         required: [true, 'Password is required'],
     },
-    isAdmin: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
-    isSuperAdmin: {
-        type: Boolean,
-        required: true,
-        default: false
-    }
+    role: new Schema({
+        isAdmin: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+        isSuperAdmin: {
+            type: Boolean,
+            required: true,
+            default: false
+        }
+    }),
 
 }, {timestamps: true});
 

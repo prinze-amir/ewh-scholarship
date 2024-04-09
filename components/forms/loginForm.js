@@ -1,9 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { accentColor } from "@/utilities/theme";
+
 const LoginForm = () => {
+
   const [error, setError] = useState(null);
   const [form, setForm] = useState({
     email: "",
@@ -21,22 +23,25 @@ const LoginForm = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     console.log(form)
+
     try{
       const resp = await signIn("credentials", {
         email: form.email,
         password: form.password,
-       // redirect: false,
+        redirect: false,
       });
       if (resp.error) {
         setError(resp.error);
         return;
       }
-      console.log(resp, 'this is the response')
     } catch(e){
-      //console.error(e)
-      console.log('this is the error', e.message)
+      console.error(e)
+      setError(resp.error);
+
     }
+
   }
   // const handleLogin = async (e) => {
   //   e.preventDefault();
@@ -63,7 +68,7 @@ const LoginForm = () => {
 
   return (
     <div className="w-full max-w-xs">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleLogin}>
+      <form className="bg-slate-100 shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4" onSubmit={handleLogin}>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -102,8 +107,8 @@ const LoginForm = () => {
           </p>
         </div>
         <div className="flex items-center justify-between">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          <button style={{backgroundColor:accentColor, _hover:{backgroundColor:'red'}}}
+            className="text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
             type="submit"
           >
             Sign In

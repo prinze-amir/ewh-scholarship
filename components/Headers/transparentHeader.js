@@ -7,9 +7,10 @@ import { MobileDropdown } from '@/Components/Dropdowns/mobileMenu'
 import {Button } from '@chakra-ui/react'
 import { useSession, signOut } from 'next-auth/react';
 
- export const TransparentHeader = () => {
+ export const TransparentHeader = ({color='text-white', bgColor='bg-transparent'}) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const {data: session} = useSession();
+    
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 0) {
@@ -24,7 +25,7 @@ import { useSession, signOut } from 'next-auth/react';
 
 
     return (
-        <div className={isScrolled ? styles.solidHeader: styles.transparentHeader}>
+        <div className={isScrolled ? styles.solidHeader: `${bgColor} ` + styles.transparentHeader}>
             <Link href="/"><h1 className='text-lg uppercase'>EWH Scholarships</h1></Link>
             <ul className={styles.navmenu}>
                 <li><Dropdown/></li>

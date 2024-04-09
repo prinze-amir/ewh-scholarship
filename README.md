@@ -8,8 +8,8 @@ You need to add the following to your env variables
 
 MONGO_URI=
 baseURI=http://localhost:3000
-GOOGLE_CLIENT=
-GOOGLE_SECRET=
+AUTH_GOOGLE_CLIENT=
+AUTH_GOOGLE_SECRET=
 GOOGLE_DRIVE_FOLDER_ID=
 
 you also need to download a google keyfile with google drive permissions and save inside /lib/google
