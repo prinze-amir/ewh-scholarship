@@ -5,10 +5,6 @@ import connectMongoDB from "@/lib/mongo/mongoosedb";
 import User from "@/models/userModel";
 import bcrypt from "bcrypt";
 
-const simpleLogin = async (credentials) => {
-  const user = { id: 1, name: "J Smith", email: "" };
-  return user;
-};
 
 const login = async (credentials) => {
   const { email, password } = credentials;

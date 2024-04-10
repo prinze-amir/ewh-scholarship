@@ -3,6 +3,7 @@ import connectMongoDB from "@/lib/mongo/mongoosedb";
 import Recipient from "@/models/recipientModel";
 
 const handler = async (request) => {
+
   //using mongoose and recipient model
   await connectMongoDB()
   const recipients = await Recipient.find({})

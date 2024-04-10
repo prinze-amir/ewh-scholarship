@@ -5,10 +5,12 @@ import { useState, useEffect } from 'react';
 import { Dropdown } from '@/Components/Dropdowns/menu'
 import { MobileDropdown } from '@/Components/Dropdowns/mobileMenu'
 import {Button } from '@chakra-ui/react'
-import { useSession, signOut } from 'next-auth/react';
+import { useSession, signOut, signIn } from 'next-auth/react';
 
  export const TransparentHeader = ({color='text-white', bgColor='bg-transparent'}) => {
     const [isScrolled, setIsScrolled] = useState(false);
+    const data = useSession();
+    console.log(data, 'data')
     const {data: session} = useSession();
     
     useEffect(() => {
@@ -30,7 +32,7 @@ import { useSession, signOut } from 'next-auth/react';
             <ul className={styles.navmenu}>
                 <li><Dropdown/></li>
                 {/* <li><Link href="/donate">Donate</Link></li> */}
-                {!session && <li><Link href="/login">Login</Link></li>}    
+                {!session && <li><Button onClick={signIn}>Login</Button></li>}    
                 <li><Link href="/admin">Admin</Link></li> 
                 {session && <li><h1>{session.user.name}</h1></li>}
                 {session && <li><Button onClick={signOut}>Sign Out</Button></li>}
