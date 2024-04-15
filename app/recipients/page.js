@@ -8,10 +8,8 @@ import { getRecipients } from '../actions';
 export default async function RecipientsPage({}){
 
     const limit = 6
-    //this is using Mongoose Model
-   // const {recipients, pages } = await getRecipients(0,limit);
 
-    const {recipients, pages} = await getAllRecipients(0,limit);
+    const {recipients, pages} = await getRecipients(0,limit);
     //this is to serialize the data so that it can be passed as props
     const allRecipients = JSON.parse(JSON.stringify(recipients)).reverse();
 

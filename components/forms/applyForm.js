@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Skeleton, Button, CircularProgress } from '@chakra-ui/react'
 import { formatPhone } from '@/utilities/forms';
 import { accentColor as themeAccentColor } from '@/utilities/theme';
+import heic2any from '@/lib/heicConversion'
 
 const ApplyForm = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
@@ -47,7 +48,7 @@ const ApplyForm = () => {
           profileImage: imagePreviewUrl,
           bio: e.target['bio'].value,
           date: date,
-          isApproved: true
+          isApproved: false
         })
       });
   
@@ -141,7 +142,7 @@ const ApplyForm = () => {
               <label className="block uppercase tracking-wide text-xs font-bold mb-2" htmlFor="name">
                 Full Name
               </label>
-              <input className="appearance-none block w-full bg-gray-200  border rounded py-3 px-4 mb-3 leading-tight text-gray-700 focus:outline-none focus:bg-white" id="name" type="text"  required placeholder="full name"/>
+              <input className="appearance-none block w-full bg-gray-200  border rounded py-3 px-4 mb-3 leading-tight text-gray-700 focus:outline-none focus:bg-white" id="name" type="text"  required placeholder="full name" autoComplete="name"/>
             </div>
             <div className="w-full md:w-1/2 px-3">
               <label className="block uppercase tracking-wide  text-xs font-bold mb-2" htmlFor="parents">
@@ -155,13 +156,13 @@ const ApplyForm = () => {
               <label className="block uppercase tracking-wide text-xs font-bold mb-2" htmlFor="email">
                 Email
               </label>
-              <input className="appearance-none block w-full bg-gray-200  border rounded py-3 px-4 mb-3 leading-tight text-gray-700 focus:outline-none focus:bg-white" id="email" type="email" required placeholder="email"/>
+              <input className="appearance-none block w-full bg-gray-200  border rounded py-3 px-4 mb-3 leading-tight text-gray-700 focus:outline-none focus:bg-white" id="email" type="email" required placeholder="email" autoComplete='email'/>
             </div>
             <div className="w-full md:w-1/2 px-3">
               <label className="block uppercase tracking-wide  text-xs font-bold mb-2" htmlFor="phone">
                 Phone
               </label>
-              <input className="appearance-none block w-full bg-gray-200  border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none text-gray-700 focus:bg-white focus:border-gray-500" id="phone"  maxLength={14} onChange={formatPhone} pattern="\(\d{3}\) \d{3}-\d{4}" type="tel" required placeholder="phone"/>
+              <input className="appearance-none block w-full bg-gray-200  border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none text-gray-700 focus:bg-white focus:border-gray-500" id="phone"  maxLength={14} onChange={formatPhone} pattern="\(\d{3}\) \d{3}-\d{4}" type="tel" required placeholder="phone" autoComplete='phone'/>
             </div>
             <div className="w-full px-3">
                   <label className="block uppercase tracking-wide  text-xs font-bold mb-2" htmlFor="addressStreet">

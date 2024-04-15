@@ -1,5 +1,6 @@
-import { Button, background } from "@chakra-ui/react"
+import { Button } from "@chakra-ui/react"
 import { Search } from '@/Components/Filters/search';
+import style from './hero.module.css'
 import Link from 'next/link'
 export const Hero = async (props) => {
     const {title, subtitle, image, buttonText, height, top, search, noOverlay} = props
@@ -62,7 +63,7 @@ export const Hero = async (props) => {
 
     return (
         <div>
-        <div style={heroStyles.divContainer}>
+        <div style={heroStyles.divContainer} className={style.divContainer}>
 
            {title && <h1 style={heroStyles.title}>{title}</h1>
             }

@@ -23,7 +23,7 @@
 
 .spinning {
     position: absolute !important;
-    z-index: 1000;
+    z-index: 75;
 }
 .skeletonContainer {
     margin-bottom: 60px;

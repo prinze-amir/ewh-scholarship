@@ -7,6 +7,7 @@ import { accentColor } from "@/utilities/theme";
 const LoginForm = () => {
 
   const [error, setError] = useState(null);
+  const [color, setColor] = useState('');
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -15,8 +16,12 @@ const LoginForm = () => {
   const router = useRouter();
 
   useEffect(() => {
+    setColor(accentColor)
+  } ,[]);
+
+  useEffect(() => {
     if (session) {
-     // router.push("/admin");
+      router.push("/admin");
      console.log('user is logged in')
     }
   }, [session]);
@@ -43,28 +48,6 @@ const LoginForm = () => {
     }
 
   }
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   console.log(form)
-  //   try {
-      
-  //     const res = await fetch("/api/auth/signin", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(form),
-  //     });
-  //     if (res.ok) {
-  //       const user = await res.json();
-  //      console.log(user)
-  //     }
-  //   }catch(e){
-  //     console.error(e)
-  //     console.log('error', e.message)
-  //   }
-    
-  // }
 
   return (
     <div className="w-full max-w-xs">
@@ -107,7 +90,7 @@ const LoginForm = () => {
           </p>
         </div>
         <div className="flex items-center justify-between">
-          <button style={{backgroundColor:accentColor, _hover:{backgroundColor:'red'}}}
+          <button style={{backgroundColor:color, _hover:{backgroundColor:'red'}}}
             className="text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
             type="submit"
           >

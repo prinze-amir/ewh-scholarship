@@ -26,6 +26,17 @@ const userSchema = new Schema({
             default: false
         }
     }),
+    image: new Schema({
+        src: {
+            type: String,
+            default: ''
+        },
+        id: {
+            type: String,
+            default: ''
+        }
+    })
+
 
 }, {timestamps: true});
 

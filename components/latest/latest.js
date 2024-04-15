@@ -2,8 +2,7 @@ import Image from 'next/image'
 import styles from '@/components/latest/latest.module.css'
 import Link  from 'next/link'
 import {getLatestRecipient} from '@/lib/mongo/recipients';
-
-const uri = process.env.baseURI;
+import { defaultProfile } from '@/utilities/theme';
 
 export const Latest = async () => {
 
@@ -11,7 +10,7 @@ export const Latest = async () => {
     
     if (!latest[0]) return <div>No recipient found</div>;
 
-    const profileImage = latest[0].profileImage ? latest[0].profileImage.src : "/images/nayla.jpeg";
+    const profileImage = latest[0].profileImage ? latest[0].profileImage.src : defaultProfile;
 
     return (
         <div className="flex items-center justify-center gap-4 flex-wrap relative bg-slate-100 py-20">

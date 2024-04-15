@@ -1,4 +1,3 @@
-
 export const formatPhone = (e) => {
     const input = e.target.value.replace(/\D/g, ''); // Remove all non-digit characters
     const match = input.match(/^(\d{0,3})(\d{0,3})(\d{0,4})$/);

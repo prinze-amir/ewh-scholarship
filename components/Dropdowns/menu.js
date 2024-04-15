@@ -8,6 +8,7 @@ export const Dropdown = () => {
     useEffect(() => {
         setAccentColor(themeAccentColor)
         }, []);
+        
     return (
         <Menu>
             <MenuButton as={Button} bgColor={accentColor} color="white" rightIcon={<ChevronDownIcon />}

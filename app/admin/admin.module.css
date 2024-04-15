@@ -92,6 +92,7 @@
     }
     .adminContainer {
         margin: 0;
+        border-radius:0;
     }
     .editContainer {
         margin: 0;
@@ -101,5 +102,12 @@
     }
     .nav ul {
         gap: 8px;
+    }
+    .nav ul li {
+        padding: 10px;
+        font-size: 1.5rem;
+    }
+    .nav ul span {
+        display: none;
     }
 }

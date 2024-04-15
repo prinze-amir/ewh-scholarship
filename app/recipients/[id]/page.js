@@ -1,20 +1,19 @@
-import Image from "next/image"
 import { getRecipient } from "@/lib/mongo/recipients";
-import style from './single.module.css'
 import RecipientCard from "@/Components/Cards/recipientCard";
 import { Hero } from "@/Components/Heros/hero";
 import { Footer } from "@/Components/Footers/footer";
+import { getProxyImages } from "@/app/actions";
 import { TransparentHeader } from "@/Components/Headers/transparentHeader";
+
 export default async function RecipientSinglePage({params}){
     const recipientId = params;
-    
     const recipientUnserialized = await getRecipient(recipientId.id);
     const recipient = JSON.parse(JSON.stringify(recipientUnserialized));
-    const defaultProfile = 'https://drive.google.com/uc?export=view&id=1zML9_4lYJsPwtfi_abQTKOHKv0yj_Pay';
+    
+    const profileImage = recipient.profileImage ? recipient.profileImage.src : null;
 
-    const profileImage = recipient.profileImage ? recipient.profileImage.src : defaultProfile;
-    const proxyImage = 'http://localhost:1105/api/proxy?'+profileImage;
-    const backgroundImages = "bg-[url('" + proxyImage +"')] ";
+    const proxyImage = await getProxyImages(profileImage);
+    
     return (
         <>
         <div className="bg-black opacity-50 w-[100%] h-[100%] absolute"></div>

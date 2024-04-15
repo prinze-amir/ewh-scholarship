@@ -11,7 +11,7 @@ export default function Apply(){
             <Hero
             image={'/images/graduates.jpg'}
             title={'Apply For The Scholarship'}
-            height={'30vh'}
+            height={'35vh'}
             top={true}
             />
             <div className="flex flex-col items-center justify-center gap-y-4 mt-20 bg-transparent">

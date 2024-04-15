@@ -2,11 +2,12 @@
 import styles from '@/components/Recipients/recipients.module.css'
 import Image from 'next/image';
 import {useState, useEffect, useRef} from 'react';
-import { Button, ButtonGroup, Spinner } from '@chakra-ui/react'
+import { Button, ButtonGroup, Spinner, CircularProgress } from '@chakra-ui/react'
 import {useRouter, useSearchParams} from 'next/navigation';
 import CustomSwitch from '@/Components/Forms/switchButton';
 import { fetchNextPage } from '@/app/actions';
-
+import { accentColor } from '@/utilities/theme';
+import {defaultProfile} from '@/utilities/theme';
 const AdminRecipients = ({allRecipients, limit, pages}) => {
     const [recipients, setRecipients] = useState(allRecipients);
     const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +66,6 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
             
         )
     }
-    const defaultProfile = 'https://drive.google.com/uc?export=view&id=1zML9_4lYJsPwtfi_abQTKOHKv0yj_Pay';
 
     const handleDelete = async (e) => {
         const recipientId = e.target.id;
@@ -148,11 +148,17 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
                 console.log(error);
             })
         }
+        
+
 
 
     return (
         <div className={styles.adminRecipientsContainer}>   
-         {updating && <Spinner size='sm' color='green.500' />}
+         {updating && <div className="absolute h-[100%] w-[100%] flex flex-col justify-center align-middle"><CircularProgress isIndeterminate zIndex={3} size="100px" color={accentColor} display='flex' justifyContent={'center'} alignSelf={'center'} position='absolute' margin='auto' left='50%'
+                 transform='translate(-50%, -50%)' />
+                 <div className={styles.overlay}></div>
+                 </div>
+                 }
             {recipients.map((recipient) => {
                  recipient._id = recipient._id.toString();
                 

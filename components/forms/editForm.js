@@ -4,6 +4,8 @@ import { states } from '@/utilities/states';
 import  {useRouter} from 'next/navigation';
 import  Image from 'next/image';
 import { formatPhone } from '@/utilities/forms';
+import heic2any from '@/lib/heicConversion'
+
 import { PhoneIcon, EmailIcon } from '@chakra-ui/icons';
 import { BiDollar } from "react-icons/bi";
 import { useState } from 'react';
@@ -54,6 +56,19 @@ const EditForm = ({ recipient }) => {
                     }
                 }
             }
+
+            return {
+                ...pre,
+                [name]: value
+            }
+        });
+    };
+    const handleToggle = (e) => {
+        const { name } = e.target;
+        const value = e.target.checked;
+        console.log(name, value)
+        
+        setFormData(pre=>{
 
             return {
                 ...pre,
@@ -183,9 +198,8 @@ const EditForm = ({ recipient }) => {
                 <FormLabel htmlFor="isApproved" className="text-white font-medium">Approved</FormLabel>
                 <CustomSwitch
                     name="isApproved"
-                    value={formData.isApproved}
-                    onChange={handleInput}
-                    isChecked={recipient.isApproved}
+                    onChange={handleToggle}
+                    isChecked={formData.isApproved}
                 /> 
                 </InputGroup>
                 <InputGroup size='lg' spacing={2} gap='3'>

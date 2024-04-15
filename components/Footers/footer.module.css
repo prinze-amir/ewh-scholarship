@@ -46,4 +46,10 @@
     width: 130%00%;
     margin:20px 0;
 }
+@media (max-width:750px){
+    .divContainer{
+        text-align: center;
+        padding:3rem;
+    }
+}
 

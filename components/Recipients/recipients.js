@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Spinner, Button, ButtonGroup } from '@chakra-ui/react';
 import { fetchNextPage } from '@/app/actions';
-const uri = process.env.baseURI;
+import { defaultProfile } from '@/utilities/theme';
 
 const Recipients = ({allRecipients, limit, pages}) =>{
 
@@ -14,6 +14,8 @@ const Recipients = ({allRecipients, limit, pages}) =>{
     const [isLoading, setIsLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState(pages-1);
+    const [filteredResults, setFilteredResults] = useState([]);
+    const [filteredPage, setFilteredPage] = useState(0);
     const searchParams = useSearchParams();
     let searchTerm = searchParams.get('search');
     const [accentColor, setAccentColor] = useState('');
@@ -25,12 +27,15 @@ const Recipients = ({allRecipients, limit, pages}) =>{
           return  setRecipients(allRecipients);
         };
         searchRecipients();
+        console.log(page, 'page', pageCount, 'pageCount')
     }, [searchTerm])
 
     const searchRecipients = async () => {
         const loadAll = await fetchNextPage(0, 0);
-        setRecipients(prev=>loadAll.filter(recipient =>{
-                return Object.values(recipient).some(value => {
+        setRecipients(prev=>{
+            
+        const results = loadAll.filter(recipient =>{
+               return Object.values(recipient).some(value => {
                     if ( typeof value  === 'string'){
                         return value.toLowerCase().includes(searchTerm.toLowerCase());
                     } else if (typeof value === 'object'){
@@ -38,38 +43,62 @@ const Recipients = ({allRecipients, limit, pages}) =>{
                             return val.toLowerCase().includes(searchTerm.toLowerCase());
                         })
                     }
-                } 
-            
-            )
-        }));
-        setPage(0);
+                })
+                
+            });
+            console.log(results, 'results')
+          //  return results
+            setFilteredResults(results);
+            const resultCount = results.length;
+            const resultpages = Math.floor(resultCount/limit);
+            const limited = results.slice(page*limit, (page+1)*limit)
+            setPageCount(resultpages);
+            console.log(resultCount, 'resultCount', resultpages, 'resultpages', limited, 'limited')
+            return limited;
+        }   
+
+    );
+    
+        setFilteredPage(0);
+        console.log(page, 'page', pageCount, 'pageCount')
 
     }
 
     const nextPage = async () => {
-       
-        const nextPageData = await fetchNextPage(page+1, limit)
-        .then(data => {
-            setRecipients(data);
-            setPage(prev=>prev+1);
-            setPageCount(prev=>prev-1);
-        })
-        .catch(error => {
-            console.log(error);
-        })
+        if(!searchTerm || searchTerm === '' || searchTerm === 'undefined' || searchTerm === 'null' || searchTerm === 'false' || searchTerm === 'true'){
+                const nextPageData = await fetchNextPage(page+1, limit)
+                    .then(data => {
+                        setRecipients(data);
+                        setPage(prev=>prev+1);
+                        setPageCount(prev=>prev-1);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                    console.log(recipients, 'recipients')
+                    return;
+          };
+          console.log(filteredResults, 'filteredResults')
+          console.log(page, 'page', pageCount, 'pageCount')
+          setRecipients(prev=>{
+            const newLimited = filteredResults.slice((page+1)*limit, (page+1)*limit+limit)
+            return newLimited;
+          });
+          setPage(prev=>prev+1);
+          setPageCount(prev=>prev-1);
+
+        
     }
 
     const prevPage = async () => {
+        if(!searchTerm || searchTerm === '' || searchTerm === 'undefined' || searchTerm === 'null' || searchTerm === 'false' || searchTerm === 'true'){
             
-            const prevPageData = await fetchNextPage(page-1, limit)
-            .then(data => {
-                setRecipients(data);
-                setPage(prev=>prev-1);
-                setPageCount(prev=>prev+1);            })
-            .catch(error => {
-                console.log(error);
-            })
+           setRecipients(prev=>{
+            const previousPageofFiltered = filteredResults.slice((page-1)*limit, (page-1)*limit+limit)
+           })
         }
+    }
+
 
     if(!recipients.some(recipient => recipient.isApproved === true)) {    
         return (
@@ -78,8 +107,6 @@ const Recipients = ({allRecipients, limit, pages}) =>{
             </div>
         )
     }
-
-    const defaultProfile = 'https://drive.google.com/uc?export=view&id=1zML9_4lYJsPwtfi_abQTKOHKv0yj_Pay';
 
     return (
         <div className={styles.recipientsWrapper}>
@@ -105,9 +132,9 @@ const Recipients = ({allRecipients, limit, pages}) =>{
         </div>
         <div className="p-5 flex justify-center">
                 <ButtonGroup gap='2' >
-                <Button isDisabled={pageCount === pages-1} onClick={prevPage} bgColor={accentColor} >Previous</Button>
+                <Button isDisabled={ page === 0} onClick={prevPage} bgColor={accentColor} >Previous</Button>
 
-                    <Button isDisabled={pageCount<=0} onClick={nextPage} bgColor={accentColor} color={'white'}>Next</Button>
+                    <Button isDisabled={pageCount < 1} onClick={nextPage} bgColor={accentColor} color={'white'}>Next</Button>
                 </ButtonGroup>
             </div>
         </div>
