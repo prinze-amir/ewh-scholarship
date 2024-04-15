@@ -14,98 +14,81 @@ const Recipients = ({allRecipients, limit, pages}) =>{
     const [isLoading, setIsLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState(pages-1);
-    const [filteredResults, setFilteredResults] = useState([]);
-    const [filteredPage, setFilteredPage] = useState(0);
+    const [searchResults, setSearchResults] = useState([]);
     const searchParams = useSearchParams();
-    let searchTerm = searchParams.get('search');
+    let searchTerm = searchParams.get('search') || '';
     const [accentColor, setAccentColor] = useState('');
     useEffect(() => {
         setAccentColor(localStorage.getItem('theme-accent-color') || 'aquamarine');
     }   , [])
+
     useEffect(() => {
-        if(!searchTerm || searchTerm === '' || searchTerm === 'undefined' || searchTerm === 'null' || searchTerm === 'false' || searchTerm === 'true'){
-          return  setRecipients(allRecipients);
-        };
-        searchRecipients();
-        console.log(page, 'page', pageCount, 'pageCount')
-    }, [searchTerm])
-
-    const searchRecipients = async () => {
-        const loadAll = await fetchNextPage(0, 0);
-        setRecipients(prev=>{
-            
-        const results = loadAll.filter(recipient =>{
-               return Object.values(recipient).some(value => {
-                    if ( typeof value  === 'string'){
-                        return value.toLowerCase().includes(searchTerm.toLowerCase());
-                    } else if (typeof value === 'object'){
-                        return Object.values(value).some(val => {
-                            return val.toLowerCase().includes(searchTerm.toLowerCase());
-                        })
-                    }
-                })
-                
-            });
-            console.log(results, 'results')
-          //  return results
-            setFilteredResults(results);
-            const resultCount = results.length;
-            const resultpages = Math.floor(resultCount/limit);
-            const limited = results.slice(page*limit, (page+1)*limit)
-            setPageCount(resultpages);
-            console.log(resultCount, 'resultCount', resultpages, 'resultpages', limited, 'limited')
-            return limited;
-        }   
-
-    );
-    
-        setFilteredPage(0);
-        console.log(page, 'page', pageCount, 'pageCount')
-
-    }
-
-    const nextPage = async () => {
-        if(!searchTerm || searchTerm === '' || searchTerm === 'undefined' || searchTerm === 'null' || searchTerm === 'false' || searchTerm === 'true'){
-                const nextPageData = await fetchNextPage(page+1, limit)
-                    .then(data => {
-                        setRecipients(data);
-                        setPage(prev=>prev+1);
-                        setPageCount(prev=>prev-1);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
-                    console.log(recipients, 'recipients')
-                    return;
-          };
-          console.log(filteredResults, 'filteredResults')
-          console.log(page, 'page', pageCount, 'pageCount')
-          setRecipients(prev=>{
-            const newLimited = filteredResults.slice((page+1)*limit, (page+1)*limit+limit)
-            return newLimited;
-          });
-          setPage(prev=>prev+1);
-          setPageCount(prev=>prev-1);
-
-        
-    }
-
-    const prevPage = async () => {
-        if(!searchTerm || searchTerm === '' || searchTerm === 'undefined' || searchTerm === 'null' || searchTerm === 'false' || searchTerm === 'true'){
-            
-           setRecipients(prev=>{
-            const previousPageofFiltered = filteredResults.slice((page-1)*limit, (page-1)*limit+limit)
-           })
+        // Fetch all recipients once if searching
+        if (searchTerm) {
+            fetchAllAndFilter();
+        } else {
+            // Reset to initial recipients when search is cleared
+            setRecipients(allRecipients);
+            setSearchResults([]);
+            fetchPageData(page, limit); // Fetch data for the current page
         }
-    }
+    }, [searchTerm, allRecipients]);
 
+    const fetchAllAndFilter = async () => {
+        setIsLoading(true);
+        try {
+            const loadAll = await fetchNextPage(0, 0);
+            const filtered = loadAll.filter(recipient => {
+                return Object.values(recipient).some(value => {
+                    if (typeof value === 'string') {
+                        return value.toLowerCase().includes(searchTerm.toLowerCase());
+                    } else if (typeof value === 'object' && value !== null) {
+                        return Object.values(value).some(val => val.toString().toLowerCase().includes(searchTerm.toLowerCase()));
+                    }
+                    return false;
+                });
+            });
 
-    if(!recipients.some(recipient => recipient.isApproved === true)) {    
+            setSearchResults(filtered);
+            setRecipients(filtered.slice(0, limit));
+        } catch (error) {
+            console.error('Error fetching and filtering recipients:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const fetchPageData = async (pageNum, pageSize) => {
+        setIsLoading(true);
+        try {
+            const data = await fetchNextPage(pageNum, pageSize);
+            setRecipients(data);
+        } catch (error) {
+            console.error('Error fetching page data:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handlePageChange = (newPage) => {
+        if (searchTerm && searchResults.length > 0) {
+            // Handling pagination with filtered results
+            const startIndex = newPage * limit;
+            const endIndex = startIndex + limit;
+            setRecipients(searchResults.slice(startIndex, endIndex));
+        } else {
+            // Handling normal pagination
+            fetchPageData(newPage, limit);
+        }
+        setPage(newPage);
+    };
+
+    if (isLoading) {
         return (
             <div className={styles.recipientsContainer}>
-                <Spinner size="xl" color="green"/>
+                <Spinner size="xl" color="green" />
             </div>
-        )
+        );
     }
 
     return (
@@ -131,10 +114,9 @@ const Recipients = ({allRecipients, limit, pages}) =>{
             })}    
         </div>
         <div className="p-5 flex justify-center">
-                <ButtonGroup gap='2' >
-                <Button isDisabled={ page === 0} onClick={prevPage} bgColor={accentColor} >Previous</Button>
-
-                    <Button isDisabled={pageCount < 1} onClick={nextPage} bgColor={accentColor} color={'white'}>Next</Button>
+        <ButtonGroup gap='2'>
+        <Button isDisabled={page === 0} onClick={() => handlePageChange(page - 1)} bgColor={accentColor}>Previous</Button>
+        <Button isDisabled={recipients.length < 0} onClick={() => handlePageChange(page + 1)} bgColor={accentColor} color={'white'}>Next</Button>
                 </ButtonGroup>
             </div>
         </div>

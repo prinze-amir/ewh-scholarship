@@ -14,7 +14,7 @@ export const fetchNextPage = async (page, limit) => {
 };
 export const deleteUser = async (id) => {
   // console.log(id, 'id')
-  //await connectToDatabase();
+  await connectToDatabase();
   const objectId = { _id: id };
 
   try {
@@ -26,13 +26,13 @@ export const deleteUser = async (id) => {
   }
 };
 export const getRecipients = async (page = 0, limit = 6) => {
-  //await connectToDatabase();
-  const total = await Recipient.countDocuments();
-  const pages = Math.ceil(total / limit);
+  await connectToDatabase();
+  // const total = await Recipient.countDocuments();
+  //const pages = Math.ceil(total / limit);
   const recipients = await Recipient.find({})
     .skip(page * limit)
     .limit(limit);
-  return { recipients, total, pages, page, limit };
+  return { recipients};
   //console.log(recipients, 'recipients')
 };
 
@@ -42,7 +42,7 @@ export const getProxyImages = async (image) => {
 };
 
 export const getUsers = async () => {
-  // //await connectToDatabase();
+  // await connectToDatabase();
   try {
     const users = await User.find({});
     return users;
@@ -52,7 +52,7 @@ export const getUsers = async () => {
   }
 };
 export const getUser = async (id) => {
-  //await connectToDatabase();
+  await connectToDatabase();
   const user = await User.findById(id);
   return user;
 };
@@ -98,7 +98,7 @@ export const updateUser = async (id, formData) => {
     }
 
    try { 
-    //await connectToDatabase();
+    await connectToDatabase();
     const updatedUser = await User.findByIdAndUpdate(
         userId,
         { $set: formData },
@@ -134,7 +134,7 @@ export const addNewUser = async (formData) => {
       formData.image = uploadedImage;
     }
 
-    //await connectToDatabase();
+    await connectToDatabase();
     const newUser = new User({ name, email, password: hashedPassword, role });
     await newUser.save();
     console.log(newUser, "new user");

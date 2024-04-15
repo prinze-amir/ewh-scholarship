@@ -9,9 +9,10 @@ export default async function RecipientsPage({}){
 
     const limit = 6
 
-    const {recipients, pages} = await getRecipients(0,limit);
+    const {recipients} = await getRecipients(0,limit);
     //this is to serialize the data so that it can be passed as props
     const allRecipients = JSON.parse(JSON.stringify(recipients)).reverse();
+    const pages = Math.ceil(allRecipients.length / limit);
 
     return (
         <div>

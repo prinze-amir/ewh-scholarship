@@ -1,4 +1,3 @@
-import LoginForm from '@/Components/Forms/loginForm'
 import { Count } from '@/Components/Recipients/count'
 import { getAllRecipients } from '@/lib/mongo/recipients'
 import { AdminRecipients } from '@/Components/Recipients/adminRecipients'
@@ -9,8 +8,9 @@ import {User} from '@/Components/Users/single'
 
 export default async function Admin (){
     const limit = 3;
-    const {recipients, pages} = await getAllRecipients(0,limit);
+    const {recipients} = await getAllRecipients(0,limit);
     const allRecipients = JSON.parse(JSON.stringify(recipients));
+    const pages = Math.ceil(allRecipients.length / limit);
     
     return (
         <div className={adminStyles.dashboardGrid}>
