@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+const path = require('path')
 const nextConfig = {
     reactStrictMode: true,
     images: {
@@ -26,6 +27,10 @@ const nextConfig = {
         },
         ]
     },
+    webpack: (config, options) => {
+        config.resolve.alias['@'] = path.resolve(__dirname);
+        return config;
+      },
     
 }
 
