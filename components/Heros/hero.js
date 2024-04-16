@@ -6,7 +6,7 @@ export const Hero = async (props) => {
     const {title, subtitle, image, buttonText, height, top, search, noOverlay} = props
     let imageUrl = image
     if (image.includes('google')) {
-         imageUrl = 'http://localhost:1105/api/proxy?' + image
+         imageUrl = '/api/proxy?' + image
     }
 
     let heroHeight = height ? height : '50vh'

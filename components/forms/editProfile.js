@@ -113,9 +113,11 @@ export const EditProfile = ({user, onClose, handleEdit}) =>{
         try {
             const updatedUser = await updateUser(user._id, formData);
             console.log(updatedUser, 'updated user')
-          handleEdit(e, updatedUser); 
-          onClose();
-          setLoading(false);  
+            if (session.user.id !== user._id) {
+                handleEdit(e, updatedUser); 
+                onClose();
+            }
+            setLoading(false);  
   
             } catch(e){
                 setError(e.message);

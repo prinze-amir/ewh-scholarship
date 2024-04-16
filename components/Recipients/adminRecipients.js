@@ -25,7 +25,7 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
           return  setRecipients(allRecipients);
         };
         searchRecipients();
-    }, [searchTerm])
+    }, [searchTerm, allRecipients])
 
     useEffect(() => {
        filterStatus();

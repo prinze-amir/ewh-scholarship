@@ -13,7 +13,6 @@ export const fetchNextPage = async (page, limit) => {
   return allRecipients;
 };
 export const deleteUser = async (id) => {
-  // console.log(id, 'id')
   await connectToDatabase();
   const objectId = { _id: id };
 
@@ -27,22 +26,20 @@ export const deleteUser = async (id) => {
 };
 export const getRecipients = async (page = 0, limit = 6) => {
   await connectToDatabase();
-  // const total = await Recipient.countDocuments();
-  //const pages = Math.ceil(total / limit);
+ 
   const recipients = await Recipient.find({})
     .skip(page * limit)
     .limit(limit);
   return { recipients};
-  //console.log(recipients, 'recipients')
 };
 
 export const getProxyImages = async (image) => {
   if (image === null) return defaultProfile;
-  return "http://localhost:1105/api/proxy?" + image;
+  return "/api/proxy?" + image;
 };
 
 export const getUsers = async () => {
-  // await connectToDatabase();
+   await connectToDatabase();
   try {
     const users = await User.find({});
     return users;
@@ -58,7 +55,6 @@ export const getUser = async (id) => {
 };
 
 export const updateUser = async (id, formData) => {
-    //const { name, email, password, confirmPassword, role } = Object.fromEntries(formData);
     const userId = { _id: id };
     const user = await getUser(id);
  

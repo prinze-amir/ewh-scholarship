@@ -24,7 +24,7 @@ const LoginForm = () => {
       router.push("/admin");
      console.log('user is logged in')
     }
-  }, [session]);
+  }, [session, router]);
 
   const handleLogin = async (e) => {
     e.preventDefault();

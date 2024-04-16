@@ -1,10 +1,11 @@
-import { Count } from '../../Components/Recipients/count'
+import { Count } from '@/Components/Recipients/count'
 import { getAllRecipients } from '@/lib/mongo/recipients'
 import { AdminRecipients } from '@/Components/Recipients/adminRecipients'
 import adminStyles from '@/app/admin/admin.module.css'
 import {Search} from '@/Components/Filters/search'
 import { accentColor } from '@/utilities/theme'
 import {User} from '@/Components/Users/single'
+import { Suspense } from 'react'
 
 export default async function Admin (){
     const limit = 3;
@@ -24,7 +25,9 @@ export default async function Admin (){
            
             <div className={adminStyles.recipients}>
                 <Search theme={'white'}/>
-                <AdminRecipients limit={limit} pages={pages} allRecipients={allRecipients} />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <AdminRecipients limit={limit} pages={pages} allRecipients={allRecipients} />
+                </Suspense>
             </div>
             
         </div>
