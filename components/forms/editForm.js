@@ -9,7 +9,7 @@ import heic2any from '@/lib/heicConversion'
 import { PhoneIcon, EmailIcon } from '@chakra-ui/icons';
 import { BiDollar } from "react-icons/bi";
 import { useState } from 'react';
-import CustomSwitch from '@/Components/Forms/switchButton';
+import CustomSwitch from '@/components/Forms/switchButton';
 import style from '@/app/admin/admin.module.css';
 import RecipientCard from '../Cards/recipientCard';
 const EditForm = ({ recipient }) => {

@@ -2,8 +2,8 @@
 import Link from 'next/link'
 import styles from './header.module.css'
 import { useState, useEffect } from 'react';
-import { Dropdown } from '@/Components/Dropdowns/menu'
-import { MobileDropdown } from '@/Components/Dropdowns/mobileMenu'
+import { Dropdown } from '@/components/Dropdowns/menu'
+import { MobileDropdown } from '@/components/Dropdowns/mobileMenu'
 import {Button } from '@chakra-ui/react'
 import { useSession, signOut, signIn } from 'next-auth/react';
 

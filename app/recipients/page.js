@@ -1,8 +1,8 @@
-import { Recipients } from '@/Components/Recipients/recipients';
-import { Hero } from '@/Components/Heros/hero';
-import { Footer } from '@/Components/Footers/footer';
+import { Recipients } from '@/components/recipients/recipients';
+import { Hero } from '@/components/Heros/hero';
+import { Footer } from '@/components/Footers/footer';
 import { getAllRecipients } from '@/lib/mongo/recipients';
-import {TransparentHeader} from '@/Components/Headers/transparentHeader'
+import {TransparentHeader} from '@/components/Headers/transparentHeader'
 import { getRecipients } from '../actions';
 import { Suspense } from 'react';
 

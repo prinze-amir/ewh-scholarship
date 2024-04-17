@@ -1,9 +1,9 @@
 //import Image from 'next/image'
-import {Hero} from '@/Components/Heros/hero'
-import {Schools} from '@/Components/schools'
-import {Footer} from '@/Components/Footers/footer'
-import { Latest } from '@/Components/Latest/latest'
-import {TransparentHeader} from '@/Components/Headers/transparentHeader'
+import {Hero} from '@/components/Heros/hero'
+import {Schools} from '@/components/schools'
+import {Footer} from '@/components/Footers/footer'
+import { Latest } from '@/components/Latest/latest'
+import {TransparentHeader} from '@/components/Headers/transparentHeader'
 import { Suspense } from 'react'
 
 export default function Home() {

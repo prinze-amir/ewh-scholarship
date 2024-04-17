@@ -4,7 +4,7 @@ import Image from 'next/image';
 import {useState, useEffect, useRef} from 'react';
 import { Button, ButtonGroup, Spinner, CircularProgress } from '@chakra-ui/react'
 import {useRouter, useSearchParams} from 'next/navigation';
-import CustomSwitch from '@/Components/Forms/switchButton';
+import CustomSwitch from '@/components/Forms/switchButton';
 import { fetchNextPage } from '@/app/actions';
 import { accentColor } from '@/utilities/theme';
 import {defaultProfile} from '@/utilities/theme';

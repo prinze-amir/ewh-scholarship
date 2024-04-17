@@ -1,6 +1,6 @@
-import ColorPicker from "@/Components/Forms/colorPicker"
-import { RegisterForm } from "@/Components/Forms/newUserForm"
-import { Users } from '@/Components/Users/user'
+import ColorPicker from "@/components/Forms/colorPicker"
+import { RegisterForm } from "@/components/Forms/newUserForm"
+import { Users } from '@/components/users/user'
 import { getUsers } from "@/app/actions"
 import { Suspense } from "react";
 

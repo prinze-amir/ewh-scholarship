@@ -1,5 +1,5 @@
-import LoginForm from '@/Components/Forms/loginForm'
-import { TransparentHeader } from '@/Components/Headers/transparentHeader'
+import LoginForm from '@/components/Forms/loginForm'
+import { TransparentHeader } from '@/components/Headers/transparentHeader'
 import style from '@/app/login/login.module.css'
 export default function Login () {
     return (

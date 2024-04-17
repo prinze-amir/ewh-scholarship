@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react"
-import { Search } from '@/Components/Filters/search';
+import { Search } from '@/components/filters/search';
 import style from './hero.module.css'
 import Link from 'next/link'
 export const Hero = async (props) => {

@@ -1,7 +1,7 @@
-import {Hero} from '@/Components/Heros/hero'
-import Form from '@/Components/Forms/applyForm'
-import {Footer} from '@/Components/Footers/footer'
-import {TransparentHeader} from '@/Components/Headers/transparentHeader'
+import {Hero} from '@/components/Heros/hero'
+import Form from '@/components/Forms/applyForm'
+import {Footer} from '@/components/Footers/footer'
+import {TransparentHeader} from '@/components/Headers/transparentHeader'
 export default function Apply(){
     
     

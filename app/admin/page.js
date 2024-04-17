@@ -1,11 +1,12 @@
-import { Count } from '@/Components/Recipients/count'
+import { Count } from '@/components/recipients/count'
 import { getAllRecipients } from '@/lib/mongo/recipients'
-import { AdminRecipients } from '@/Components/Recipients/adminRecipients'
+import { AdminRecipients } from '@/components/recipients/adminRecipients'
 import adminStyles from '@/app/admin/admin.module.css'
-import {Search} from '@/Components/Filters/search'
+import {Search} from '@/components/filters/search'
 import { accentColor } from '@/utilities/theme'
-import {User} from '@/Components/Users/single'
+import {User} from '@/components/users/single'
 import { Suspense } from 'react'
+import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 
 export default async function Admin (){
     const limit = 3;
@@ -17,7 +18,9 @@ export default async function Admin (){
         <div className={adminStyles.dashboardGrid}>
                 
             <div>
-            <User />
+            <Suspense fallback={<div className="bg-white p-4 h-[245px] rounded-lg flex flex-col gap-4 mt-1 w-fit mb-4" ><SkeletonCircle size="80px"></SkeletonCircle><SkeletonText width="210px" noOfLines={3} spacing='4'></SkeletonText></div>}>
+                <User />
+            </Suspense>
             <div id="totalRecipients" style={{backgroundColor:accentColor}} className={adminStyles.count}>
                 <Suspense fallback={<div className="h-[200px] w-[300px]">Loading...</div>}>
                 <Count />

@@ -1,9 +1,9 @@
 import { getRecipient } from "@/lib/mongo/recipients";
-import RecipientCard from "@/Components/Cards/recipientCard";
-import { Hero } from "@/Components/Heros/hero";
-import { Footer } from "@/Components/Footers/footer";
+import RecipientCard from "@/components/Cards/recipientCard";
+import { Hero } from "@/components/Heros/hero";
+import { Footer } from "@/components/Footers/footer";
 import { getProxyImages } from "@/app/actions";
-import { TransparentHeader } from "@/Components/Headers/transparentHeader";
+import { TransparentHeader } from "@/components/Headers/transparentHeader";
 
 export default async function RecipientSinglePage({params}){
     const recipientId = params;
