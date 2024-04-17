@@ -1,4 +1,4 @@
-import { Count } from '@/components/recipients/count'
+import { Count } from '@/components/recipients/counts'
 import { getAllRecipients } from '@/lib/mongo/recipients'
 import { AdminRecipients } from '@/components/recipients/adminRecipients'
 import adminStyles from '@/app/admin/admin.module.css'
