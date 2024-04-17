@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { Spinner, Button, ButtonGroup } from '@chakra-ui/react';
 import { fetchNextPage } from '@/app/actions';
 import { defaultProfile } from '@/utilities/theme';
+import { set } from 'mongoose';
 
 const Recipients = ({allRecipients, limit, pages}) =>{
 
@@ -20,17 +21,22 @@ const Recipients = ({allRecipients, limit, pages}) =>{
     const [accentColor, setAccentColor] = useState('');
     useEffect(() => {
         setAccentColor(localStorage.getItem('theme-accent-color') || 'aquamarine');
+        console.log(pageCount, 'the initial page count')
+        console.log(page, 'the initial page number')
     }   , [])
 
+    
     useEffect(() => {
         // Fetch all recipients once if searching
         if (searchTerm) {
             fetchAllAndFilter();
+            console.log(page, 'the page number')
+            console.log(pageCount, 'the page count')
         } else {
             // Reset to initial recipients when search is cleared
             setRecipients(allRecipients);
             setSearchResults([]);
-            fetchPageData(page, limit); // Fetch data for the current page
+            setPageCount(pages-1);
         }
     }, [searchTerm, allRecipients]);
 
@@ -50,6 +56,7 @@ const Recipients = ({allRecipients, limit, pages}) =>{
             });
 
             setSearchResults(filtered);
+            setPageCount(Math.ceil(filtered.length / limit)-1);
             setRecipients(filtered.slice(0, limit));
         } catch (error) {
             console.error('Error fetching and filtering recipients:', error);
@@ -70,7 +77,7 @@ const Recipients = ({allRecipients, limit, pages}) =>{
         }
     };
 
-    const handlePageChange = (newPage) => {
+    const handlePageChange = (newPage, count) => {
         if (searchTerm && searchResults.length > 0) {
             // Handling pagination with filtered results
             const startIndex = newPage * limit;
@@ -81,12 +88,18 @@ const Recipients = ({allRecipients, limit, pages}) =>{
             fetchPageData(newPage, limit);
         }
         setPage(newPage);
+        setPageCount(count);
+        console.log(page, 'the page number')
+        console.log(pageCount, 'the new page count')
     };
 
     if (isLoading) {
         return (
+            <div className={styles.recipientsWrapper}>
+
             <div className={styles.recipientsContainer}>
                 <Spinner size="xl" color="green" />
+            </div>
             </div>
         );
     }
@@ -100,12 +113,12 @@ const Recipients = ({allRecipients, limit, pages}) =>{
                 return (
                     <div className={styles.recipientCard} key={recipient._id}>
                         <Link href={`/recipients/${recipient._id}`}>
-                            <Image alt={recipient.name} src={recipient.profileImage ? recipient.profileImage.src : defaultProfile} width={300} height={300} className={styles.profileImage} />
+                            <Image alt={recipient.name} src={recipient.profileImage ? recipient.profileImage.src : defaultProfile} width={250} height={250} className={styles.profileImage} />
                             </Link>
                         <div className={styles.content}>
-                            <h2 className="text-xl ">{recipient.name}</h2>
-                            <p>Graduated in {recipient.graduateYear}</p>
-                            <p>Attending {recipient.college}</p>
+                            <h2 className="text-2xl ">{recipient.name}</h2>
+                            {/* <p>Class of {recipient.graduateYear}</p> */}
+                            <p>{recipient.college}</p>
                             <p>Majoring in {recipient.major}</p>
                         </div>
                         
@@ -115,8 +128,8 @@ const Recipients = ({allRecipients, limit, pages}) =>{
         </div>
         <div className="p-5 flex justify-center">
         <ButtonGroup gap='2'>
-        <Button isDisabled={page === 0} onClick={() => handlePageChange(page - 1)} bgColor={accentColor}>Previous</Button>
-        <Button isDisabled={recipients.length < 0} onClick={() => handlePageChange(page + 1)} bgColor={accentColor} color={'white'}>Next</Button>
+        <Button isDisabled={page === 0} onClick={() => handlePageChange(page - 1, pageCount+1)} bgColor={accentColor}>Previous</Button>
+        <Button isDisabled={pageCount < 1} onClick={() => handlePageChange(page + 1, pageCount-1)} bgColor={accentColor} color={'white'}>Next</Button>
                 </ButtonGroup>
             </div>
         </div>

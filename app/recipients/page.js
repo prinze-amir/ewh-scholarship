@@ -11,9 +11,10 @@ export default async function RecipientsPage({}){
     const limit = 6
 
     const {recipients} = await getRecipients(0,limit);
+    const {total} = await getAllRecipients();
     //this is to serialize the data so that it can be passed as props
     const allRecipients = JSON.parse(JSON.stringify(recipients)).reverse();
-    const pages = Math.ceil(allRecipients.length / limit);
+    const pages = Math.ceil(total / limit);
 
     return (
         <div>
@@ -26,13 +27,13 @@ export default async function RecipientsPage({}){
                 top={true}
                 search={true}
             />
-       <Suspense fallback={<div>Loading...</div>}>
+       {/* <Suspense fallback={<div>Loading...</div>}> */}
              <Recipients 
              pages={pages}
              limit={limit}
              allRecipients={allRecipients} 
              />
-        </Suspense>
+        {/* </Suspense> */}
       
         <Footer />            
         </div>
