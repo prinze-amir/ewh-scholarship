@@ -1,4 +1,4 @@
-import { Recipients } from '@/components/recipients/recipients';
+import { Recipients } from '@/components/Recipients/recipients';
 import { Hero } from '@/components/Heros/hero';
 import { Footer } from '@/components/Footers/footer';
 import { getAllRecipients } from '@/lib/mongo/recipients';

@@ -10,7 +10,7 @@ import { getUsers, deleteUser} from '@/app/actions'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Modal, Button, Heading, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton  } from '@chakra-ui/react'
 import { useDisclosure } from '@chakra-ui/react'
-import { EditProfile } from '../Forms/editProfile';
+import { EditProfile } from '../forms/editProfile';
 export const Users = ({initialUsers}) => {
     
     const [users, setUsers] = useState(initialUsers)

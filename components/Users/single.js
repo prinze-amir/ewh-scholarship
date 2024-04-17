@@ -1,6 +1,6 @@
 import { authOptions } from "@/auth/authOptions";
 import { getServerSession } from "next-auth";
-import { SignOutButton } from "@/components/Forms/signOutButton";
+import { SignOutButton } from "@/components/forms/signOutButton";
 import { defaultUserPic, wait } from "@/utilities/defaults";
 import Image from "next/image";
 export const User = async ({user}) => {

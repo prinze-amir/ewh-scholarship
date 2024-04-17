@@ -1,5 +1,5 @@
 import {Hero} from '@/components/Heros/hero'
-import Form from '@/components/Forms/applyForm'
+import Form from '@/components/forms/applyForm'
 import {Footer} from '@/components/Footers/footer'
 import {TransparentHeader} from '@/components/Headers/transparentHeader'
 export default function Apply(){

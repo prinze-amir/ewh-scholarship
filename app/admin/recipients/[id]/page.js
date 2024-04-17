@@ -1,6 +1,6 @@
 import { getRecipient } from "@/lib/mongo/recipients";
 import { accentColor } from "@/utilities/theme";
-import { EditForm } from "@/components/Forms/editForm";
+import { EditForm } from "@/components/forms/editForm";
 import style from '@/app/admin/admin.module.css';
 import Link from "next/link";
 import {Button} from '@chakra-ui/react';

@@ -2,7 +2,7 @@
 import {Hero} from '@/components/Heros/hero'
 import {Schools} from '@/components/schools'
 import {Footer} from '@/components/Footers/footer'
-import { Latest } from '@/components/Latest/latest'
+import { Latest } from '@/components/latest/latest'
 import {TransparentHeader} from '@/components/Headers/transparentHeader'
 import { Suspense } from 'react'
 

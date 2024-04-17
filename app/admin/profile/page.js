@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/auth/authOptions"
-import { User } from "@/components/users/single"
-import { EditProfile } from "@/components/Forms/editProfile"
+import { User } from "@/components/Users/single"
+import { EditProfile } from "@/components/forms/editProfile"
 import { getUser } from "@/app/actions";
 import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import { Suspense } from "react";
