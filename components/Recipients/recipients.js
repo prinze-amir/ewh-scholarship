@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { Spinner, Button, ButtonGroup } from '@chakra-ui/react';
 import { fetchNextPage } from '@/app/actions';
 import { defaultProfile } from '@/utilities/theme';
-import { set } from 'mongoose';
 
 const Recipients = ({allRecipients, limit, pages}) =>{
 
@@ -21,8 +20,6 @@ const Recipients = ({allRecipients, limit, pages}) =>{
     const [accentColor, setAccentColor] = useState('');
     useEffect(() => {
         setAccentColor(localStorage.getItem('theme-accent-color') || 'aquamarine');
-        console.log(pageCount, 'the initial page count')
-        console.log(page, 'the initial page number')
     }   , [])
 
     
@@ -30,8 +27,6 @@ const Recipients = ({allRecipients, limit, pages}) =>{
         // Fetch all recipients once if searching
         if (searchTerm) {
             fetchAllAndFilter();
-            console.log(page, 'the page number')
-            console.log(pageCount, 'the page count')
         } else {
             // Reset to initial recipients when search is cleared
             setRecipients(allRecipients);
@@ -89,8 +84,6 @@ const Recipients = ({allRecipients, limit, pages}) =>{
         }
         setPage(newPage);
         setPageCount(count);
-        console.log(page, 'the page number')
-        console.log(pageCount, 'the new page count')
     };
 
     if (isLoading) {
