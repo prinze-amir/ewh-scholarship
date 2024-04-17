@@ -19,17 +19,19 @@ export default async function Admin (){
             <div>
             <User />
             <div id="totalRecipients" style={{backgroundColor:accentColor}} className={adminStyles.count}>
+                <Suspense fallback={<div className="h-[200px] w-[300px]">Loading...</div>}>
                 <Count />
+                </Suspense>
             </div> 
             </div>
-           
+        <Suspense fallback={<div>Loading...</div>}>
+
             <div className={adminStyles.recipients}>
                 <Search theme={'white'}/>
-                <Suspense fallback={<div>Loading...</div>}>
                     <AdminRecipients limit={limit} pages={pages} allRecipients={allRecipients} />
-                </Suspense>
             </div>
-            
+                            </Suspense>
+
         </div>
     )
 }

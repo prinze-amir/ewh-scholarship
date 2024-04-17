@@ -49,7 +49,8 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
     }
 
     const filterStatus = async () =>{
-        const loadAll = await fetchNextPage(0, 0);
+        //need to fetch the filtered data so that it cam be limited prior****
+        const loadAll = await fetchNextPage(0, 3);
         if (filter === 'pending') {
             setRecipients(prev=>loadAll.filter(recipient => !recipient.isApproved));
         } else if (filter === 'approved') {

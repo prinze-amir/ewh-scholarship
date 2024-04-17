@@ -4,6 +4,7 @@ import { Footer } from '@/Components/Footers/footer';
 import { getAllRecipients } from '@/lib/mongo/recipients';
 import {TransparentHeader} from '@/Components/Headers/transparentHeader'
 import { getRecipients } from '../actions';
+import { Suspense } from 'react';
 
 export default async function RecipientsPage({}){
 
@@ -25,12 +26,13 @@ export default async function RecipientsPage({}){
                 top={true}
                 search={true}
             />
-       
+       <Suspense fallback={<div>Loading...</div>}>
              <Recipients 
              pages={pages}
              limit={limit}
              allRecipients={allRecipients} 
              />
+        </Suspense>
       
         <Footer />            
         </div>

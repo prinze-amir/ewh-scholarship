@@ -4,6 +4,7 @@ import {Schools} from '@/Components/schools'
 import {Footer} from '@/Components/Footers/footer'
 import { Latest } from '@/Components/Latest/latest'
 import {TransparentHeader} from '@/Components/Headers/transparentHeader'
+import { Suspense } from 'react'
 
 export default function Home() {
   return (
@@ -17,8 +18,9 @@ export default function Home() {
       height={'70vh'}
       top={true}
     />
-     
+   <Suspense fallback={<div>Loading...</div>}>  
     <Latest/>
+    </Suspense>
 
    <Hero image={'/images/tsu-campus.jpg'}
    height={'30vh'}
