@@ -4,7 +4,7 @@ import styles from '@/components/Recipients/recipients.module.css'
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { Spinner, Button, ButtonGroup } from '@chakra-ui/react';
+import { Spinner, CircularProgress, Button, ButtonGroup } from '@chakra-ui/react';
 import { fetchNextPage } from '@/app/actions';
 import { defaultProfile } from '@/utilities/defaults';
 import { set } from 'mongoose';
@@ -88,12 +88,12 @@ const Recipients = ({allRecipients, limit, pages}) =>{
         setPageCount(count);
     };
 
-    if (isLoading) {
+    if (isLoading || recipients.length === 0) {
         return (
             <div className={styles.recipientsWrapper}>
 
-            <div className={styles.recipientsContainer}>
-                <Spinner size="xl" color="green" />
+            <div className="h-[100vh] items-center justify-center flex">
+            <CircularProgress isIndeterminate color='green.300' size="150px" />
             </div>
             </div>
         );

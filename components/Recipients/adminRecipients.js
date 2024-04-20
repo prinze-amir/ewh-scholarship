@@ -113,6 +113,7 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
     const handleDelete = async (e) => {
         const recipientId = e.target.id;
         setIsLoading(pre=>({...pre, [recipientId]: true}));
+        alert('Are you sure you want to delete this recipient?');
         try {
             const response = await fetch(`/api/recipients/${recipientId}`, {
                 method: 'DELETE',
@@ -192,19 +193,20 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
         setPageCount(count);
     };
 
-    // if (recipients.length === 0) {    
-    //     return (
-    //         <div className={styles.empty}>
-    //         <Spinner size="xl" color="white" />
-    //         <h1>No RESULTS</h1>
-    //         </div>
+    if (recipients.length === 0) {    
+        return (
+            <div className={styles.empty}>
+            <Spinner size="xl" color="white" />
+            <h1>NO RESULTS</h1>
+            <button className="p-3 bg-zinc-600 rounded-lg" onClick={() => router.push('/admin')}>Go Back</button>
+            </div>
             
-    //     )
-    // }
+        )
+    }
     
     return (
         <div className={styles.adminRecipientsContainer}>   
-         {updating && <div className="absolute h-[100%] w-[100%] flex flex-col justify-center align-middle"><CircularProgress isIndeterminate zIndex={3} size="100px" color={accentColor} display='flex' justifyContent={'center'} alignSelf={'center'} position='absolute' margin='auto' left='50%'
+         {updating || recipients.length === 0 && <div className="absolute h-[100%] w-[100%] flex flex-col justify-center align-middle"><CircularProgress isIndeterminate zIndex={3} size="100px" color={accentColor} display='flex' justifyContent={'center'} alignSelf={'center'} position='absolute' margin='auto' left='50%'
                  transform='translate(-50%, -50%)' />
                  <div className={styles.overlay}></div>
                  </div>

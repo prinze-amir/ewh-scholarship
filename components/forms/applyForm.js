@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation'
 import { Skeleton, Button, CircularProgress } from '@chakra-ui/react'
 import { formatPhone } from '@/utilities/forms';
 import { accentColor as themeAccentColor } from '@/utilities/theme';
-import heic2any from '@/lib/heicConversion'
+//import heic2any from 'heic2any'
+import {convertHeicToJpg} from '@/lib/heicConversion'
 
 const ApplyForm = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
@@ -86,11 +87,12 @@ const ApplyForm = () => {
     if (file.type === 'image/heic' || file.name.endsWith('.heic')) {
 
       try {
-        const convertedBlob = await heic2any({
-          blob: file,
-          toType: "image/jpeg",
-          quality: 0.8 // Adjust quality as needed
-        });
+        // const convertedBlob = await heic2any({
+        //   blob: file,
+        //   toType: "image/jpeg",
+        //   quality: 0.8 // Adjust quality as needed
+        // });
+        const convertedBlob = await convertHeicToJpg(file);
 
         // Generate a URL for the converted file
         const reader = new FileReader();

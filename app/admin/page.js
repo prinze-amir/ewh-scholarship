@@ -7,6 +7,7 @@ import { accentColor } from '@/utilities/theme'
 import {User} from '@/components/Users/single'
 import { Suspense } from 'react'
 import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
+import { ThemeButton } from '@/components/Buttons/themeButton'
 export default async function Admin (){
     const limit = 3;
     const {recipients} = await getAllRecipients(0,limit);
@@ -17,16 +18,17 @@ export default async function Admin (){
     return (
         <div className={adminStyles.dashboardGrid}>
                 
-            <div>
+            <div className="flex flex-col gap-3">
             <Suspense fallback={<div className="bg-white p-4 h-[245px] rounded-lg flex flex-col gap-4 mt-1 w-fit mb-4" ><SkeletonCircle size="80px"></SkeletonCircle><SkeletonText width="210px" noOfLines={3} spacing='4'></SkeletonText></div>}>
                 <User />
             </Suspense>
+            <ThemeButton text="Add New Recipient" theme="dark" link="/apply" />
+
             <Suspense fallback={<Skeleton height="210px" width="420px" startColor={accentColor} endColor='white' rounded="lg"/>}>
                 <div id="totalRecipients" style={{backgroundColor:accentColor}} className={adminStyles.count}>
                     <Count />
                 </div> 
             </Suspense>
-
             </div>                
 
             <div className={adminStyles.recipients}>
