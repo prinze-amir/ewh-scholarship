@@ -5,6 +5,7 @@ import {Footer} from '@/components/Footers/footer'
 import { Latest } from '@/components/latest/latest'
 import {TransparentHeader} from '@/components/Headers/transparentHeader'
 import { Suspense } from 'react'
+import { Skeleton } from '@chakra-ui/react'
 
 export default function Home() {
   return (
@@ -15,15 +16,15 @@ export default function Home() {
       subtitle={'Memorial Scholarship Fund'}
       image={'/images/tsu-campus.jpg'}
       buttonText={'Apply Now'}  
-      height={'70vh'}
+      height={'75vh'}
       top={true}
     />
-   <Suspense fallback={<div>Loading...</div>}>  
-    <Latest/>
+   <Suspense fallback={<Skeleton height="450px"/>}>  
+      <Latest/>
     </Suspense>
 
    <Hero image={'/images/tsu-campus.jpg'}
-   height={'30vh'}
+   height={'40vh'}
    />
     <Schools/>
    

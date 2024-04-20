@@ -2,72 +2,114 @@
 import styles from '@/components/Recipients/recipients.module.css'
 import Image from 'next/image';
 import {useState, useEffect, useRef} from 'react';
-import { Button, ButtonGroup, Spinner, CircularProgress } from '@chakra-ui/react'
+import { Button, ButtonGroup, Spinner, CircularProgress, theme } from '@chakra-ui/react'
 import {useRouter, useSearchParams} from 'next/navigation';
 import CustomSwitch from '@/components/forms/switchButton';
 import { fetchNextPage } from '@/app/actions';
-import { accentColor } from '@/utilities/theme';
-import {defaultProfile} from '@/utilities/theme';
+import { accentColor as themeColor } from '@/utilities/theme';
+import {defaultProfile} from '@/utilities/defaults';
 const AdminRecipients = ({allRecipients, limit, pages}) => {
     const [recipients, setRecipients] = useState(allRecipients);
     const [isLoading, setIsLoading] = useState(false);
-    const [updating, setUpdating] = useState(false);
-    const router = useRouter();
-    const searchParams = useSearchParams();
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState(pages-1);
+    const [searchResults, setSearchResults] = useState([]);
+    const [updating, setUpdating] = useState(false);
+    const [accentColor, setAccentColor] = useState('');
+    const router = useRouter();
+    const searchParams = useSearchParams();
 
     let searchTerm = searchParams.get('search');
     let filter = searchParams.get('filter');
-    
-    useEffect(() => {
-        if(!searchTerm || searchTerm === '' || searchTerm === 'undefined' || searchTerm === 'null' || searchTerm === 'false' || searchTerm === 'true'){
-          return  setRecipients(allRecipients);
-        };
-        searchRecipients();
-    }, [searchTerm, allRecipients])
 
+    useEffect( ()=>{
+        setAccentColor(themeColor);
+    },[]);
     useEffect(() => {
-       filterStatus();
+        if (filter){
+            filterStatus();
+        }
     }, [filter])
 
-    const searchRecipients = async () => {
-        const loadAll = await fetchNextPage(0, 0);
-        setRecipients(prev=>loadAll.filter(recipient =>{
-                return Object.values(recipient).some(value => {
-                    if ( typeof value  === 'string'){
-                        return value.toLowerCase().includes(searchTerm.toLowerCase());
-                    } else if (typeof value === 'object'){
-                        return Object.values(value).some(val => {
-                            return val.toLowerCase().includes(searchTerm.toLowerCase());
-                        })
-                    }
-                } 
-            
-            )
-        }));
-    }
+    useEffect(() => {
+        // Fetch all recipients once if searching
+        if (searchTerm) {
+            searchRecipients();
+        } else {
+            // Reset to initial recipients when search is cleared
+            setRecipients(allRecipients);
+            setSearchResults([]);
+            setPageCount(pages-1);
+        }
+    }, [searchTerm, allRecipients]);
 
-    const filterStatus = async () =>{
-        //need to fetch the filtered data so that it cam be limited prior****
-        const loadAll = await fetchNextPage(0, 3);
-        if (filter === 'pending') {
-            setRecipients(prev=>loadAll.filter(recipient => !recipient.isApproved));
-        } else if (filter === 'approved') {
-            setRecipients(loadAll.filter(recipient => recipient.isApproved));
+    const searchRecipients = async () => {
+        setUpdating(true);
+        try {
+            if (!filter){
+            const loadAll = await fetchNextPage(0, 0);
+            const filtered = loadAll.filter(recipient => {
+                return Object.values(recipient).some(value => {
+                    if (typeof value === 'string') {
+                        return value.toLowerCase().includes(searchTerm.toLowerCase());
+                    } else if (typeof value === 'object' && value !== null) {
+                        return Object.values(value).some(val => val.toString().toLowerCase().includes(searchTerm.toLowerCase()));
+                    }
+                    return false;
+                });
+            });
+            setSearchResults(filtered);
+            setPageCount(Math.ceil(filtered.length / limit)-1);
+            setRecipients(filtered.slice(0, limit));
+        } else {
+            const searchFiltered = recipients.filter(recipient => {
+                return Object.values(recipient).some(value => {
+                    if (typeof value === 'string') {
+                        return value.toLowerCase().includes(searchTerm.toLowerCase());
+                    } else if (typeof value === 'object' && value !== null) {
+                        return Object.values(value).some(val => val.toString().toLowerCase().includes(searchTerm.toLowerCase()));
+                    }
+                    return false;
+                });
+            });
+            setSearchResults(searchFiltered);
+            setPageCount(Math.ceil(searchFiltered.length / limit)-1);
+            setRecipients(searchFiltered.slice(0, limit));
+         }
+           
+        } catch (error) {
+            console.error('Error fetching and filtering recipients:', error);
+        } finally {
+            setUpdating(false);
         }
     }
+ 
+    const filterStatus = async () =>{
+        //need to fetch the filtered data so that it cam be limited prior****
+        setUpdating(true);
+        try{
+            const loadAll = await fetchNextPage(0, 0);
+            const filtered = loadAll.filter(recipient => {
+                if (filter === 'pending') {
+                    return !recipient.isApproved;
+                } else if (filter === 'approved') {
+                    return recipient.isApproved;
+                } 
+            });
+            console.log(filtered, 'filtered');
+            setSearchResults(filtered);
+            setPageCount(Math.ceil(filtered.length / limit)-1);
+            setRecipients(filtered.slice(0, limit));
 
-    if (recipients.length === 0) {    
-        return (
-            <div className={styles.empty}>
-            <Spinner size="xl" color="white" />
-            <h1>No RESULTS</h1>
-            </div>
-            
-        )
+        }catch(error){
+            console.log(error);
+        }finally{
+            setUpdating(false);
+        }
+        
     }
 
+   
     const handleDelete = async (e) => {
         const recipientId = e.target.id;
         setIsLoading(pre=>({...pre, [recipientId]: true}));
@@ -124,35 +166,42 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
 
     }
 
-    const nextPage = async () => {
-       
-        const nextPageData = await fetchNextPage(page+1, limit)
-        .then(data => {
+    const fetchPageData = async (pageNum, pageSize) => {
+        setUpdating(true);
+        try {
+            const data = await fetchNextPage(pageNum, pageSize);
             setRecipients(data);
-            setPage(prev=>prev+1);
-            setPageCount(prev=>prev-1);
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    }
-
-    const prevPage = async () => {
-            
-
-            const prevPageData = await fetchNextPage(page-1, limit)
-            .then(data => {
-                setRecipients(data);
-                setPage(prev=>prev-1);
-                setPageCount(prev=>prev+1);            })
-            .catch(error => {
-                console.log(error);
-            })
+        } catch (error) {
+            console.error('Error fetching page data:', error);
+        } finally {
+            setUpdating(false);
         }
-        
+    };
 
+    const handlePageChange = (newPage, count) => {
+        if (searchTerm && searchResults.length > 0) {
+            // Handling pagination with filtered results
+            const startIndex = newPage * limit;
+            const endIndex = startIndex + limit;
+            setRecipients(searchResults.slice(startIndex, endIndex));
+        } else {
+            // Handling normal pagination
+            fetchPageData(newPage, limit);
+        }
+        setPage(newPage);
+        setPageCount(count);
+    };
 
-
+    // if (recipients.length === 0) {    
+    //     return (
+    //         <div className={styles.empty}>
+    //         <Spinner size="xl" color="white" />
+    //         <h1>No RESULTS</h1>
+    //         </div>
+            
+    //     )
+    // }
+    
     return (
         <div className={styles.adminRecipientsContainer}>   
          {updating && <div className="absolute h-[100%] w-[100%] flex flex-col justify-center align-middle"><CircularProgress isIndeterminate zIndex={3} size="100px" color={accentColor} display='flex' justifyContent={'center'} alignSelf={'center'} position='absolute' margin='auto' left='50%'
@@ -168,7 +217,7 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
                             <Image alt={recipient.name+recipient._id} src={recipient.profileImage ? recipient.profileImage.src : defaultProfile} width={250} height={250} className={styles.adminProifileImage} />
                         <div className={styles.adminContent}>
                             <h2 className="text-xl ">{recipient.name}</h2>
-                            <p>Graduated in {recipient.graduateYear}</p>
+                            <p>Graduated in {recipient.graduationYear}</p>
                             <p>Attending {recipient.college}</p>
                             <p>Majoring in {recipient.major}</p>
                         </div>
@@ -191,9 +240,9 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
             })}
             <div className="p-5">
                 <ButtonGroup gap='2' >
-                <Button isDisabled={pageCount === pages-1} onClick={prevPage}>Previous</Button>
+                <Button isDisabled={page === 0} onClick={() => handlePageChange(page - 1, pageCount+1)}>Previous</Button>
 
-                    <Button isDisabled={pageCount<=0} onClick={nextPage}>Next</Button>
+                    <Button isDisabled={pageCount< 1} onClick={() => handlePageChange(page + 1, pageCount-1)}>Next</Button>
                 </ButtonGroup>
             </div>
 

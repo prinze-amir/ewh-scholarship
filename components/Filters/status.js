@@ -1,11 +1,16 @@
 'use client';
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Button, ButtonGroup } from "@chakra-ui/react";
 const StatusFilters = () =>{
     const router = useRouter();
     const pathname = usePathname();
+    const params = useSearchParams();
     const handleFilter = (filter) => {
-        router.push(`${pathname}?filter=${filter}`, {shallow: true});
+        const query = new URLSearchParams(params);
+        console.log(query.get('search'))
+        query.set('filter', filter);
+       
+        router.push(`${pathname}?${query.toString()}`, {shallow: true});
     }
     return (
         <div className='mt-4'>

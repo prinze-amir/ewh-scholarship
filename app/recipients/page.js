@@ -17,7 +17,7 @@ export default async function RecipientsPage({}){
     const pages = Math.ceil(total / limit);
 
     return (
-        <div>
+        <div className="md:m-0 mb-10">
             <TransparentHeader/>
             <Hero 
                 title={'Our Recipients'}

@@ -7,9 +7,11 @@ import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import { Suspense } from "react";
 
 export default async function Profile(){
+
     const session = await getServerSession(authOptions)
+    let user = session.user
     const res = await getUser(session.user.id)
-    const user = JSON.parse(JSON.stringify(res))
+   if (res) user = JSON.parse(JSON.stringify(res))
     
     return (
         <div className="flex gap-4 flex-wrap max-w-full">

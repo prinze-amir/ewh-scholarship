@@ -61,7 +61,7 @@
     height:350px;
     border-radius: 10px;
     display: flex;
-    border: 1px solid #d2d2d2;
+    border: 1px solid #eeeeee;
     flex-direction: column;
     gap:2px;
     padding: 20px;
@@ -127,6 +127,8 @@
     }
     .recipientCard {
         width: 100%;
+        align-items:center;
+        border:none;
     }
     .adminContent{
         width:100%;

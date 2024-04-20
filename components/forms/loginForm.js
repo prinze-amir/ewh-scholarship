@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { accentColor } from "@/utilities/theme";
+import { FcGoogle } from "react-icons/fc";
 
 const LoginForm = () => {
 
@@ -12,7 +13,7 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-  const { data: session } = useSession();
+   const { data: session } = useSession();
   const router = useRouter();
 
   useEffect(() => {
@@ -21,15 +22,14 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (session) {
-      router.push("/admin");
-     console.log('user is logged in')
+      router.push('/admin');  // Redirect to dashboard if logged in
     }
-  }, [session]);
+  }, [session, router]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    //console.log(form)
+    console.log(form)
 
     try{
       const resp = await signIn("credentials", {
@@ -37,17 +37,20 @@ const LoginForm = () => {
         password: form.password,
         redirect: false,
       });
+
       if (resp.error) {
         setError(resp.error);
         return;
       }
+     // router.push("/admin");
     } catch(e){
       console.error(e)
-      setError(resp.error);
+      setError(e.message);
 
     }
 
   }
+
 
   return (
     <div className="w-full max-w-xs">
@@ -104,6 +107,12 @@ const LoginForm = () => {
           </a>
         </div>
       </form>
+      {/* <button
+          className="bg-white shadow-md hover:bg-slate-900 hover:text-white text-slate-800 font-bold py-2 px-4 mx-auto my-3 rounded-lg flex gap-3"
+          onClick={() => signIn("google")}
+        >
+          <FcGoogle className="text-2xl" /> Sign in with Google
+        </button> */}
       <p className="text-center text-gray-500 text-xs">
         &copy;2024 WeArePlu2o. All rights reserved.
       </p>

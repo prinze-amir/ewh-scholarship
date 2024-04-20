@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcrypt";
 import connectMongoDB from "@/lib/mongo/mongoosedb";
 import User from "@/models/userModel";
+import { signIn } from "next-auth/react";
 
 const loginAuth = async (credentials) => {
     const { email, password } = credentials;
@@ -29,7 +30,7 @@ export const authOptions = {
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email", placeholder: "Enter your email" },
-        password: { label: "Password", type: "password" },
+        password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
         try {
@@ -46,6 +47,7 @@ export const authOptions = {
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
     }),
   ],
+  baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
 
   session: {
     strategy: "jwt",
@@ -73,6 +75,20 @@ export const authOptions = {
        
       return session;
     },
+    
+    // async signIn(user, account, profile) {
+    //  // if (account.provider === "google") {
+    //  // console.log(user, 'user', account, 'account', profile, 'profile')
+    //     return true;
+    // //  }
+    //  // return true;
+    // },
+    // async redirect({ url, baseUrl }) {
+    //   // You can use a conditional statement to customize the redirect based on the user role or other parameters
+    //     console.log(url, 'url', baseUrl, 'baseUrl')
+    //     return baseUrl+'/admin'; 
+    //    // Redirecting to a custom page after login
+    // }
 
   },
   jwt: {

@@ -50,22 +50,33 @@ export const getUsers = async () => {
 };
 export const getUser = async (id) => {
   await connectToDatabase();
-  const user = await User.findById(id);
-  return user;
+  try{
+      const user = await User.findById(id);
+      if (!user) {
+        throw new Error("No user found");
+      }
+      console.log(user, 'user')
+      return user;
+  }catch(error){
+    console.log(error.message, 'error')
+    return error.message;
+  }
+  
 };
 
 export const updateUser = async (id, formData) => {
     const userId = { _id: id };
     const user = await getUser(id);
- 
+    let newPassword = false
     if(formData.password) {
           console.log('checking for password')  
         if (formData.password !== formData?.confirmPassword) {
-        throw new Error("Passwords do not match");
+        throw new Error("Failed to update! Passwords do not match");
         }
         const salt = await bycrypt.genSalt(10);
         const hashedPassword = await bycrypt.hash(formData.password, salt);
         formData.password = hashedPassword;
+        newPassword = true
     }
     if(formData.removeImage){
         //delete the old image from google drive
@@ -95,14 +106,14 @@ export const updateUser = async (id, formData) => {
 
    try { 
     await connectToDatabase();
-    const updatedUser = await User.findByIdAndUpdate(
+    const res = await User.findByIdAndUpdate(
         userId,
         { $set: formData },
         { new: true, runValidators: true }  // Return the updated object and run schema validators
       );
-      console.log( updatedUser, 'updated user')
-      const resp  = JSON.parse(JSON.stringify(updatedUser));
-     return resp
+      console.log( res, 'updated user')
+      const updatedUser  = JSON.parse(JSON.stringify(res));
+     return {updateUser, newPassword}
    // return 'user updated successfully'
     } catch (error) {
           console.log(error.message, 'error')

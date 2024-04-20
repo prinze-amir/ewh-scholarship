@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Spinner, Button, ButtonGroup } from '@chakra-ui/react';
 import { fetchNextPage } from '@/app/actions';
-import { defaultProfile } from '@/utilities/theme';
+import { defaultProfile } from '@/utilities/defaults';
+import { set } from 'mongoose';
 
 const Recipients = ({allRecipients, limit, pages}) =>{
 
@@ -53,6 +54,7 @@ const Recipients = ({allRecipients, limit, pages}) =>{
             setSearchResults(filtered);
             setPageCount(Math.ceil(filtered.length / limit)-1);
             setRecipients(filtered.slice(0, limit));
+            setPage(0);
         } catch (error) {
             console.error('Error fetching and filtering recipients:', error);
         } finally {
@@ -110,21 +112,20 @@ const Recipients = ({allRecipients, limit, pages}) =>{
                             </Link>
                         <div className={styles.content}>
                             <h2 className="text-2xl ">{recipient.name}</h2>
-                            {/* <p>Class of {recipient.graduateYear}</p> */}
-                            <p>{recipient.college}</p>
-                            <p>Majoring in {recipient.major}</p>
+                            <p className="truncate">{recipient.college}</p>
+                            <p className="truncate">Majoring in {recipient.major}</p>
                         </div>
                         
                     </div>
                 )} 
             })}    
         </div>
-        <div className="p-5 flex justify-center">
-        <ButtonGroup gap='2'>
-        <Button isDisabled={page === 0} onClick={() => handlePageChange(page - 1, pageCount+1)} bgColor={accentColor}>Previous</Button>
-        <Button isDisabled={pageCount < 1} onClick={() => handlePageChange(page + 1, pageCount-1)} bgColor={accentColor} color={'white'}>Next</Button>
-                </ButtonGroup>
-            </div>
+        <div className="md:p-5 flex justify-center md:relative fixed bottom-0 bg-white w-[100%] p-3 z-10">
+            <ButtonGroup gap='2'>
+                <Button isDisabled={page === 0} onClick={() => handlePageChange(page - 1, pageCount+1)} bgColor={accentColor}>Previous</Button>
+                <Button isDisabled={pageCount < 1} onClick={() => handlePageChange(page + 1, pageCount-1)} bgColor={accentColor} color={'white'}>Next</Button>
+            </ButtonGroup>
+        </div>
         </div>
     )
 }

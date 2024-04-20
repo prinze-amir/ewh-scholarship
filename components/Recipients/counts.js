@@ -1,6 +1,7 @@
 import { getAllRecipients } from "@/lib/mongo/recipients";
 import { revalidatePath } from "next/cache";
 import { StatusFilters } from "../Filters/status";
+import { wait } from "@/utilities/defaults";
 const Count = async () => {
     const {recipients} = await getAllRecipients(0,0);
 
@@ -14,7 +15,6 @@ const Count = async () => {
    const pending = recipients.filter(recipient => recipient.isApproved === false);
 
    revalidatePath('/admin');
-
     return (
         <div>
             <h1 className="text-3xl my-2">{approved.length} Recipients</h1>

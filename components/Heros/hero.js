@@ -2,6 +2,7 @@ import { Button } from "@chakra-ui/react"
 import { Search } from '@/components/Filters/search';
 import style from './hero.module.css'
 import Link from 'next/link'
+import { accentColor } from "@/utilities/theme";
 export const Hero = async (props) => {
     const {title, subtitle, image, buttonText, height, top, search, noOverlay} = props
     let imageUrl = image
@@ -11,6 +12,7 @@ export const Hero = async (props) => {
 
     let heroHeight = height ? height : '50vh'
     let adjustMargin = top ? '-74px' : '0px'
+    let setTop = top ? 'top-0' : ''
 
     const heroStyles = {
         divContainer: {
@@ -63,15 +65,15 @@ export const Hero = async (props) => {
 
     return (
         <div>
-        <div style={heroStyles.divContainer} className={style.divContainer}>
+        <div style={heroStyles.divContainer} className={`${setTop}`}>
 
-           {title && <h1 style={heroStyles.title}>{title}</h1>
+           {title && <h1 className="md:text-6xl uppercase font-medium text-4xl text-white z-10 text-center my-3" >{title}</h1>
             }
             {subtitle && <h2 style={heroStyles.subtitle}>{subtitle}</h2>}
-            {search && <Search/>}           
+            {search && <Search className={style.search}/>}           
             {buttonText && <Link href="/apply"><Button 
                 size='lg'
-                bgColor="#2fd6b9" 
+                bgColor={accentColor}
                 color="white"
                 zIndex={'2'} 
                  style={{marginTop:'20px'}}
@@ -80,7 +82,7 @@ export const Hero = async (props) => {
                 >{buttonText}</Button></Link>}
             {!noOverlay && <div style={heroStyles.overlay}></div>}
         </div>
-        <div style={heroStyles.height}></div>
+        <div className={`${setTop}`} style={heroStyles.height}></div>
     </div>
     )
 }

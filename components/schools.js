@@ -1,3 +1,4 @@
+import { accentColor } from '@/utilities/theme'
 import Image from 'next/image'
 
 export const Schools = () => {
@@ -55,9 +56,10 @@ export const Schools = () => {
             justifyContent: 'center',
             alignItems: 'center',
             flexWrap: 'wrap',
+            flexShrink: '3',
             gap:'20px' ,
             padding: '1rem',
-            backgroundColor: '#2fd6b9',
+            backgroundColor: '#f1f5f9',
             color: '#000',
             position: 'relative',
             zIndex: '1',
@@ -75,7 +77,7 @@ export const Schools = () => {
             width: '100%',
             height: 'auto',
             objectFit: 'cover',
-            zIndex: '2',
+            zIndex: '99',
         },
         schoolName: {
             fontSize: '1.5rem',

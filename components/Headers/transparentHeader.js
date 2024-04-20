@@ -6,6 +6,7 @@ import { Dropdown } from '@/components/Dropdowns/menu'
 import { MobileDropdown } from '@/components/Dropdowns/mobileMenu'
 import {Button } from '@chakra-ui/react'
 import { useSession, signOut, signIn } from 'next-auth/react';
+import Image from 'next/image';
 
  export const TransparentHeader = ({color='text-white', bgColor='bg-transparent'}) => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -25,7 +26,7 @@ import { useSession, signOut, signIn } from 'next-auth/react';
 
     return (
         <div className={isScrolled ? styles.solidHeader: `${bgColor} ` + styles.transparentHeader}>
-            <Link href="/"><h1 className='text-lg uppercase'>EWH Scholarships</h1></Link>
+            <Link href="/" className="flex gap-2 items-center"><Image className="rounded-full p-3 bg-slate-100 hover:bg-slate-200" src="/images/logo1.svg" alt="logo" height={50} width={50}/><h1 className='text-lg uppercase'>EWH Scholarships</h1></Link>
             <ul className={styles.navmenu}>
                 <li><Dropdown/></li>
                 {/* <li><Link href="/donate">Donate</Link></li> */}

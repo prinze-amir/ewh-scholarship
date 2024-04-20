@@ -14,3 +14,11 @@ export const formatPhone = (e) => {
 export const isEmpty = (obj) => {
   return Object.keys(obj).length === 0;
 }
+
+export const appendQuery = (router, query) => {
+  const updatedQuery = { ...router.query, ...query };
+  router.push({
+    pathname: router.pathname,
+    query: updatedQuery,
+  }, undefined, { shallow: true });
+}

@@ -1,3 +1,4 @@
+'use client';
 import { Menu, MenuButton, MenuList, MenuItem, Button, IconButton} from '@chakra-ui/react';
 import { ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { accentColor as themeAccentColor } from '@/utilities/theme';
@@ -28,7 +29,7 @@ export const MobileDropdown = ({session}) => {
                 <MenuItem as='a' href='/recipients'>See Recipients</MenuItem>
                 {!session && <MenuItem as='a' href='/login'><button style={{backgroundColor:accentColor}} className={"p-1.5 rounded-lg shadow-md text-white"} >Login</button></MenuItem>}
                 {session && <MenuItem as='a' href='/admin'>Admin</MenuItem>}
-                {session && <MenuItem as='li'><button className="p-1.5 rounded-lg w-fit bg-slate-600 text-white" onClick={signOut}>LogOut</button></MenuItem>}
+                {session && <MenuItem as='div'><button className="p-1.5 rounded-lg w-fit bg-slate-600 text-white" onClick={signOut}>LogOut</button></MenuItem>}
             </MenuList>
         </Menu>
     )

@@ -26,7 +26,7 @@ export const Users = ({initialUsers}) => {
    
     useEffect(() => {
         if(session){
-            setIsSuperAdmin(prev=>session.user.role.isSuperAdmin)    
+            setIsSuperAdmin(prev=>session.user?.role?.isSuperAdmin)    
         }
     }, [session])
 

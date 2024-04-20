@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
  import { Button } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { accentColor } from '@/utilities/theme';
 import  Image  from 'next/image';
 import heic2any from '@/lib/heicConversion'
@@ -20,11 +20,12 @@ export const EditProfile = ({user, onClose, handleEdit}) =>{
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [passwordChange, setPasswordChange] = useState(false);
     const [imagePreviewUrl, setImagePreviewUrl] = useState(user.image?.src);
-    const isSuperAdmin = user.role.isSuperAdmin;
+    const isSuperAdmin = user.role?.isSuperAdmin;
     const {data: session} = useSession();
-    const isCurrentUserSuperAdmin = session?.user.role.isSuperAdmin;
-    const router = useRouter();
+    const isCurrentUserSuperAdmin = session?.user.role?.isSuperAdmin;
+    const pathname = usePathname();
 
     useEffect(() =>{
         setColor(accentColor);
@@ -111,18 +112,24 @@ export const EditProfile = ({user, onClose, handleEdit}) =>{
         setLoading(true);
         setError(null);
         try {
-            const updatedUser = await updateUser(user._id, formData);
+            const {updatedUser, newPassword} = await updateUser(user._id, formData);
             console.log(updatedUser, 'updated user')
-            if (session.user.id !== user._id) {
+            if (pathname === '/admin/settings') {
                 handleEdit(e, updatedUser); 
                 onClose();
             }
-            setLoading(false);  
+            document.getElementById('password').value = ''; 
+            document.getElementById('confirmPassword').value = ''; 
+            setPasswordChange(newPassword);
   
             } catch(e){
                 setError(e.message);
+                document.getElementById('password').value = ''; 
+                document.getElementById('confirmPassword').value = '';     
                 console.log(e.message, 'error occured')
             }
+            setLoading(false); 
+
     }
     const removeImage = () => {
         setImagePreviewUrl(null);
@@ -135,7 +142,7 @@ export const EditProfile = ({user, onClose, handleEdit}) =>{
     const accessSettings = (
         <>
         <label htmlFor="role">Access</label>
-                <select className="border p-2 rounded-lg" name="role" id="role" value={formData.role.isSuperAdmin ? 'superAdmin':'admin'} onChange={handleInput}>
+                <select className="border p-2 rounded-lg" name="role" id="role" value={formData.role?.isSuperAdmin ? 'superAdmin':'admin'} onChange={handleInput}>
                     <option value={"admin"}>Admin</option>
                     <option value="superAdmin">Super Admin</option>
                 </select>
@@ -146,7 +153,6 @@ export const EditProfile = ({user, onClose, handleEdit}) =>{
     return (
         <div className="bg-white rounded-lg p-4 w-[400px] max-w-full">
             <h1 className="text-2xl">Edit Profile</h1>
-            <p className="text-red-500">{error ? error: ''}</p>
             <form onSubmit={handleSubmit}  data={formData} className=" flex flex-col m-2 rounded-lg gap-2 justify-center bg-white p-4 w-[350px] max-w-full">
             {imagePreviewUrl && (
                 <div className="w-full px-3 mb-6">
@@ -163,15 +169,19 @@ export const EditProfile = ({user, onClose, handleEdit}) =>{
                     onChange={handleImageChange}
                     placeholder="Upload Image"
                 />
+
                 <label htmlFor="name">Name</label>
                 <input className="border p-2 rounded-lg" type="text" name="name" autoComplete="name" id="name" value={formData.name} onChange={handleInput}  />
                 <label htmlFor="email">Email</label>
                 <input className="border p-2 rounded-lg" type="email" name="email"  id="email" autoComplete="username" onChange={handleInput} value={formData.email} />
+                {passwordChange && <p className="text-green-500">Password Changed Successfully</p>}
                 <label htmlFor="password">Change Password</label>
                 <input className="border p-2 rounded-lg" onChange={handleInput} type="password" autoComplete="new-password" name="password" id="password" placeholder='enter new password'  />
                 <label htmlFor="confirmPassword">Confirm Password</label>
                 <input className="border p-2 rounded-lg" onChange={handleInput} type="password" autoComplete="new-password" name="confirmPassword" id="confirmPassword"  />
                 {showAccess}
+                <p className="text-red-500">{error ? error: ''}</p>
+
                 <Button bgColor={color} color='white' width='fit-content' isLoading={loading} shadow='lg' _hover={{background:'white',color:'#333'}} type="submit">Add New User</Button>
             </form>
         </div>

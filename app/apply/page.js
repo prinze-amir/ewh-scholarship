@@ -6,15 +6,15 @@ export default function Apply(){
     
     
         return (
-           <div className="bg-stone-950">
+           <div className="bg-neutral-900">
            <TransparentHeader/>
             <Hero
             image={'/images/graduates.jpg'}
             title={'Apply For The Scholarship'}
-            height={'35vh'}
+            height={'45vh'}
             top={true}
             />
-            <div className="flex flex-col items-center justify-center gap-y-4 mt-20 bg-transparent">
+            <div className="flex flex-col items-center justify-center gap-y-4 mt-20 p-5 ">
                 {/* <h1 className="text-3xl font-bold">Apply For The Scholarship</h1> */}
                 
                 <Form />
