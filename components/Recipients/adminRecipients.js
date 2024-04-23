@@ -62,6 +62,8 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
             setSearchResults(filtered);
             setPageCount(Math.ceil(filtered.length / limit)-1);
             setRecipients(filtered.slice(0, limit));
+            setPage(0);
+
         } else {
             const searchFiltered = recipients.filter(recipient => {
                 return Object.values(recipient).some(value => {
@@ -76,6 +78,8 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
             setSearchResults(searchFiltered);
             setPageCount(Math.ceil(searchFiltered.length / limit)-1);
             setRecipients(searchFiltered.slice(0, limit));
+            setPage(0);
+
          }
            
         } catch (error) {
