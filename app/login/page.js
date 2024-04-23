@@ -10,7 +10,7 @@ export default async function Login () {
             bgColor={'bg-neutral-800 shadow-md'}
             /> */}
             <div className={style.container}>
-                <Link href="/"><Image className="mt-20 bg-slate-200 p-5 rounded-full hover:bg-slate-100" src="/images/logo2.svg"alt="logo" width={150} height={150} /></Link>
+                <Link href="/"><Image priority className="mt-20 bg-slate-200 p-5 rounded-full hover:bg-slate-100" src="/images/logo2.svg"alt="logo" width={150} height={150} /></Link>
                 <h1 className="text-2xl font-semibold my-4">EWH Scholarship Fund</h1>
                 <LoginForm />
             </div>

@@ -4,14 +4,15 @@ import { states } from '@/utilities/states';
 import  {useRouter} from 'next/navigation';
 import  Image from 'next/image';
 import { formatPhone } from '@/utilities/forms';
-import heic2any from '@/lib/heicConversion'
+import {convertHeicToJpg} from '@/lib/heicConversion'
 
 import { PhoneIcon, EmailIcon } from '@chakra-ui/icons';
 import { BiDollar } from "react-icons/bi";
 import { useState } from 'react';
-import CustomSwitch from '@/components/forms/switchButton';
+import CustomSwitch from '@/components/Buttons/switchButton';
 import style from '@/app/admin/admin.module.css';
 import RecipientCard from '../Cards/recipientCard';
+
 const EditForm = ({ recipient }) => {
     const [formData, setFormData] = useState({
         name: recipient.name,
@@ -35,6 +36,7 @@ const EditForm = ({ recipient }) => {
     const [profile, setProfile] = useState(recipient);
     const [imagePreviewUrl, setImagePreviewUrl] = useState(recipient.profileImage?.src);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
     const router = useRouter();
     const date = new Date();
     const startYear = 1980;
@@ -93,11 +95,7 @@ const EditForm = ({ recipient }) => {
         if (file.type === 'image/heic' || file.name.endsWith('.heic')) {
     
           try {
-            const convertedBlob = await heic2any({
-              blob: file,
-              toType: "image/jpeg",
-              quality: 0.8 // Adjust quality as needed
-            });
+            const convertedBlob = await convertHeicToJpg(file)
     
             // Generate a URL for the converted file
             const reader = new FileReader();
@@ -150,12 +148,18 @@ const EditForm = ({ recipient }) => {
                 },
                 body: JSON.stringify(formData),
             });
+            console.log(response, 'response')
+            if (!response.ok) {
+                throw new Error('Failed to update recipient');
+            }
             const data = await response.json();
+            console.log(data, 'data')
             console.log(formData, 'form data');
             setProfile(prev=>({...prev, ...formData}));
             router.refresh();
         } catch (error) {
             console.log(error);
+            setError(error.message);
         }
         setIsLoading(false);
         console.log(profile, 'profile')
@@ -178,6 +182,7 @@ const EditForm = ({ recipient }) => {
                 />
                 </div>
                }
+               {error && <p className="text-red-500 text-center">{error}</p>}
 
         <form className="text-white p-5 max-w-screen-sm w-[100%] rounded-lg border shadow-lg self-center" onSubmit={handleSubmit}>
             <Stack spacing={3}>
@@ -364,6 +369,8 @@ const EditForm = ({ recipient }) => {
             </InputGroup>
             <Button id={recipient._id} isLoading={isLoading} type="submit" bgColor="#2fd6b9" color="white" _hover={{color:'#333', backgroundColor:'white'}} >UPDATE</Button>
             </Stack>
+            {error && <p className="text-red-500 text-center">{error}</p>}
+
         </form>
         </div>
     );

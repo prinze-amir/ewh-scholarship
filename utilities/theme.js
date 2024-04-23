@@ -1,4 +1,6 @@
 'use client'
+import { useState, useEffect } from 'react';
+
 if (typeof localStorage === 'undefined') {
   global.localStorage = {
     getItem: () => null,
@@ -10,5 +12,19 @@ if (typeof localStorage === 'undefined') {
 const defaultProfile = '/images/cute-profile.png'
 
 const accentColor = localStorage.getItem('theme-accent-color') || '#2fd6b9';
+
+export const ThemeDiv = ({style, children }) => {
+  const [accent, setAccent] = useState('');
+
+  useEffect(() => {
+    setAccent(accentColor);
+  }, [accent]);
+
+  return (
+    <div className={style} style={{ backgroundColor: accent }}>
+      {children}
+    </div>
+  );
+};
 
 export { accentColor, defaultProfile }

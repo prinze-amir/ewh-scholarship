@@ -8,6 +8,7 @@ import {User} from '@/components/Users/single'
 import { Suspense } from 'react'
 import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import { ThemeButton } from '@/components/Buttons/themeButton'
+import { ThemeDiv } from '@/utilities/theme'
 export default async function Admin (){
     const limit = 3;
     const {recipients} = await getAllRecipients(0,limit);
@@ -24,16 +25,21 @@ export default async function Admin (){
             </Suspense>
             <ThemeButton text="Add New Recipient" theme="dark" link="/apply" />
 
-            <Suspense fallback={<Skeleton height="210px" width="420px" startColor={accentColor} endColor='white' rounded="lg"/>}>
-                <div id="totalRecipients" style={{backgroundColor:accentColor}} className={adminStyles.count}>
+            <Suspense fallback={<Skeleton height="210px" width="420px" rounded="lg"/>}>
+                <ThemeDiv style={adminStyles.count}>
                     <Count />
-                </div> 
+                </ThemeDiv>
+               
             </Suspense>
             </div>                
 
             <div className={adminStyles.recipients}>
                     <Search theme={'white'}/>
-                    <AdminRecipients limit={limit} pages={pages} allRecipients={allRecipients} />
+                    <AdminRecipients
+                    pages={pages}  
+                    limit={limit} 
+                    allRecipients={allRecipients} 
+                    />
             </div>
 
 

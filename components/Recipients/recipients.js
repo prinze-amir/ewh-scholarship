@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { Spinner, CircularProgress, Button, ButtonGroup } from '@chakra-ui/react';
 import { fetchNextPage } from '@/app/actions';
 import { defaultProfile } from '@/utilities/defaults';
-import { set } from 'mongoose';
 
 const Recipients = ({allRecipients, limit, pages}) =>{
 
@@ -108,7 +107,7 @@ const Recipients = ({allRecipients, limit, pages}) =>{
                 return (
                     <div className={styles.recipientCard} key={recipient._id}>
                         <Link href={`/recipients/${recipient._id}`}>
-                            <Image alt={recipient.name} src={recipient.profileImage ? recipient.profileImage.src : defaultProfile} width={250} height={250} className={styles.profileImage} />
+                            <Image priority alt={recipient.name} src={recipient.profileImage ? recipient.profileImage.src : defaultProfile} width={250} height={250} className={styles.profileImage} />
                             </Link>
                         <div className={styles.content}>
                             <h2 className="text-2xl ">{recipient.name}</h2>
