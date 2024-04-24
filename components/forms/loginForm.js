@@ -3,10 +3,13 @@ import { useState, useEffect } from "react";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { accentColor } from "@/utilities/theme";
+import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
+
 import { FcGoogle } from "react-icons/fc";
+import { Button } from "@chakra-ui/react";
 
 const LoginForm = () => {
-
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [color, setColor] = useState('');
   const [form, setForm] = useState({
@@ -30,6 +33,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     console.log(form)
+    setLoading(true);
 
     try{
       const resp = await signIn("credentials", {
@@ -46,11 +50,25 @@ const LoginForm = () => {
     } catch(e){
       console.error(e)
       setError(e.message);
-
+    }
+    finally {
+      setLoading(false);
     }
 
   }
 
+  const showPassword = () => {
+    const password = document.getElementById('password');
+    if (password.type === 'password') {
+      password.type = 'text';
+      document.getElementById('show').classList.add('hidden');
+      document.getElementById('hide').classList.remove('hidden');
+    } else {
+      password.type = 'password';
+      document.getElementById('show').classList.remove('hidden');
+      document.getElementById('hide').classList.add('hidden');
+    }
+  }
 
   return (
     <div className="w-full max-w-xs">
@@ -79,7 +97,8 @@ const LoginForm = () => {
           >
             Password
           </label>
-          <input
+          <div className="flex relative">
+             <input
             className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             type="password"
@@ -88,20 +107,27 @@ const LoginForm = () => {
             onChange={(e) => setForm({ ...form, password: e.target.value })}
 
           />
+          <FaRegEye id="show" onClick={showPassword} className="absolute text-zinc-400 right-2 top-2 z-3 text-2xl" />
+          <FaRegEyeSlash id="hide"onClick={showPassword} className="absolute hidden right-2 top-2 z-3 text-2xl" />
+          </div>
+         
           <p className="text-red-500 text-xs italic">
             {error ? error : ""}
           </p>
         </div>
         <div className="flex items-center justify-between">
-          <button style={{backgroundColor:color, _hover:{backgroundColor:'red'}}}
-            className="text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+          <Button isLoading={loading} bgColor={color} color='white' rounded="lg" 
+          _hover={{backgroundColor: '#333',shadow: 'md'}}
+          _active={{p:3}}
+           my={3} shadow="md"
+            
             type="submit"
           >
             Sign In
-          </button>
+          </Button>
           <a
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            href="#"
+            href="/password-reset"
           >
             Forgot Password?
           </a>

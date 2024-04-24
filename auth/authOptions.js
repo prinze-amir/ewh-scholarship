@@ -18,7 +18,7 @@ const loginAuth = async (credentials) => {
     const passwordsMatch = await bcrypt.compare(password, user.password);
 
     if (passwordsMatch === false) {
-      throw new Error("Password does not match");
+      throw new Error("Wrong password or email address");
     }
 
     return user;

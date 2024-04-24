@@ -114,8 +114,7 @@ export const Schools = () => {
                         height={350} 
                         style={schoolsStyles.schoolImage} 
                     />
-                    {/* <h2 style={schoolsStyles.schoolName}>{school.name}</h2>
-                    <h3 style={schoolsStyles.schoolLocation}>{school.city}, {school.state}</h3> */}
+
                     </a>
                 </div>
             ))}

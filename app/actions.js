@@ -3,7 +3,7 @@ import { getAllRecipients } from "@/lib/mongo/recipients";
 import connectToDatabase from "@/lib/mongo/mongoosedb";
 import { defaultProfile } from "@/utilities/defaults";
 import { uploadGoogleDrive, deletePhoto } from "@/lib/google/googleDriveService";
-import bycrypt from "bcrypt";
+import bcrypt from "bcrypt";
 import User from "@/models/userModel";
 import Recipient from "@/models/recipientModel";
 
@@ -73,8 +73,8 @@ export const updateUser = async (id, formData) => {
         if (formData.password !== formData?.confirmPassword) {
         throw new Error("Failed to update! Passwords do not match");
         }
-        const salt = await bycrypt.genSalt(10);
-        const hashedPassword = await bycrypt.hash(formData.password, salt);
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(formData.password, salt);
         formData.password = hashedPassword;
         newPassword = true
     }
@@ -134,8 +134,8 @@ export const addNewUser = async (formData) => {
     } else {
       role = { isAdmin: true, isSuperAdmin: false };
     }
-    const salt = await bycrypt.genSalt(10);
-    const hashedPassword = await bycrypt.hash(password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     if (image) {
       const uploadedImage = await uploadGoogleDrive(image, name);
       formData.image = uploadedImage;

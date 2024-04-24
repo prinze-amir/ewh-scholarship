@@ -4,7 +4,7 @@ import Image from 'next/image';
 import {useState, useEffect, useRef} from 'react';
 import { Button, ButtonGroup, Spinner, CircularProgress, theme } from '@chakra-ui/react'
 import {useRouter, useSearchParams} from 'next/navigation';
-import CustomSwitch from '@/components/forms/switchButton';
+import CustomSwitch from '@/components/Buttons/switchButton';
 import { fetchNextPage } from '@/app/actions';
 import { accentColor as themeColor } from '@/utilities/theme';
 import {defaultProfile} from '@/utilities/defaults';
@@ -28,6 +28,7 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
     useEffect(() => {
         if (filter){
             filterStatus();
+            document.getElementById('admin-recipients').scrollIntoView({behavior: 'smooth'});
         }
     }, [filter])
 
@@ -61,6 +62,8 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
             setSearchResults(filtered);
             setPageCount(Math.ceil(filtered.length / limit)-1);
             setRecipients(filtered.slice(0, limit));
+            setPage(0);
+
         } else {
             const searchFiltered = recipients.filter(recipient => {
                 return Object.values(recipient).some(value => {
@@ -75,6 +78,8 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
             setSearchResults(searchFiltered);
             setPageCount(Math.ceil(searchFiltered.length / limit)-1);
             setRecipients(searchFiltered.slice(0, limit));
+            setPage(0);
+
          }
            
         } catch (error) {
@@ -113,7 +118,11 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
     const handleDelete = async (e) => {
         const recipientId = e.target.id;
         setIsLoading(pre=>({...pre, [recipientId]: true}));
-        alert('Are you sure you want to delete this recipient?');
+        const confirmed = confirm('Are you sure you want to delete this recipient?');
+        if (!confirmed) {
+            setIsLoading(pre=>({...pre, [recipientId]: false}));
+            return;
+        }
         try {
             const response = await fetch(`/api/recipients/${recipientId}`, {
                 method: 'DELETE',
@@ -205,7 +214,7 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
     }
     
     return (
-        <div className={styles.adminRecipientsContainer}>   
+        <div id="admin-recipients" className={styles.adminRecipientsContainer}>   
          {updating || recipients.length === 0 && <div className="absolute h-[100%] w-[100%] flex flex-col justify-center align-middle"><CircularProgress isIndeterminate zIndex={3} size="100px" color={accentColor} display='flex' justifyContent={'center'} alignSelf={'center'} position='absolute' margin='auto' left='50%'
                  transform='translate(-50%, -50%)' />
                  <div className={styles.overlay}></div>
@@ -216,7 +225,7 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
                 
                 return (
                     <div key={recipient._id} className={styles.recipientListItem}>
-                            <Image alt={recipient.name+recipient._id} src={recipient.profileImage ? recipient.profileImage.src : defaultProfile} width={250} height={250} className={styles.adminProifileImage} />
+                            <Image priority alt={recipient.name+recipient._id} src={recipient.profileImage ? recipient.profileImage.src : defaultProfile} width={250} height={250} className={styles.adminProifileImage} />
                         <div className={styles.adminContent}>
                             <h2 className="text-xl ">{recipient.name}</h2>
                             <p>Graduated in {recipient.graduationYear}</p>
@@ -231,7 +240,10 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
                             <div className={styles.switch}>
                                 <h1>APPROVE</h1>
                                 <CustomSwitch
-                                    id={recipient._id} size='lg'  isChecked={recipient.isApproved} onChange={toggleRecipient} 
+                                    id={recipient._id} size='lg'  
+                                    isChecked={recipient.isApproved} 
+                                    onChange={toggleRecipient}
+                                    bgcolor={accentColor} 
                                 />
                             </div>
                         

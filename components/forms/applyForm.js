@@ -66,20 +66,20 @@ const ApplyForm = () => {
     
   }
 
-  // const testForm = () => {
-  //     document.getElementById('name').value = 'Amir Arnett';
-  //     document.getElementById('parents').value = 'Donna and Derrick';
-  //     document.getElementById('email').value = 'amir@yahoo.com';
-  //     document.getElementById('phone').value = '(404) 555-5555';
-  //     document.getElementById('addressStreet').value = '1234 Elm St';
-  //     document.getElementById('addressCity').value = 'Atlanta';
-  //     document.getElementById('addressState').value = 'GA';
-  //     document.getElementById('addressZip').value = '30303';
-  //     document.getElementById('year').value = '2023';
-  //     document.getElementById('major').value = 'Business';
-  //     document.getElementById('school').value = 'Georgia State University';
-  //     document.getElementById('bio').value = 'I am a very smart and hard working'
-  // }
+  const testForm = () => {
+      document.getElementById('name').value = 'Amir Arnett';
+      document.getElementById('parents').value = 'Donna and Derrick';
+      document.getElementById('email').value = 'amir@yahoo.com';
+      document.getElementById('phone').value = '(404) 555-5555';
+      document.getElementById('addressStreet').value = '1234 Elm St';
+      document.getElementById('addressCity').value = 'Atlanta';
+      document.getElementById('addressState').value = 'GA';
+      document.getElementById('addressZip').value = '30303';
+      document.getElementById('year').value = '2023';
+      document.getElementById('major').value = 'Business';
+      document.getElementById('school').value = 'Georgia State University';
+      document.getElementById('bio').value = 'I am a very smart and hard working'
+  }
   
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -244,7 +244,7 @@ const ApplyForm = () => {
               </div>
           </div>
           <Button  bgColor={accentColor} color='white' type="submit">Submit</Button>
-          {/* <Button onClick={testForm} color="white" className='ml-4' bgColor={accentColor}>Test Button</Button> */}
+          <Button onClick={testForm} color="white" className='ml-4' bgColor={accentColor}>Test Button</Button>
 
         </form>
       </div>

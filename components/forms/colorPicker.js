@@ -1,22 +1,35 @@
 'use client'
-import { Button, Input, Heading, CardHeader, CardBody, Card  } from '@chakra-ui/react'
+import { Button, Input, Heading, CardHeader, CardBody, Card, theme  } from '@chakra-ui/react'
 import {useState, useEffect} from 'react';
 import { accentColor } from "@/utilities/theme"
+import { getSettings } from '@/app/admin/settings/actions';
+import { updateSettings } from '@/app/admin/settings/actions';
 
-
-export default function ColorPicker() {
+export default function ColorPicker({theme}) {
     const [color, setColor] = useState('');
+
     useEffect(()=>{
 
-        setColor(accentColor)
-
+        if(theme){
+            setColor(theme.accentColor)
+        } else {
+            setColor(accentColor)
+        }console.log(theme, 'theme')
+      
     }, [])
+       
 
     const handleSubmit = (e) => {
-      //  e.preventDefault();
+       // e.preventDefault();
         const newColor = e.target.color.value;
-       // setColor(prev=>newColor);
+        try{
 
+          const res = updateSettings({themeSettings: {accentColor: newColor}});
+          console.log(res, 'settings updated')
+
+        }catch(e){
+            console.error(e)
+        }
         localStorage.setItem('theme-accent-color', newColor);
 
     }
@@ -30,7 +43,7 @@ export default function ColorPicker() {
         <Heading>Theme Colors</Heading>
         <p>Select theme accent color.</p>
         <div className="border rounded-lg" style={{backgroundColor:`${color}`, height:'50px', padding:'10px'}}>
-            <p>Current Color: {color}</p>
+            <p className="text-white">Current Color: {color}</p>
         </div>
       </CardHeader>
       <CardBody className="flex items-center space-y-4">

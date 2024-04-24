@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { accentColor } from '@/utilities/theme';
 import  Image  from 'next/image';
-import heic2any from '@/lib/heicConversion'
+import {convertHeicToJpg} from '@/lib/heicConversion'
 import { updateUser } from '@/app/actions';
 
 export const EditProfile = ({user, onClose, handleEdit}) =>{
@@ -63,11 +63,7 @@ export const EditProfile = ({user, onClose, handleEdit}) =>{
         if (file.type === 'image/heic' || file.name.endsWith('.heic')) {
     
           try {
-            const convertedBlob = await heic2any({
-              blob: file,
-              toType: "image/jpeg",
-              quality: 0.8 // Adjust quality as needed
-            });
+            const convertedBlob = await convertHeicToJpg(file)
     
             // Generate a URL for the converted file
             const reader = new FileReader();

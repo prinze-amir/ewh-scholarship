@@ -1,4 +1,4 @@
-import mongoose, {Schema, models} from 'mongoose';
+import mongoose, {Schema, models, model} from 'mongoose';
 
 const userSchema = new Schema({
     name: {
@@ -35,12 +35,16 @@ const userSchema = new Schema({
             type: String,
             default: ''
         }
-    })
+    }),
+    resetPasswordToken: {
+        type: String,
+        default: ''
+    },
 
 
 }, {timestamps: true});
 
-const User = models.User || mongoose.model('User', userSchema);
+const User = models.User || model('User', userSchema);
 
 
 export default User;

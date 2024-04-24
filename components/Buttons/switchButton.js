@@ -1,6 +1,7 @@
 import { Switch } from '@chakra-ui/react';
-import { accentColor } from '@/utilities/theme';
+
 const CustomSwitch = (props) => {
+
   return (
     <Switch
       {...props}
@@ -8,7 +9,7 @@ const CustomSwitch = (props) => {
         // Track styles
         '.chakra-switch__track': {
           _checked: {
-            bg: accentColor, // Your custom color
+            bg: props.bgcolor, // Your custom color
           },
         },
         // Thumb styles when checked

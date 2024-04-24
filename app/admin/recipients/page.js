@@ -1,4 +1,3 @@
-import LoginForm from '@/components/forms/loginForm'
 import { AdminRecipients } from '@/components/Recipients/adminRecipients'
 import { getAllRecipients } from '@/lib/mongo/recipients'
 import adminStyles from '@/app/admin/admin.module.css'
