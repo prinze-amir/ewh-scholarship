@@ -53,8 +53,11 @@ const [color, setColor] = useState('');
                 </Select>
                 <label>SMTP Username</label>
                 <input  className="p-3 rounded-md border" autoComplete="username" type="email" name="username" value={emailAccount.username} onChange={handleChange} />
-                <label>SMTP Password</label>
+                {emailAccount.service === 'gmail' ? <label>Google App Password</label>: <label>Password</label>}
+
                 <input className="p-3 rounded-md border" autoComplete="new-password" type="password" name="pass" value={emailAccount.pass} onChange={handleChange} />
+               {emailAccount.service === 'gmail' && <a className="text-sm text-blue-600" href="https://support.google.com/mail/answer/185833?hl=en#:~:text=Go%20to%20your%20Google%20Account,the%20page%2C%20select%20App%20passwords." target="_blank">How do I find my app password?</a>}
+
                 <Button isLoading={loading} size='lg' bgColor={color} type="submit">Save</Button>
             </form>
         </div>
