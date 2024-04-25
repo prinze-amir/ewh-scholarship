@@ -26,12 +26,9 @@ export const deleteUser = async (id) => {
 };
 export const getNextRecipient = async (id)=>{
   try {await connectToDatabase();
-    console.log(id, 'id')
     const nextRecipient = await Recipient.findOne({ _id: { $gt: id } }).sort({ _id: 1 });
     const previousRecipient = await Recipient.findOne({ _id: { $lt: id } }).sort({ _id: -1 });
-  console.log(nextRecipient, 'next recipient')
   return {nextRecipient, previousRecipient}
-  //return JSON.parse(JSON.stringify(nextRecipient));
   } catch (error) {
     console.log(error.message, 'error')
     return error.message;
