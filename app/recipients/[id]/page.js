@@ -2,14 +2,19 @@ import { getRecipient } from "@/lib/mongo/recipients";
 import RecipientCard from "@/components/Cards/recipientCard";
 import { Hero } from "@/components/Heros/hero";
 import { Footer } from "@/components/Footers/footer";
-import { getProxyImages } from "@/app/actions";
+import { getProxyImages, getNextRecipient } from "@/app/actions";
 import { TransparentHeader } from "@/components/Headers/transparentHeader";
-
+import { ThemeButton } from "@/components/Buttons/themeButton";
+import { getServerSession } from "next-auth";
 export default async function RecipientSinglePage({params}){
     const recipientId = params;
+    const session = await getServerSession();
     const recipientUnserialized = await getRecipient(recipientId.id);
     const recipient = JSON.parse(JSON.stringify(recipientUnserialized));
-    
+
+    const {nextRecipient, previousRecipient} = await getNextRecipient(recipientId.id);
+    const next = JSON.parse(JSON.stringify(nextRecipient));
+    const previous = JSON.parse(JSON.stringify(previousRecipient));
     const profileImage = recipient.profileImage ? recipient.profileImage.src : null;
 
     const proxyImage = await getProxyImages(profileImage);
@@ -28,9 +33,15 @@ export default async function RecipientSinglePage({params}){
            top={true}
            noOverlay={true} 
            />
+       {session && <div className="flex justify-center my-5 ">
+                    <ThemeButton text={'Edit Recipient'} theme='dark' link={'/admin/recipients/'+recipientId.id} />
 
-           <div className="flex mx-4 justify-center my-20 ">
-                <RecipientCard recipient={recipient}/>
+        </div>}
+
+
+           <div className="flex flex-col gap-2 mx-4 items-center ">
+                <RecipientCard recipient={recipient} next={next} previous={previous} />
+                
            </div>
            <Hero 
            title={recipient.college}

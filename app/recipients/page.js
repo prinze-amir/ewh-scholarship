@@ -27,13 +27,11 @@ export default async function RecipientsPage({}){
                 top={true}
                 search={true}
             />
-       <Suspense fallback={<div>Loading...</div>}>
              <Recipients 
              pages={pages}
              limit={limit}
              allRecipients={allRecipients} 
              />
-        </Suspense>
       
         <Footer />            
         </div>
