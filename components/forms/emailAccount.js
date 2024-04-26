@@ -18,6 +18,7 @@ export const EmailAccount = ({account}) => {
     const [loading, setLoading] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [color, setColor] = useState('');
+
     useEffect(() => {
         setColor(accentColor)
         if(emailAccount.service !== 'other'){
@@ -25,7 +26,6 @@ export const EmailAccount = ({account}) => {
         }
     }, [])
 
-    console.log(account)
     const updateAcount = async (e) => {
         e.preventDefault();
         setLoading(true);

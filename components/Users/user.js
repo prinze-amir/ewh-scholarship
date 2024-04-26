@@ -127,6 +127,7 @@ function EditUserModal({user, handleEdit}) {
         <Button
             id={user._id}
           ml='4'
+          isDisabled={user.role.isSuperAdmin}
           onClick={(e) => {
             setOverlay(<OverlayTwo />)
             onOpen()
