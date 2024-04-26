@@ -244,7 +244,7 @@ const ApplyForm = () => {
               </div>
           </div>
           <Button  bgColor={accentColor} color='white' type="submit">Submit</Button>
-          <Button onClick={testForm} color="white" className='ml-4' bgColor={accentColor}>Test Button</Button>
+          {/* <Button onClick={testForm} color="white" className='ml-4' bgColor={accentColor}>Test Button</Button> */}
 
         </form>
       </div>
