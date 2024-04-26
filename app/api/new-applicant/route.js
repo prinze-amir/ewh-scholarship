@@ -30,7 +30,7 @@ export async function POST(request) {
     // Insert the new recipient into the database
     //  const result = await newApplicant(applicant);
     await connectMongoDB();
-    await Recipient.create(applicant);
+    const result = await Recipient.create(applicant);
 
     // Send an email to the admin
     await newApplicantEmail(applicant, emailImage);
@@ -63,7 +63,7 @@ const newApplicantEmail = async (applicant, image) => {
       from: settings[0].emailService.username,
       to: emails,
       subject: `New Applicant - ${applicant.name}`,
-      html: `<div style="margin:auto;font-size:1.5em;padding:20px;text-align:center"><h1 style="text-transform:capitalize;text-align:center;color:#2da7a9">You have received a new applicant.</h1><div style="margin:10px 0"><img  style="border-radius:25px" src='${image}'  width="120px" /></div><h2>${applicant.name}</h2><p> Graduated/Graduating in ${applicant.graduationYear}<p></p>Plan to attend ${applicant.college}</p> <p>Login to view full application.</p><a href="${process.env.baseURI}/admin?filter=pending" target="_blank"><button style="padding:9px 16px; font-size:1.5em; border-radius:18px; border:none;background:#2fd6b9;color:#fff">View New Applicants</button></a></div>`,
+      html: `<div style="margin:auto;font-size:1.5em;padding:20px;text-align:center"><h1 style="text-transform:capitalize;text-align:center;color:#62c8e1">You have received a new applicant.</h1><div style="margin:10px 0"><img  style="border-radius:25px" src='${image}'  width="250px" /></div><h2>${applicant.name}</h2><p> Graduated/Graduating in ${applicant.graduationYear}<p></p>Plan to attend ${applicant.college}</p> <p>Login to view full application.</p><a href="${process.env.baseURI}/admin?filter=pending" target="_blank"><button style="padding:9px 16px; font-size:1.5em; border-radius:18px; border:none;background:#2fd6b9;color:#fff">View New Applicants</button></a></div>`,
     };
     await sendEmail.sendMail(message);
   } catch (error) {

@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { updateSettings } from '@/app/admin/settings/actions';
 import { Button } from '@chakra-ui/react';
 import { accentColor } from '@/utilities/theme';
-import { set } from 'mongoose';
 
 export const EmailAccount = ({account}) => {
     const [emailAccount, setEmailAccount] = useState({
