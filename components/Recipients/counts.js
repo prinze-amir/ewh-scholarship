@@ -1,7 +1,6 @@
 import { getAllRecipients } from "@/lib/mongo/recipients";
 import { revalidatePath } from "next/cache";
 import { StatusFilters } from "../Filters/status";
-import { wait } from "@/utilities/defaults";
 const Count = async () => {
     const {recipients} = await getAllRecipients(0,0);
 

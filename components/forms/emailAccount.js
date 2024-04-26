@@ -8,18 +8,23 @@ import { accentColor } from '@/utilities/theme';
 export const EmailAccount = ({account}) => {
     const [emailAccount, setEmailAccount] = useState({
                 service: account?.service,
+                host: account?.host,
                 username:account?.username,
                 pass: account?.pass
             
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-const [color, setColor] = useState('');
+    const [disabled, setDisabled] = useState(false);
+    const [color, setColor] = useState('');
+
     useEffect(() => {
         setColor(accentColor)
+        if(emailAccount.service !== 'other'){
+            setDisabled(true)
+        }
     }, [])
 
-    console.log(account)
     const updateAcount = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -34,6 +39,23 @@ const [color, setColor] = useState('');
     }
     const handleChange = (e) => {
         setEmailAccount({...emailAccount, [e.target.name]: e.target.value})
+        if(e.target.name === 'service') {
+            if(e.target.value === 'gmail') {
+                setEmailAccount({...emailAccount, host: 'smtp.gmail.com', service: 'gmail'})
+                if(!disabled) setDisabled(true)
+            } else if(e.target.value === 'yahoo') {
+                setEmailAccount({...emailAccount, host: 'smtp.mail.yahoo.com', service: 'yahoo'} )
+                if(!disabled) setDisabled(true)
+
+            } else if(e.target.value === 'outlook') {
+                setEmailAccount({...emailAccount, host: 'smtp-mail.outlook.com', service:'outlook'})
+                if(!disabled) setDisabled(true)
+
+            } else {
+                setEmailAccount({...emailAccount, host: 'smtp.', service:'other'})
+                setDisabled(false)
+            }
+        }
         console.log(emailAccount, 'email account')
     }
 
@@ -51,6 +73,8 @@ const [color, setColor] = useState('');
                     <option value="outlook">Outlook</option>
                     <option value="other">Other</option>
                 </Select>
+                <label>SMTP Host</label>
+                <input  className="p-3 rounded-md border" disabled={disabled} autoComplete="host" type="text" name="host" value={emailAccount.host} onChange={handleChange} />
                 <label>SMTP Username</label>
                 <input  className="p-3 rounded-md border" autoComplete="username" type="email" name="username" value={emailAccount.username} onChange={handleChange} />
                 {emailAccount.service === 'gmail' ? <label>Google App Password</label>: <label>Password</label>}
