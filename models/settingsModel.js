@@ -1,11 +1,13 @@
 import mongoose, {Schema, models, model} from "mongoose";
 
 const settingsSchema = new Schema({
-    siteName: {
-        type: String,
-    },
+   
     emailService: new Schema({
         service: {
+            type: String,
+            required: true,
+        },
+        host: {
             type: String,
             required: true,
         },
