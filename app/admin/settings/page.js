@@ -14,8 +14,7 @@ export default async function Settings() {
   }
   const theme = JSON.parse(JSON.stringify(settings[0].themeSettings));
   const users = await getUsers();
-  //must convert to plain object to avoid mongoose error
-  const usersArray = JSON.parse(JSON.stringify(users));
+
 
   return (
     <div className="flex gap-4 flex-wrap justify-center items-baseline">
@@ -27,7 +26,7 @@ export default async function Settings() {
 
       <div>
         <Suspense fallback={<div>Loading...</div>}>
-          <Users initialUsers={usersArray} />
+          <Users initialUsers={users} />
         </Suspense>
       </div>
     </div>

@@ -9,12 +9,10 @@ import { getServerSession } from "next-auth";
 export default async function RecipientSinglePage({params}){
     const recipientId = params;
     const session = await getServerSession();
-    const recipientUnserialized = await getRecipient(recipientId.id);
-    const recipient = JSON.parse(JSON.stringify(recipientUnserialized));
+    const recipient = await getRecipient(recipientId.id);
 
-    const {nextRecipient, previousRecipient} = await getNextRecipient(recipientId.id);
-    const next = JSON.parse(JSON.stringify(nextRecipient));
-    const previous = JSON.parse(JSON.stringify(previousRecipient));
+    const {next, previous} = await getNextRecipient(recipientId.id);
+   
     const profileImage = recipient.profileImage ? recipient.profileImage.src : null;
 
     const proxyImage = await getProxyImages(profileImage);

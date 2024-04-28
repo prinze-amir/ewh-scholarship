@@ -7,9 +7,8 @@ import {Button} from '@chakra-ui/react';
 export default async function EditRecipient({params}) {
   const {id} = params;
   const profileLink = `/recipients/${id}`
-  const response = await getRecipient(id);
+  const recipient = await getRecipient(id);
     //this is to serialize the data so that it can be passed as props
-  const recipient = JSON.parse(JSON.stringify(response));
 
 
   return (

@@ -11,7 +11,7 @@ export default async function Profile(){
     const session = await getServerSession(authOptions)
     let user = session.user
     const res = await getUser(session.user.id)
-   if (res) user = JSON.parse(JSON.stringify(res))
+   if (res) user = res
     
     return (
         <div className="flex gap-4 flex-wrap max-w-full">

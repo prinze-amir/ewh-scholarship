@@ -28,7 +28,9 @@ export const getNextRecipient = async (id)=>{
   try {await connectToDatabase();
     const nextRecipient = await Recipient.findOne({ _id: { $gt: id } }).sort({ _id: 1 });
     const previousRecipient = await Recipient.findOne({ _id: { $lt: id } }).sort({ _id: -1 });
-  return {nextRecipient, previousRecipient}
+    const next = JSON.parse(JSON.stringify(nextRecipient));
+    const previous = JSON.parse(JSON.stringify(previousRecipient));
+  return {next, previous}
   } catch (error) {
     console.log(error.message, 'error')
     return error.message;
@@ -41,7 +43,7 @@ export const getRecipients = async (page = 0, limit = 6) => {
   const recipients = await Recipient.find({})
     .skip(page * limit)
     .limit(limit);
-  return { recipients};
+  return { recipients } ;
 };
 
 export const getProxyImages = async (image) => {
@@ -52,13 +54,15 @@ export const getProxyImages = async (image) => {
 export const getUsers = async () => {
    await connectToDatabase();
   try {
-    const users = await User.find({});
-    return users;
+    const users = await User.find({}).lean();
+    return JSON.parse(JSON.stringify(users));
+
   } catch (error) {
     console.log(error.message, "error");
     return error.message;
   }
 };
+
 export const getUser = async (id) => {
   await connectToDatabase();
   try{
@@ -67,7 +71,7 @@ export const getUser = async (id) => {
         throw new Error("No user found");
       }
       console.log(user, 'user')
-      return user;
+      return JSON.parse(JSON.stringify(user));
   }catch(error){
     console.log(error.message, 'error')
     return error.message;
