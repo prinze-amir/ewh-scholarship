@@ -56,7 +56,7 @@ export const sendResetPasswordEmail = async (email) => {
             from: settings[0].emailService.username,
             to: email,
             subject: 'Password Reset',
-            html: `<div style="font-size:1.2em;padding:15px" ><p>${user.name}, you are receiving this email because you (or someone else) has requested the reset of a password.</p><p>To reset your password, please click on the link below:</p></div> <a href='${process.env.NEXT_PUBLIC_BASE_URL}/password-reset?token=${token}&email=${email}' target="_blank" style="padding:10px 15px; border-radius:12px; background:#0cd5d1; color:#fff border:none">Reset Password</a><a href="https://google.com">test</a>`
+            html: `<div style="font-size:1.2em;padding:15px" ><p>${user.name}, you are receiving this email because you (or someone else) has requested the reset of a password.</p><p>To reset your password, please click on the link below:</p></div> <a href='${process.env.baseURI}/password-reset?token=${token}&email=${email}' target="_blank" style="padding:10px 15px; border-radius:12px; background:#0cd5d1; color:#fff border:none">Reset Password</a>`
 
         }
         await sendEmail.sendMail(message);
