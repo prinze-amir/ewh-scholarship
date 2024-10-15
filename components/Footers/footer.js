@@ -9,7 +9,7 @@ export const Footer = async() => {
         <h1 className="text-4xl">EWH Scholarships</h1>
         <h3 className="text-lg">Memorial Scholarship Fund</h3>
         <ul className={footerStyles.navmenu}>
-            <li><ThemeButton text="Donate"/></li>
+            <li><ThemeButton text="Donate" link="https://cash.app/$Wakux1938" target="_blank"/></li>
             <li><ThemeButton text="Apply" theme="dark" link="/apply"/></li>
         </ul>
         <h4 className="">Built and designed by WeArePlu2o</h4>
