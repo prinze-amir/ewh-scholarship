@@ -7,7 +7,7 @@ const StatusFilters = () =>{
     const params = useSearchParams();
     const handleFilter = (filter) => {
         const query = new URLSearchParams(params);
-        console.log(query.get('search'))
+      //  console.log(query.get('search'))
         query.set('filter', filter);
        
         router.push(`${pathname}?${query.toString()}`, {shallow: true});

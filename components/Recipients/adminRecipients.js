@@ -28,7 +28,6 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
     useEffect(() => {
         if (filter){
             filterStatus();
-            document.getElementById('admin-recipients').scrollIntoView({behavior: 'smooth'});
         }
     }, [filter])
 
@@ -110,6 +109,8 @@ const AdminRecipients = ({allRecipients, limit, pages}) => {
             console.log(error);
         }finally{
             setUpdating(false);
+            document.getElementById('admin-recipients').scrollIntoView({behavior: 'smooth'});
+
         }
         
     }
