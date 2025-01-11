@@ -25,6 +25,10 @@ const recipientSchema = new Schema({
         type: String,
         required: true
     },
+    major: {
+        type: String,
+        required: true
+    },
     bio: {
         type: String,
         required: true
