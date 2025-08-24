@@ -8,15 +8,15 @@ export const Latest = async () => {
 
     const latest = await getLatestRecipient();
     
-    if (!latest[0]) return <div>No recipient found</div>;
+    if (!latest) return <div>No recipient found</div>;
 
-    const profileImage = latest[0].profileImage ? latest[0].profileImage.src : defaultProfile;
+    const profileImage = latest.profileImage ? latest.profileImage.src : defaultProfile;
     return (
         <div className="flex items-center justify-center gap-4 flex-wrap relative bg-slate-100 py-20">
             <div className={styles.latestThumbnail}>
                 
-                <Image src={profileImage} alt={latest[0].name} width={400} height={400} />
-               <ThemeButton text={'Latest Recipient '+latest[0].name} link={`/recipients/${latest[0]._id}`}/>
+                <Image src={profileImage} alt={latest.name} width={400} height={400} />
+               <ThemeButton text={'Latest Recipient '+latest.name} link={`/recipients/${latest._id}`}/>
               
             </div>
 
